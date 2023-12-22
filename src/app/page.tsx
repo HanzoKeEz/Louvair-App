@@ -41,13 +41,12 @@ export default function Home() {
 								/>
 							</AspectRatio>
 							<div className='absolute top-0 left-0 mt-6 w-full'>
-								<h1 className='text-4xl font-light tracking-wide text-zinc-600'>
-									Soulful Bliss
+								<h1 className='text-4xl font-light tracking-wide text-zinc-700'>
+									Aromatic Bliss
 									<br />
-									<span className='text-blue-600 font-thin uppercase text-lg'>
+									<span className='text-amber-700 font-extralight uppercase text-lg'>
 										Air Ambience
 									</span>
-									.
 								</h1>
 							</div>
 						</div>
@@ -76,7 +75,7 @@ export default function Home() {
 				{/* TODO: List products */}
 			</MaxWidthWrapper>
 
-			<section className=''>
+			<section className='border-t border-gray-200 bg-gray-50'>
 				<MaxWidthWrapper className='py-20'>
 					<div className='grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0'>
 						{perks.map((perk) => (
@@ -85,15 +84,13 @@ export default function Home() {
 								key={perk.name}
 							>
 								<div className='md:flex-shrink-0 flex justify-center'>
-									<div className='h-12 w-12 flex items-center justify-center rounded-full bg-zinc-200 text-zinc-500'>
+									<div className='h-12 w-12 flex items-center justify-center rounded-full'>
 										{<perk.Icon className='w-1/3 h-1/3' />}
 									</div>
 								</div>
 
 								<div className='mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6'>
-									<h3 className='text-base font-medium text-neutral-900'>
-										{perk.name}
-									</h3>
+									<h3 className='text-base font-medium'>{perk.name}</h3>
 									<p className='mt-3 text-sm text-muted-foreground'>
 										{perk.description}
 									</p>

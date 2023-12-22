@@ -3,19 +3,28 @@ import MaxWidthWrapper from './MaxWidthWrapper'
 import Logo from '../../public/Logo.png'
 import Link from 'next/link'
 import NavItems from './NavItems'
+import { buttonVariants } from './ui/button'
+import UserAccountNav from './UserAccountNav'
+import MobileNav from './MobileNav'
+import Cart from './Cart'
+import { Icons } from './Icons'
 
 const Navbar = async () => {
+	// const nextCookies = cookies()
+	// const { user } = await getServerSideUser(nextCookies)
+	const user = null
+
 	return (
-		<div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
-			<header className='relative bg-white'>
+		<div className='bg-zinc-50 sticky z-50 top-0 inset-x-0 h-16'>
+			<header className='relative bg-zinc-50'>
 				<MaxWidthWrapper>
-					<div className='border-b border-gray-300'>
+					<div className='border-b border-gray-200'>
 						<div className='flex h-16 items-center'>
-							{/* <MobileNav /> */}
+							<MobileNav />
 
 							<div className='ml-4 flex lg:ml-0'>
 								<Link href='/'>
-									<Image src={Logo} alt='DigitalHippo' width={32} height={32} />
+									<Image src={Logo} alt={'Logo'} height={36} width={36} />
 								</Link>
 							</div>
 
@@ -24,7 +33,53 @@ const Navbar = async () => {
 							</div>
 
 							<div className='ml-auto flex items-center'>
-								<div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'></div>
+								<div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
+									{user ? null : (
+										<Link
+											href='/sign-in'
+											className={buttonVariants({
+												variant: 'ghost',
+											})}
+										>
+											Sign in
+										</Link>
+									)}
+
+									{user ? null : (
+										<span className='h-6 w-px bg-gray-200' aria-hidden='true' />
+									)}
+
+									{user ? (
+										// <UserAccountNav user={user} />
+										<UserAccountNav />
+									) : (
+										<Link
+											href='/sign-up'
+											className={buttonVariants({
+												variant: 'ghost',
+											})}
+										>
+											Sign up
+										</Link>
+									)}
+
+									{user ? (
+										<span className='h-6 w-px bg-gray-200' aria-hidden='true' />
+									) : null}
+
+									{user ? null : (
+										<div className='flex lg:ml-6'>
+											<span
+												className='h-6 w-px bg-gray-200'
+												aria-hidden='true'
+											/>
+										</div>
+									)}
+
+									<div className='ml-4 flow-root lg:ml-6'>
+										<Cart />
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
