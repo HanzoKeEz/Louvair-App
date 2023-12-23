@@ -4,6 +4,7 @@ import './globals.css'
 import { cn } from '@/lib/utils'
 import Navbar from '@/components/Navbar'
 import { Toaster } from 'sonner'
+import Providers from '@/components/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,8 +27,10 @@ export default function RootLayout({
 				)}
 			>
 				<main className='relative flex flex-col min-h-screen'>
-					<Navbar />
-					<div className='flex-grow flex-1 '>{children}</div>
+					<Providers>
+						<Navbar />
+						<div className='flex-grow flex-1 '>{children}</div>
+					</Providers>
 				</main>
 
 				<Toaster position='top-center' richColors />
