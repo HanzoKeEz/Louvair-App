@@ -7,7 +7,6 @@ import { buttonVariants } from './ui/button'
 import UserAccountNav from './UserAccountNav'
 import MobileNav from './MobileNav'
 import Cart from './Cart'
-import { Icons } from './Icons'
 
 const Navbar = async () => {
 	// const nextCookies = cookies()

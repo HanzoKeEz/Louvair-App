@@ -14,9 +14,9 @@ import { useForm } from 'react-hook-form'
 import {
 	AuthCredentialsValidator,
 	TAuthCredentialsValidator,
-} from '@/lib/validators/account-credentials-validator'
+} from '@/lib/validations/account-credentials-validator'
 import { useRouter } from 'next/navigation'
-import { trpc } from '@/trpc/client'
+
 import { toast } from 'sonner'
 import { ZodError } from 'zod'
 
@@ -31,36 +31,14 @@ function Page() {
 
 	const router = useRouter()
 
-	const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
-		onError: (err) => {
-			if (err.data?.code === 'CONFLICT') {
-				toast.error('This email is already in use. Sign in instead?')
-
-				return
-			}
-
-			if (err instanceof ZodError) {
-				toast.error(err.issues[0].message)
-
-				return
-			}
-
-			toast.error('Something went wrong. Please try again.')
-		},
-		onSuccess: ({ sentToEmail }) => {
-			toast.success(`Verification email sent to ${sentToEmail}.`)
-			router.push('/verify-email?to=' + sentToEmail)
-		},
-	})
-
 	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-		mutate({ email, password })
+		// send data to the server
 	}
 
 	return (
 		<>
-			<div className='container relative flex flex-col pt-20 items-center justify-center lg:px-0 border-4 border-black'>
-				<div className='flex flex-col mx-auto justify-center space-y-6'>
+			<div className='container relative flex flex-col pt-20 items-center justify-center lg:px-0 border-4'>
+				<div className='flex flex-col mx-auto justify-center space-y-6 sm:w-[360px]'>
 					<div className='flex flex-col items-center space-y-2 text-center'>
 						<Image src={Logo} alt={'Logo'} height={36} width={36} />
 						<h1 className='text-muted-foreground text-2xl font-semibold tracking-tight'>
