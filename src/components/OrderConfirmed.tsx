@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import dance from '../../public/dance.gif'
 import Link from 'next/link'
-import { useCartStore } from '@/store'
+import { useCartStore } from '../../store'
 import { useEffect } from 'react'
 
 export default function OrderConfirmed() {

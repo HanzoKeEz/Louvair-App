@@ -5,28 +5,32 @@ import Link from 'next/link'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { ArrowDownToLine, CheckCircle, Leaf } from 'lucide-react'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
+import getProducts from '@/lib/getProducts'
+import Product from '@/components/Product'
 
-const perks = [
-	{
-		name: 'Instant Delivery',
-		Icon: ArrowDownToLine,
-		description: 'Get your assets delivered instantly after purchase.',
-	},
+// const perks = [
+// 	{
+// 		name: 'Instant Delivery',
+// 		Icon: ArrowDownToLine,
+// 		description: 'Get your assets delivered instantly after purchase.',
+// 	},
 
-	{
-		name: 'Guaranteed Quality',
-		Icon: CheckCircle,
-		description:
-			'Every asset on our platform is verified by our team to ensure our highest quality standards.',
-	},
-	{
-		name: 'For the Planet',
-		Icon: Leaf,
-		description: 'We only charge a 10% fee on sales.',
-	},
-]
+// 	{
+// 		name: 'Guaranteed Quality',
+// 		Icon: CheckCircle,
+// 		description:
+// 			'Every asset on our platform is verified by our team to ensure our highest quality standards.',
+// 	},
+// 	{
+// 		name: 'For the Planet',
+// 		Icon: Leaf,
+// 		description: 'We only charge a 10% fee on sales.',
+// 	},
+// ]
 
-export default function Home() {
+export default async function Home() {
+	const products = await getProducts()
+
 	return (
 		<>
 			<MaxWidthWrapper>
@@ -66,40 +70,12 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-
-				{/* <ProductReel
-				query={{ sort: 'desc', limit: 4 }}
-				href='/products?sort=recent'
-				title='Brand new'
-			/> */}
-				{/* TODO: List products */}
+				<section className='grid grid-cols-fluid gap-12'>
+					{products.map((product) => (
+						<Product {...product} key={product.id} />
+					))}
+				</section>
 			</MaxWidthWrapper>
-
-			<section className='border-t border-gray-200 bg-gray-50'>
-				<MaxWidthWrapper className='py-20'>
-					<div className='grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0'>
-						{perks.map((perk) => (
-							<div
-								className='text-center md:flex md:items-start md:text-left lg:block lg:text-center'
-								key={perk.name}
-							>
-								<div className='md:flex-shrink-0 flex justify-center'>
-									<div className='h-12 w-12 flex items-center justify-center rounded-full'>
-										{<perk.Icon className='w-1/3 h-1/3' />}
-									</div>
-								</div>
-
-								<div className='mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6'>
-									<h3 className='text-base font-medium'>{perk.name}</h3>
-									<p className='mt-3 text-sm text-muted-foreground'>
-										{perk.description}
-									</p>
-								</div>
-							</div>
-						))}
-					</div>
-				</MaxWidthWrapper>
-			</section>
 		</>
 	)
 }

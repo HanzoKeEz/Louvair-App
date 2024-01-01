@@ -1,6 +1,5 @@
 'use client'
 
-// import { User } from '@/payload-types'
 import { Button } from './ui/button'
 import {
 	DropdownMenu,
@@ -10,36 +9,53 @@ import {
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import Link from 'next/link'
-// import { useAuth } from '@/hooks/use-auth'
+import { useAuth } from '@/hooks/use-auth'
+import { User } from 'next-auth'
+import { UserAvatar } from './UserAvatar'
+import { signOut } from 'next-auth/react'
 
-// const UserAccountNav = ({ user }: { user: User }) => {
-const UserAccountNav = () => {
-	// const { signOut } = useAuth()
+interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
+	user: Pick<User, 'name' | 'image' | 'email'>
+}
+
+export function UserAccountNav({ user }: UserAccountNavProps) {
+	const { signOut } = useAuth()
 
 	return (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild className='overflow-visible'>
-				<Button variant='ghost' size='sm' className='relative'>
-					My account
-				</Button>
+			<DropdownMenuTrigger>
+				<UserAvatar
+					user={{ name: user.name || null, image: user.image || null }}
+					className='h-9 w-9'
+				/>
 			</DropdownMenuTrigger>
-
-			<DropdownMenuContent className='bg-white w-60' align='end'>
+			<DropdownMenuContent className='bg-white' align='end'>
 				<div className='flex items-center justify-start gap-2 p-2'>
-					<div className='flex flex-col space-y-0.5 leading-none'>
-						{/* <p className='font-medium text-sm text-black'>{user.email}</p> */}
-						<p className='font-medium text-sm text-black'>user.email</p>
+					<div className='flex flex-col space-y-1 leading-none'>
+						{user.name && <p className='font-medium'>{user.name}</p>}
+						{user.email && (
+							<p className='w-[200px] truncate text-sm text-muted-foreground'>
+								{user.email}
+							</p>
+						)}
 					</div>
 				</div>
-
 				<DropdownMenuSeparator />
-
 				<DropdownMenuItem asChild>
-					<Link href='/sell'>Seller Dashboard</Link>
+					<Link href='/'>Feed</Link>
 				</DropdownMenuItem>
 
-				{/* <DropdownMenuItem onClick={signOut} className='cursor-pointer'> */}
-				<DropdownMenuItem className='cursor-pointer'>Log out</DropdownMenuItem>
+				<DropdownMenuItem asChild>
+					<Link href='/r/create'>Create Community</Link>
+				</DropdownMenuItem>
+
+				<DropdownMenuItem asChild>
+					<Link href='/settings'>Settings</Link>
+				</DropdownMenuItem>
+				<DropdownMenuSeparator />
+				<DropdownMenuItem className='cursor-pointer' onSelect={() => signOut()}>
+					Sign out
+				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

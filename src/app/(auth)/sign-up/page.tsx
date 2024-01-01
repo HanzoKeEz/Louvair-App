@@ -1,100 +1,59 @@
-'use client'
-
-import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
-import Logo from '../../../../public/Logo.png'
 import Link from 'next/link'
-import Image from 'next/image'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
+
 import { cn } from '@/lib/utils'
-import { useForm } from 'react-hook-form'
-import {
-	AuthCredentialsValidator,
-	TAuthCredentialsValidator,
-} from '@/lib/validations/account-credentials-validator'
-import { useRouter } from 'next/navigation'
+import { buttonVariants } from '@/components/ui/button'
+import { Icons } from '@/components/icons'
+import UserAuthForm from '@/components/UserAuthForm'
 
-import { toast } from 'sonner'
-import { ZodError } from 'zod'
-
-function Page() {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<TAuthCredentialsValidator>({
-		resolver: zodResolver(AuthCredentialsValidator),
-	})
-
-	const router = useRouter()
-
-	const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-		// send data to the server
-	}
-
-	return (
-		<>
-			<div className='container relative flex flex-col pt-20 items-center justify-center lg:px-0 border-4'>
-				<div className='flex flex-col mx-auto justify-center space-y-6 sm:w-[360px]'>
-					<div className='flex flex-col items-center space-y-2 text-center'>
-						<Image src={Logo} alt={'Logo'} height={36} width={36} />
-						<h1 className='text-muted-foreground text-2xl font-semibold tracking-tight'>
-							Create an account
-						</h1>
-
-						<Link
-							className={buttonVariants({
-								variant: 'link',
-								className: 'gap-1.5',
-							})}
-							href='/sign-in'
-						>
-							Already have an account? Sign-in
-							<ArrowRight className='h-4 w-4' />
-						</Link>
-					</div>
-				</div>
-
-				<div className='grid gap-6'>
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<div className='grid gap-2'>
-							<div className='grid gap-1 py-2'>
-								<Label htmlFor='email'>Email</Label>
-								<Input
-									{...register('email')}
-									className={cn({ 'focus-visible:ring-red-500': errors.email })}
-									placeholder='you@example.com'
-								/>
-								{errors?.email && (
-									<p className='text-sm text-red-500'>{errors.email.message}</p>
-								)}
-							</div>
-
-							<div className='grid gap-1 py-2'>
-								<Label htmlFor='password'>Password</Label>
-								<Input
-									{...register('password')}
-									className={cn({
-										'focus-visible:ring-red-500': errors.password,
-									})}
-									placeholder='Password'
-								/>
-								{errors?.password && (
-									<p className='text-sm text-red-500'>
-										{errors.password.message}
-									</p>
-								)}
-							</div>
-						</div>
-						<Button>Sign up</Button>
-					</form>
-				</div>
-			</div>
-		</>
-	)
+export const metadata = {
+	title: 'Create an account',
+	description: 'Create an account to get started.',
 }
 
-export default Page
+export default function RegisterPage() {
+	return (
+		<div className='container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
+			<Link
+				href='/login'
+				className={cn(
+					buttonVariants({ variant: 'ghost' }),
+					'absolute right-4 top-4 md:right-8 md:top-8'
+				)}
+			>
+				Login
+			</Link>
+			<div className='hidden h-full bg-muted lg:block' />
+			<div className='lg:p-8'>
+				<div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
+					<div className='flex flex-col space-y-2 text-center'>
+						<Icons.logo className='mx-auto h-6 w-6' />
+						<h1 className='text-2xl font-semibold tracking-tight'>
+							Create an account
+						</h1>
+						<p className='text-sm text-muted-foreground'>
+							Enter your email below to create your account
+						</p>
+					</div>
+					<UserAuthForm />
+					<p className='px-8 text-center text-sm text-muted-foreground'>
+						By clicking continue, you agree to our{' '}
+						<Link
+							href='/terms'
+							className='hover:text-brand underline underline-offset-4'
+						>
+							Terms of Service
+						</Link>{' '}
+						and{' '}
+						<Link
+							href='/privacy'
+							className='hover:text-brand underline underline-offset-4'
+						>
+							Privacy Policy
+						</Link>
+						.
+					</p>
+				</div>
+			</div>
+		</div>
+	)
+}

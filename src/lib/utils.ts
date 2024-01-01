@@ -2,12 +2,8 @@ import { type ClassValue, clsx } from 'clsx'
 import { Metadata } from 'next'
 import { twMerge } from 'tailwind-merge'
 
-// export function cn(...inputs: ClassValue[]) {
-// 	return twMerge(clsx(inputs))
-// }
-
-export function cn(...args: ClassValue[]) {
-	return twMerge(clsx(...args))
+export function cn(...inputs: ClassValue[]) {
+	return twMerge(clsx(inputs))
 }
 
 export function formatPrice(
@@ -30,8 +26,8 @@ export function formatPrice(
 }
 
 export function constructMetadata({
-	title = 'Louvair - an e-commerce website for store for aromatherapy products',
-	description = "L'ouvair is an e-commerce website for store for aromatherapy products",
+	title = 'Louvair Air Ambience',
+	description = 'Louvair is an open-source marketplace for high quality air ambience products',
 	image = '/thumbnail.png',
 	icons = '/favicon.ico',
 	noIndex = false,
@@ -59,10 +55,10 @@ export function constructMetadata({
 			title,
 			description,
 			images: [image],
-			creator: '@larrylobsters',
+			creator: '@louvair',
 		},
 		icons,
-		metadataBase: new URL('https://louvair-app.vercel.app/'),
+		metadataBase: new URL('https://louvair.vercel.app/'),
 		...(noIndex && {
 			robots: {
 				index: false,

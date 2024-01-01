@@ -1,18 +1,18 @@
 'use client'
 
-import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js'
-import { Elements } from '@stripe/react-stripe-js'
-import { useCartStore } from '@/store'
+// import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js'
+// import { Elements } from '@stripe/react-stripe-js'
+import { useCartStore } from '../../store'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import CheckoutForm from './CheckoutForm'
 // import OrderAnimation from './OrderAnimation'
 import { motion } from 'framer-motion'
-import { useThemeStore } from '@/store'
+import { useThemeStore } from '../../store'
 
-const stripePromise = loadStripe(
-	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-)
+// const stripePromise = loadStripe(
+// 	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+// )
 
 export default function Checkout() {
 	const cartStore = useCartStore()
@@ -51,22 +51,23 @@ export default function Checkout() {
 			})
 	}, [])
 
-	const options: StripeElementsOptions = {
-		clientSecret,
-		appearance: {
-			// theme: stripeTheme,
-			labels: 'floating',
-		},
-	}
+	// const options: StripeElementsOptions = {
+	// 	clientSecret,
+	// 	appearance: {
+	// 		// theme: stripeTheme,
+	// 		labels: 'floating',
+	// 	},
+	// }
 
 	return (
 		<div>
 			{/* {!clientSecret && <OrderAnimation />} */}
 			{clientSecret && (
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-					<Elements options={options} stripe={stripePromise}>
-						<CheckoutForm clientSecret={clientSecret} />
-					</Elements>
+					{/* <Elements options={options} stripe={stripePromise}> */}
+					{/* <CheckoutForm clientSecret={clientSecret} /> */}
+					<CheckoutForm />
+					{/* </Elements> */}
 				</motion.div>
 			)}
 		</div>
