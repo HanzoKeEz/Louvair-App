@@ -2,8 +2,8 @@ import { NextAuthOptions, getServerSession } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { db } from '@/lib/db'
-import { nanoid } from 'nanoid'
 import Stripe from 'stripe'
+import { nanoid } from 'nanoid'
 
 export const authOptions: NextAuthOptions = {
 	adapter: PrismaAdapter(db),
@@ -13,11 +13,11 @@ export const authOptions: NextAuthOptions = {
 	pages: {
 		signIn: '/sign-in',
 	},
-	secret: process.env.NEXTAUTH_SECRET,
+
 	providers: [
 		GoogleProvider({
-			clientId: process.env.GOOGLE_CLIENT_ID as string,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			clientId: process.env.GOOGLE_CLIENT_ID!,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 		}),
 		//Add another provider
 	],
@@ -41,7 +41,7 @@ export const authOptions: NextAuthOptions = {
 		},
 	},
 	callbacks: {
-		async session({ session, token }) {
+		async session({ token, session }) {
 			if (token) {
 				session.user.id = token.id
 				session.user.name = token.name
@@ -89,5 +89,4 @@ export const authOptions: NextAuthOptions = {
 		},
 	},
 }
-
 export const getAuthSession = () => getServerSession(authOptions)

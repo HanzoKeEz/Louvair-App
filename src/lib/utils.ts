@@ -1,5 +1,4 @@
 import { type ClassValue, clsx } from 'clsx'
-import { Metadata } from 'next'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -25,45 +24,11 @@ export function formatPrice(
 	}).format(numericPrice)
 }
 
-export function constructMetadata({
-	title = 'Louvair Air Ambience',
-	description = 'Louvair is an open-source marketplace for high quality air ambience products',
-	image = '/thumbnail.png',
-	icons = '/favicon.ico',
-	noIndex = false,
-}: {
-	title?: string
-	description?: string
-	image?: string
-	icons?: string
-	noIndex?: boolean
-} = {}): Metadata {
-	return {
-		title,
-		description,
-		openGraph: {
-			title,
-			description,
-			images: [
-				{
-					url: image,
-				},
-			],
-		},
-		twitter: {
-			card: 'summary_large_image',
-			title,
-			description,
-			images: [image],
-			creator: '@louvair',
-		},
-		icons,
-		metadataBase: new URL('https://louvair.vercel.app/'),
-		...(noIndex && {
-			robots: {
-				index: false,
-				follow: false,
-			},
-		}),
-	}
+export function formatDate(input: string | number): string {
+	const date = new Date(input)
+	return date.toLocaleDateString('en-US', {
+		month: 'long',
+		day: 'numeric',
+		year: 'numeric',
+	})
 }

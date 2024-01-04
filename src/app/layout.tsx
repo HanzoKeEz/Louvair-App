@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { Inter, Lobster_Two, Roboto } from 'next/font/google'
 import '@/styles/globals.css'
 import { Toaster } from 'sonner'
-import { Providers } from '@/components/Providers'
-import clsx from 'clsx'
+
 import { Navigation } from '@/components/navigation'
 import Hydrate from '@/components/Hydrate'
+import { cn } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 const roboto = Roboto({
@@ -23,33 +23,25 @@ export const metadata: Metadata = {
 	description: `I'm a self-taught designer & developer and I aim for smooth engaging user experience.`,
 }
 
-export default function RootLayout({
-	children,
-}: {
+interface RootLayoutProps {
 	children: React.ReactNode
-}) {
-	return (
-		<html
-			lang='en'
-			className={`${roboto.variable} ${lobster.variable} scroll-p-32 scroll-smooth `}
-			suppressHydrationWarning
-		>
-			<body
-				className={clsx(
-					'bg-dark-50 text-dark-600 transition-colors duration-300 ease-in-out dark:bg-dark-850 dark:text-dark-50',
+}
 
-					inter.className
-				)}
-			>
-				<Hydrate>
-					<Providers>
-						<Navigation />
-						<div className='flex-grow flex-1 '>{children}</div>
-					</Providers>
+export default function RootLayout({ children }: RootLayoutProps) {
+	return (
+		<html lang='en' suppressHydrationWarning>
+			<Hydrate>
+				<body
+					className={cn(
+						`${roboto.variable} ${lobster.variable} min-h-screen bg-background antialiased  scroll-smooth`
+					)}
+				>
+					<Navigation />
+					<div className=''>{children}</div>
 
 					<Toaster position='top-center' richColors />
-				</Hydrate>
-			</body>
+				</body>
+			</Hydrate>
 		</html>
 	)
 }

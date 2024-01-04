@@ -58,8 +58,8 @@ export function MobileNav() {
 	useClickAway([navRef, navToggleRef], () => setIsOpen(false))
 
 	useScrollspy({
-		ids: ['intro', 'projects', 'about', 'contact'],
-		hrefs: ['/#intro', '/#projects', '/#about', '/#contact'],
+		ids: ['intro', 'pricing', 'about', 'contact'],
+		hrefs: ['/#intro', '/#pricing', '/#about', '/#contact'],
 		offset: 'topCenter',
 		activeClass: 'active-nav-link',
 	})

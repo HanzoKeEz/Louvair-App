@@ -1,16 +1,15 @@
 'use client'
 
-import { cn } from '@/lib/utils'
-import { signIn } from 'next-auth/react'
 import * as React from 'react'
-import { FC } from 'react'
-import { Button } from '@/components/ui/button'
-import { useToast } from '@/hooks/use-toast'
+import { signIn } from 'next-auth/react'
 import { FcGoogle } from 'react-icons/fc'
+import { cn } from '@/lib/utils'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { useToast } from '@/hooks/use-toast'
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
+const UserAuthForm: React.FC<UserAuthFormProps> = ({ className, ...props }) => {
 	const { toast } = useToast()
 	const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -31,11 +30,11 @@ const UserAuthForm: FC<UserAuthFormProps> = ({ className, ...props }) => {
 	}
 
 	return (
-		<div className={cn('flex justify-center gap-6', className)} {...props}>
+		<div className={cn('flex justify-center', className)} {...props}>
 			<Button
 				isLoading={isLoading}
 				type='button'
-				size='lg'
+				size='sm'
 				className='w-full'
 				onClick={loginWithGoogle}
 				disabled={isLoading}

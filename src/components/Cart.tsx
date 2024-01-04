@@ -1,13 +1,5 @@
 'use client'
 
-import {
-	Sheet,
-	SheetContent,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from './ui/sheet'
 import Image from 'next/image'
 import { useCartStore } from '../../store'
 import formatPrice from '@/lib/PriceFormat'
@@ -16,121 +8,133 @@ import basket from '../../public/basket.png'
 import { motion, AnimatePresence } from 'framer-motion'
 import Checkout from './Checkout'
 import OrderConfirmed from './OrderConfirmed'
-import { ChevronLeft, ShoppingCart } from 'lucide-react'
-import { Separator } from './ui/separator'
-import Link from 'next/link'
-import { buttonVariants } from './ui/button'
-import { ScrollArea } from './ui/scroll-area'
-import CartItem from './CartItem'
-import { useEffect, useState } from 'react'
-import { useCart } from '@/hooks/use-cart'
 
 export default function Cart() {
-	const { items } = useCart()
-	const itemCount = items.length
 	const cartStore = useCartStore()
-
-	const [isMounted, setIsMounted] = useState<boolean>(false)
 
 	//Total Price
 	const totalPrice = cartStore.cart.reduce((acc, item) => {
 		return acc + item.unit_amount! * item.quantity!
 	}, 0)
 
-	useEffect(() => {
-		setIsMounted(true)
-	}, [])
-
-	const cartTotal = items.reduce(
-		(total, { product }) => total + product.price,
-		0
-	)
-
-	const fee = 1
-
 	return (
-		<Sheet>
-			<SheetTrigger className='group -m-2 flex items-center p-2'>
-				<ShoppingCart
-					aria-hidden='true'
-					className='h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500'
-				/>
-				<span className='ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800'>
-					{isMounted ? itemCount : 0}
-				</span>
-			</SheetTrigger>
-			<SheetContent className='flex w-full flex-col pr-0 sm:max-w-lg'>
-				<SheetHeader className='space-y-2.5 pr-6'>
-					<SheetTitle>Cart ({itemCount})</SheetTitle>
-				</SheetHeader>
-				{itemCount > 0 ? (
-					<>
-						<div className='flex w-full flex-col pr-6'>
-							<ScrollArea>
-								{items.map(({ product }) => (
-									<CartItem product={product} key={product.id} />
-								))}
-							</ScrollArea>
-						</div>
-						<div className='space-y-4 pr-6'>
-							<Separator />
-							<div className='space-y-1.5 text-sm'>
-								<div className='flex'>
-									<span className='flex-1'>Shipping</span>
-									<span>Free</span>
-								</div>
-								<div className='flex'>
-									<span className='flex-1'>Transaction Fee</span>
-									<span>{formatPrice(fee)}</span>
-								</div>
-								<div className='flex'>
-									<span className='flex-1'>Total</span>
-									<span>{formatPrice(cartTotal + fee)}</span>
-								</div>
-							</div>
-
-							<SheetFooter>
-								<SheetTrigger asChild>
-									<Link
-										href='/cart'
-										className={buttonVariants({
-											className: 'w-full',
-										})}
-									>
-										Continue to Checkout
-									</Link>
-								</SheetTrigger>
-							</SheetFooter>
-						</div>
-					</>
-				) : (
-					<div className='flex h-full flex-col items-center justify-center space-y-1'>
-						<div
-							aria-hidden='true'
-							className='relative mb-4 h-60 w-60 text-muted-foreground'
+		<>
+			<motion.div
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				onClick={() => cartStore.toggleCart()}
+				className='fixed w-full h-screen  left-0 top-0 bg-black/25'
+			>
+				{/* Cart */}
+				<motion.div
+					layout
+					onClick={(e) => e.stopPropagation()}
+					className='bg-neutral-900/90 absolute right-0 top-0  h-screen p-12 overflow-y-scroll  w-full lg:w-2/5'
+				>
+					{cartStore.onCheckout === 'cart' && (
+						<button
+							onClick={() => cartStore.toggleCart()}
+							className='text-sm font-bold pb-12'
 						>
-							<Image
-								src='/hippo-empty-cart.png'
-								fill
-								alt='empty shopping cart hippo'
-							/>
-						</div>
-						<div className='text-xl font-semibold'>Your cart is empty</div>
-						<SheetTrigger asChild>
-							<Link
-								href='/products'
-								className={buttonVariants({
-									variant: 'link',
-									size: 'sm',
-									className: 'text-sm text-muted-foreground',
-								})}
+							Back to store 🏃
+						</button>
+					)}
+					{cartStore.onCheckout === 'checkout' && (
+						<button
+							onClick={() => cartStore.setCheckout('cart')}
+							className='text-sm font-bold pb-12'
+						>
+							Check your cart 🛒
+						</button>
+					)}
+					{/* Cart Items */}
+					{cartStore.onCheckout === 'cart' && (
+						<>
+							{cartStore.cart.map((item) => (
+								<motion.div
+									layout
+									key={item.id}
+									className='flex p-4 gap-4 bg-base-100 my-4 rounded-lg '
+								>
+									<Image
+										className='rounded-md h-24'
+										src={item.image}
+										alt={item.name}
+										width={120}
+										height={120}
+									/>
+									<div>
+										<h2>{item.name}</h2>
+										{/* Update quantity of a product */}
+										<div className='flex gap-2'>
+											<h2>Quantity: {item.quantity}</h2>
+											<button
+												onClick={() =>
+													cartStore.removeProduct({
+														id: item.id,
+														image: item.image,
+														name: item.name,
+														unit_amount: item.unit_amount,
+														quantity: item.quantity,
+													})
+												}
+											>
+												<IoRemoveCircle />
+											</button>
+											<button
+												onClick={() =>
+													cartStore.addProduct({
+														id: item.id,
+														image: item.image,
+														name: item.name,
+														unit_amount: item.unit_amount,
+														quantity: item.quantity,
+													})
+												}
+											>
+												<IoAddCircle />
+											</button>
+										</div>
+
+										<p className='text-sm'>
+											{item.unit_amount && formatPrice(item.unit_amount)}
+										</p>
+									</div>
+								</motion.div>
+							))}
+						</>
+					)}
+					{/* Checkout and total */}
+					{cartStore.cart.length > 0 && cartStore.onCheckout === 'cart' ? (
+						<motion.div layout>
+							<p>Total: {formatPrice(totalPrice)}</p>
+							<button
+								onClick={() => cartStore.setCheckout('checkout')}
+								className='py-2 mt-4 bg-primary w-full rounded-md text-white'
 							>
-								Add items to your cart to checkout
-							</Link>
-						</SheetTrigger>
-					</div>
-				)}
-			</SheetContent>
-		</Sheet>
+								Checkout
+							</button>
+						</motion.div>
+					) : null}
+					{/* Checkout Form */}
+					{cartStore.onCheckout === 'checkout' && <Checkout />}
+					{cartStore.onCheckout === 'success' && <OrderConfirmed />}
+					<AnimatePresence>
+						{!cartStore.cart.length && cartStore.onCheckout === 'cart' && (
+							<motion.div
+								animate={{ scale: 1, rotateZ: 0, opacity: 0.75 }}
+								initial={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+								exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
+								className='flex flex-col items-center gap-12 text-2xl font-medium pt-56 opacity-75'
+							>
+								<h1>Uhhh ohhh...it&apos;s empty 😢</h1>
+								<Image src={basket} alt='empty cart' width={200} height={200} />
+							</motion.div>
+						)}
+					</AnimatePresence>
+				</motion.div>
+			</motion.div>
+		</>
 	)
 }
