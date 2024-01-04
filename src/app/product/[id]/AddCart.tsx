@@ -1,6 +1,6 @@
 'use client'
 
-import { useCartStore } from '../../../../../store'
+import { useCartStore } from '../../../../store'
 import { AddCartType } from '@/types/AddCartType'
 import { useState } from 'react'
 

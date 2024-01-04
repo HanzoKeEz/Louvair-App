@@ -6,10 +6,18 @@ import { AddCartType } from '@/types/AddCartType'
 import { db } from '@/lib/db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-	apiVersion: '2023-10-16',
+	apiVersion: '2022-11-15',
 })
 
-const calculateOrderAmount = (items) => {
+interface Item {
+	name: string
+	description?: string
+	unit_amount: number
+	quantity: number
+	image?: string
+}
+
+const calculateOrderAmount = (items: Item[]) => {
 	const totalPrice = items.reduce((acc, item) => {
 		return acc + item.unit_amount! * item.quantity!
 	}, 0)
@@ -37,10 +45,10 @@ export default async function handler(
 		status: 'pending',
 		paymentIntentID: payment_intent_id,
 		products: {
-			create: items.map((item) => ({
+			create: items.map((item: Item) => ({
 				name: item.name,
 				description: item.description || null,
-				unit_amount: parseFloat(item.unit_amount),
+				unit_amount: item.unit_amount,
 				image: item.image,
 				quantity: item.quantity,
 			})),
@@ -69,10 +77,10 @@ export default async function handler(
 						amount: total,
 						products: {
 							deleteMany: {},
-							create: items.map((item) => ({
+							create: items.map((item: Item) => ({
 								name: item.name,
 								description: item.description || null,
-								unit_amount: parseFloat(item.unit_amount),
+								unit_amount: item.unit_amount,
 								image: item.image,
 								quantity: item.quantity,
 							})),

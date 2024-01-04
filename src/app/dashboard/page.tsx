@@ -5,14 +5,38 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
+interface Product {
+	id: string
+	name: string
+	image?: string
+	unit_amount: number
+	quantity: number
+}
+interface Order {
+	id: string
+	status: string
+	createdDate: string
+	products: Product[]
+	amount: number
+}
+
 export default function Dashboard() {
-	const [orders, setOrders] = useState(null)
+	const [orders, setOrders] = useState<Order[]>([])
 	const [loading, setLoading] = useState(true)
-	const [error, setError] = useState(null)
+	const [error, setError] = useState<string | null>(null)
+
 	const fetchOrders = async () => {
-		const res = await fetch('/api/get-orders')
-		const data = await res.json()
-		return data
+		try {
+			const res = await fetch('/api/get-orders')
+			if (!res.ok) {
+				throw new Error('HTTP Error! status: ' + res.status)
+			}
+			const data = await res.json()
+			return data
+		} catch (error) {
+			setError('Failed to fetch orders')
+			throw error
+		}
 	}
 
 	useEffect(() => {

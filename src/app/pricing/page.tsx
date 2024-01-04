@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
-import { Icons } from '@/components/icons'
+import { Check } from 'lucide-react'
 
 export const metadata = {
 	title: 'Pricing',
@@ -27,24 +27,23 @@ export default function PricingPage() {
 					</h3>
 					<ul className='grid gap-3 text-sm text-muted-foreground sm:grid-cols-2'>
 						<li className='flex items-center'>
-							<Icons.check className='mr-2 h-4 w-4' /> Automatic Deliveries
+							<Check className='mr-2 h-4 w-4' /> Automatic Deliveries
 						</li>
 						<li className='flex items-center'>
-							<Icons.check className='mr-2 h-4 w-4' /> Receive a refill bottle
-							500ML
+							<Check className='mr-2 h-4 w-4' /> Receive a refill bottle 500ML
 						</li>
 
 						<li className='flex items-center'>
-							<Icons.check className='mr-2 h-4 w-4' /> Swap fragrances anytime
+							<Check className='mr-2 h-4 w-4' /> Swap fragrances anytime
 						</li>
 						<li className='flex items-center'>
-							<Icons.check className='mr-2 h-4 w-4' /> Manage your subscription
+							<Check className='mr-2 h-4 w-4' /> Manage your subscription
 						</li>
 						<li className='flex items-center'>
-							<Icons.check className='mr-2 h-4 w-4' /> Free Shipping
+							<Check className='mr-2 h-4 w-4' /> Free Shipping
 						</li>
 						<li className='flex items-center'>
-							<Icons.check className='mr-2 h-4 w-4' /> Premium Support
+							<Check className='mr-2 h-4 w-4' /> Premium Support
 						</li>
 					</ul>
 				</div>
