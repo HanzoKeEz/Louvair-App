@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import formatPrice from '@/lib/PriceFormat'
 import { ProductType } from '@/types/ProductType'

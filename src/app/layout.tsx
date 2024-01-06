@@ -6,6 +6,8 @@ import { Toaster } from 'sonner'
 import { Navigation } from '@/components/navigation'
 import Hydrate from '@/components/Hydrate'
 import { cn } from '@/lib/utils'
+import { Providers } from '@/components/Providers'
+import clsx from 'clsx'
 
 const inter = Inter({ subsets: ['latin'] })
 const roboto = Roboto({
@@ -18,6 +20,7 @@ const lobster = Lobster_Two({
 	subsets: ['latin'],
 	variable: '--font-lobster',
 })
+
 export const metadata: Metadata = {
 	title: 'Larry Ly - Frontend developer',
 	description: `I'm a self-taught designer & developer and I aim for smooth engaging user experience.`,
@@ -29,17 +32,17 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<html lang='en' suppressHydrationWarning>
+		<html lang='en'>
 			<Hydrate>
 				<body
-					className={cn(
+					className={clsx(
 						`${roboto.variable} ${lobster.variable} min-h-screen bg-background antialiased  scroll-smooth`
 					)}
 				>
-					<Navigation />
-					<div className=''>{children}</div>
-
-					<Toaster position='top-center' richColors />
+					<Providers>
+						<Navigation />
+						<div className=''>{children}</div>
+					</Providers>
 				</body>
 			</Hydrate>
 		</html>

@@ -55,5 +55,5 @@ export const useClickAway = <TEvent extends Event = Event>(
 				off(document, event, handler)
 			}
 		}
-	}, [references])
+	}, [references, onClickAway])
 }

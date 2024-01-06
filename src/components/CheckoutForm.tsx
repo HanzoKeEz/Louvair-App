@@ -28,7 +28,7 @@ export default function CheckoutForm({
 		if (!clientSecret) {
 			return
 		}
-	}, [clientSecret, stripe])
+	})
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()

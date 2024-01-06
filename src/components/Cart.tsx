@@ -4,10 +4,10 @@ import Image from 'next/image'
 import { useCartStore } from '../../store'
 import formatPrice from '@/lib/PriceFormat'
 import { IoAddCircle, IoRemoveCircle } from 'react-icons/io5'
-import basket from '../../public/basket.png'
 import { motion, AnimatePresence } from 'framer-motion'
 import Checkout from './Checkout'
 import OrderConfirmed from './OrderConfirmed'
+import ShoppingBag from '../../public/shoppingbag.png'
 
 export default function Cart() {
 	const cartStore = useCartStore()
@@ -24,20 +24,20 @@ export default function Cart() {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				onClick={() => cartStore.toggleCart()}
-				className='fixed w-full h-screen  left-0 top-0 bg-black/25'
+				className='fixed w-full h-screen  left-0 top-0 bg-zinc-900/90'
 			>
 				{/* Cart */}
 				<motion.div
 					layout
 					onClick={(e) => e.stopPropagation()}
-					className='bg-neutral-900/90 absolute right-0 top-0  h-screen p-12 overflow-y-scroll  w-full lg:w-2/5'
+					className='bg-zinc-200/10 absolute right-0 top-0  h-screen p-12 overflow-y-scroll  w-full lg:w-2/5'
 				>
 					{cartStore.onCheckout === 'cart' && (
 						<button
 							onClick={() => cartStore.toggleCart()}
-							className='text-sm font-bold pb-12'
+							className='text-sm font-bold pb-12 underline'
 						>
-							Back to store 🏃
+							Back to store
 						</button>
 					)}
 					{cartStore.onCheckout === 'checkout' && (
@@ -55,7 +55,7 @@ export default function Cart() {
 								<motion.div
 									layout
 									key={item.id}
-									className='flex p-4 gap-4 bg-base-100 my-4 rounded-lg '
+									className='flex p-4 gap-4 bg-blue-500 my-4 rounded-lg '
 								>
 									<Image
 										className='rounded-md h-24'
@@ -111,7 +111,7 @@ export default function Cart() {
 							<p>Total: {formatPrice(totalPrice)}</p>
 							<button
 								onClick={() => cartStore.setCheckout('checkout')}
-								className='py-2 mt-4 bg-primary w-full rounded-md text-white'
+								className='py-2 mt-4 bg-zinc-00/90 w-full rounded-md text-white'
 							>
 								Checkout
 							</button>
@@ -128,8 +128,13 @@ export default function Cart() {
 								exit={{ scale: 0.5, rotateZ: -10, opacity: 0 }}
 								className='flex flex-col items-center gap-12 text-2xl font-medium pt-56 opacity-75'
 							>
-								<h1>Uhhh ohhh...it&apos;s empty 😢</h1>
-								<Image src={basket} alt='empty cart' width={200} height={200} />
+								<h1>You have 0 items in your bag...</h1>
+								<Image
+									src={ShoppingBag}
+									alt='empty cart'
+									width={200}
+									height={200}
+								/>
 							</motion.div>
 						)}
 					</AnimatePresence>

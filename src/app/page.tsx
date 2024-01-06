@@ -13,13 +13,13 @@ export default async function Home() {
 	return (
 		<>
 			<div className='py-20 mx-auto text-center flex flex-col items-center max-w-3xl'>
-				<div className='relative w-screen'>
+				<div className='w-screen'>
 					<div className='bg-fixed inset-0 object-cover w-screen'>
 						<AspectRatio ratio={16 / 9}>
 							<Image
 								src={Hero}
 								alt='Hero Image'
-								className='rounded-sm object-cover'
+								className='rounded-sm object-cover '
 							/>
 						</AspectRatio>
 						<div className='absolute top-0 left-0 mt-6 w-full'>

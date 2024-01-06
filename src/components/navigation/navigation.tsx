@@ -11,32 +11,44 @@ import Cart from '../Cart'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useCartStore } from '../../../store'
 import { Button } from '../ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Label } from '../ui/label'
+import { useState } from 'react'
+import DropMenu from '../DropMenu'
 
 const AnimatedLink = motion(Link)
 AnimatedLink.defaultProps = { className: 'hover:text-primary-brand nav-link' }
 
 export function Navigation() {
+	const [label, setLabel] = useState('Orders')
+	const [open, setOpen] = useState(false)
+
 	const cartStore = useCartStore()
 	const { data: session, status } = useSession()
 
+	const labels = ['Orders', 'Profile', 'Settings', 'Sign out']
+	const menuItems = []
 	return (
-		<nav className='sticky top-0 z-40 w-full border-b'>
+		<nav className='sticky top-0 w-screen h-16 z-50 mb-16'>
 			<motion.header
 				variants={navVariants}
 				initial='hidden'
 				animate='visible'
-				className='flex container fixed inset-x-0 top-0 z-50 items-center justify-between  w-full h-20'
+				className='flex container fixed inset-x-0 top-0 items-center justify-between w-full h-20 border'
 			>
-				<AnimatedLink href='/#' variants={linkVariants} className=''>
-					<Image src={Logo} alt='Larry Logo' width={36} height={36} />
+				<AnimatedLink href='/' variants={linkVariants} className=''>
+					<Image src={Logo} alt='Louvair Logo' width={36} height={36} />
 				</AnimatedLink>
 
 				<section className='gap-x-14 flex items-center justify-center text-sm font-thin'>
-					<AnimatedLink href='/#products' variants={linkVariants}>
-						Products
+					<AnimatedLink href='/#fragrances' variants={linkVariants}>
+						Air Ambience
+					</AnimatedLink>
+					<AnimatedLink href='/#machines' variants={linkVariants}>
+						Pricing
 					</AnimatedLink>
 					<AnimatedLink href='/#pricing' variants={linkVariants}>
-						Pricing
+						Module
 					</AnimatedLink>
 					<AnimatedLink href='/#about' variants={linkVariants}>
 						About
@@ -60,7 +72,7 @@ export function Navigation() {
 									animate={{ scale: 1 }}
 									initial={{ scale: 0 }}
 									exit={{ scale: 0 }}
-									className='bg-primary text-white dark:text-black text-sm font-bold w-5 h-5 rounded-full absolute left-8 border bottom-4 flex items-center justify-center'
+									className='bg-zinc-500 text-white dark:text-black text-sm font-bold w-5 h-5 rounded-full absolute left-5 border bottom-4 flex items-center justify-center'
 								>
 									{cartStore.cart.length}
 								</motion.span>
@@ -70,54 +82,42 @@ export function Navigation() {
 
 					{/* If the user is not signed in */}
 					{!session?.user && (
-						<li className='bg-primary text-white py-2 px-4 rounded-md'>
+						<li className='text-white py-2 px-4 rounded-md'>
 							<button onClick={() => signIn()}>Sign in</button>
 						</li>
 					)}
 
 					{session?.user && (
-						<li>
-							<div className='dropdown dropdown-end cursor-pointer'>
-								<Image
-									src={session.user?.image as string}
-									alt={session.user.name as string}
-									width={36}
-									height={36}
-									className='rounded-full'
-									tabIndex={0}
-								/>
-								<ul
-									tabIndex={0}
-									className='dropdown-content menu p-4 space-y-4 shadow bg-base-100 rounded-box w-72'
-								>
-									<Link
-										className='hover:bg-base-300 p-4 rounded-md'
-										href={'/dashboard'}
-										onClick={() => {
-											if (document.activeElement instanceof HTMLElement) {
-												document.activeElement.blur()
-											}
-										}}
-									>
-										Orders
-									</Link>
-									<li
-										onClick={() => {
-											signOut()
-											if (document.activeElement instanceof HTMLElement) {
-												document.activeElement.blur()
-											}
-										}}
-										className='hover:bg-base-300 p-4 rounded-md'
-									>
-										Sign out
-									</li>
-								</ul>
+						<div className=' flex items-center justify-center gap-6 mx-auto'>
+							<div className=''>
+								<DropMenu />
 							</div>
-						</li>
+							{/* <Button
+								className=''
+								onClick={() => {
+									if (document.activeElement instanceof HTMLElement) {
+										document.activeElement.blur()
+									}
+								}}
+							>
+								Orders
+							</Button>
+							<Button
+								onClick={() => {
+									signOut()
+									if (document.activeElement instanceof HTMLElement) {
+										document.activeElement.blur()
+									}
+								}}
+								className=''
+							>
+								Sign out
+							</Button> */}
+						</div>
 					)}
 				</ul>
 			</motion.header>
+
 			<AnimatePresence>{cartStore.isOpen && <Cart />}</AnimatePresence>
 		</nav>
 	)

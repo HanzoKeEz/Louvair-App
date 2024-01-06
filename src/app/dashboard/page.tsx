@@ -26,17 +26,9 @@ export default function Dashboard() {
 	const [error, setError] = useState<string | null>(null)
 
 	const fetchOrders = async () => {
-		try {
-			const res = await fetch('/api/get-orders')
-			if (!res.ok) {
-				throw new Error('HTTP Error! status: ' + res.status)
-			}
-			const data = await res.json()
-			return data
-		} catch (error) {
-			setError('Failed to fetch orders')
-			throw error
-		}
+		const res = await fetch('/api/get-orders')
+		const data = await res.json()
+		return data
 	}
 
 	useEffect(() => {

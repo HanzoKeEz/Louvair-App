@@ -25,8 +25,8 @@ export default function Checkout() {
 
 	useEffect(() => {
 		//Set the theme of stripe
-		if (themeStore.mode === 'light') {
-			setStripeTheme('stripe')
+		if (themeStore.mode === 'dark') {
+			setStripeTheme('flat')
 		} else {
 			setStripeTheme('night')
 		}
@@ -61,7 +61,7 @@ export default function Checkout() {
 
 	return (
 		<div>
-			{!clientSecret && <OrderAnimation />}
+			{/* {!clientSecret && <OrderAnimation />} */}
 			{clientSecret && (
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
 					<Elements options={options} stripe={stripePromise}>
