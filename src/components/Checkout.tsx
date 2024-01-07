@@ -19,14 +19,14 @@ export default function Checkout() {
 	const router = useRouter()
 	const [clientSecret, setClientSecret] = useState('')
 	const themeStore = useThemeStore()
-	const [stripeTheme, setStripeTheme] = useState<'flat' | 'stripe' | 'night'>(
-		'stripe'
-	)
+	const [stripeTheme, setStripeTheme] = useState<
+		'flat' | 'stripe' | 'night' | 'none'
+	>('stripe')
 
 	useEffect(() => {
 		//Set the theme of stripe
-		if (themeStore.mode === 'dark') {
-			setStripeTheme('flat')
+		if (themeStore.mode === 'light') {
+			setStripeTheme('stripe')
 		} else {
 			setStripeTheme('night')
 		}
@@ -49,7 +49,7 @@ export default function Checkout() {
 				setClientSecret(data.paymentIntent.client_secret)
 				cartStore.setPaymentIntent(data.paymentIntent.id)
 			})
-	}, [cartStore, router, themeStore.mode])
+	}, [])
 
 	const options: StripeElementsOptions = {
 		clientSecret,
@@ -61,7 +61,7 @@ export default function Checkout() {
 
 	return (
 		<div>
-			{/* {!clientSecret && <OrderAnimation />} */}
+			{!clientSecret && <OrderAnimation />}
 			{clientSecret && (
 				<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
 					<Elements options={options} stripe={stripePromise}>

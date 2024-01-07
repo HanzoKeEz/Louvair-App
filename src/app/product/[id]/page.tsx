@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { SearchParamTypes } from '@/types/SearchParamTypes'
-import formatPrice from '@/lib/PriceFormat'
+import formatPrice from '@/util/PriceFormat'
 import AddCart from './AddCart'
 
 export default async function Product({ searchParams }: SearchParamTypes) {
@@ -11,7 +11,7 @@ export default async function Product({ searchParams }: SearchParamTypes) {
 				alt={searchParams.name}
 				width={600}
 				height={600}
-				className='rounded-lg w-96 h-96'
+				className='rounded-lg w-80 h-96'
 				priority={true}
 			/>
 
@@ -24,11 +24,8 @@ export default async function Product({ searchParams }: SearchParamTypes) {
 						{searchParams.unit_amount && formatPrice(searchParams.unit_amount)}
 					</p>
 				</div>
-				<AddCart {...searchParams} />x
+				<AddCart {...searchParams} />
 			</div>
 		</div>
 	)
 }
-
-// Climate = .04% co2 or 417 ppm
-// c02 =

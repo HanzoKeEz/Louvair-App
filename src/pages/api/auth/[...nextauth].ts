@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { db } from '@/lib/db'
+import { db } from '@/util/db'
 import Stripe from 'stripe'
 
 export const authOptions: NextAuthOptions = {
@@ -21,7 +21,7 @@ export const authOptions: NextAuthOptions = {
 			})
 			//Let's create a stripe customer
 
-			const costumer = await stripe.customers.create({
+			const customer = await stripe.customers.create({
 				email: user.email || undefined,
 				name: user.name || undefined,
 			})
@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
 
 			await db.user.update({
 				where: { id: user.id },
-				data: { stripeCustomerId: costumer.id },
+				data: { stripeCustomerId: customer.id },
 			})
 		},
 	},

@@ -1,6 +1,6 @@
 'use client'
 
-import formatPrice from '@/lib/PriceFormat'
+import formatPrice from '@/util/PriceFormat'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
@@ -28,6 +28,7 @@ export default function Dashboard() {
 	const fetchOrders = async () => {
 		const res = await fetch('/api/get-orders')
 		const data = await res.json()
+		console.log(data)
 		return data
 	}
 
@@ -52,7 +53,7 @@ export default function Dashboard() {
 				{orders.map((order) => (
 					<div
 						key={order.id}
-						className='rounded-lg p-8 my-4 space-y-2 bg-zinc-200'
+						className='rounded-lg p-8 my-4 space-y-2 bg-zinc-300 '
 					>
 						<h2 className='text-xs font-medium'>Order reference: {order.id}</h2>
 						<p className='text-xs'>

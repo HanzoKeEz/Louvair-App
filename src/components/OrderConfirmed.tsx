@@ -2,10 +2,11 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import dance from '../../public/dance.gif'
+import dance from '../public/dance.gif'
 import Link from 'next/link'
 import { useCartStore } from '../../store'
 import { useEffect } from 'react'
+import { Button } from './ui/button'
 
 export default function OrderConfirmed() {
 	const cartStore = useCartStore()
@@ -33,9 +34,9 @@ export default function OrderConfirmed() {
 				<Image src={dance} className='py-8' alt='dancing kid' />
 				<div className='flex items-center justify-center gap-12'>
 					<Link href={'/dashboard'}>
-						<button onClick={checkoutOrder} className='font-medium'>
+						<Button onClick={checkoutOrder} className='font-medium'>
 							Check your Order
-						</button>
+						</Button>
 					</Link>
 				</div>
 			</div>

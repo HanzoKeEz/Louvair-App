@@ -1,9 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import formatPrice from '@/lib/PriceFormat'
+import formatPrice from '@/util/PriceFormat'
 import { ProductType } from '@/types/ProductType'
 import Link from 'next/link'
+import AddCart from '@/app/product/[id]/AddCart'
+import { AddCartType } from '@/types/AddCartType'
 
 export default function Product({
 	name,
@@ -36,6 +38,12 @@ export default function Product({
 					<h2 className='text-sm'>
 						{unit_amount !== null ? formatPrice(unit_amount) : 'N/A'}
 					</h2>
+					<AddCart
+						id={id}
+						name={name}
+						image={image}
+						unit_amount={unit_amount}
+					/>
 				</div>
 			</div>
 		</Link>

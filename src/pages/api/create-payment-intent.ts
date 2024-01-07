@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { authOptions } from './auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import { AddCartType } from '@/types/AddCartType'
-import { db } from '@/lib/db'
+import { db } from '@/util/db'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 	apiVersion: '2022-11-15',
@@ -96,7 +96,7 @@ export default async function handler(
 			return
 		}
 	} else {
-		//Create a new order with db
+		//Create a new order with prisma
 		const paymentIntent = await stripe.paymentIntents.create({
 			amount: calculateOrderAmount(items),
 			currency: 'usd',

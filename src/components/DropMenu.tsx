@@ -33,7 +33,6 @@ import {
 } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { useSession } from 'next-auth/react'
-import { Label } from './ui/label'
 
 export default function DropMenu() {
 	const { data: session, status } = useSession()

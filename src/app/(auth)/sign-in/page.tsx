@@ -1,4 +1,4 @@
-import Logo from '../../../../public/Logo.png'
+import Logo from '@/public/Logo.png'
 import UserAuthForm from '@/components/UserAuthForm'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'

@@ -1,7 +1,7 @@
 import { NextAuthOptions, getServerSession } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { db } from '@/lib/db'
+import { db } from '@/util/db'
 import Stripe from 'stripe'
 import { nanoid } from 'nanoid'
 

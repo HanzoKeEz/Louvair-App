@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import formatPrice from '@/lib/PriceFormat'
+import formatPrice from '@/util/PriceFormat'
 import { useCartStore } from '../../store'
+import { Button } from './ui/button'
 
 export default function CheckoutForm({
 	clientSecret,
@@ -54,7 +55,7 @@ export default function CheckoutForm({
 		<form onSubmit={handleSubmit} id='payment-form'>
 			<PaymentElement id='payment-element' options={{ layout: 'tabs' }} />
 			<h1 className='py-4 text-sm font-bold '>Total: {formattedPrice}</h1>
-			<button
+			<Button
 				className={`py-2 mt-4  w-full bg-zinc-300 rounded-md text-red-500 disabled:opacity-25`}
 				id='submit'
 				disabled={isLoading || !stripe || !elements}
@@ -62,7 +63,7 @@ export default function CheckoutForm({
 				<span id='button-text'>
 					{isLoading ? <span>Processing 👀</span> : <span>Pay now 🔥</span>}
 				</span>
-			</button>
+			</Button>
 		</form>
 	)
 }

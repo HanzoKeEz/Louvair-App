@@ -2,12 +2,13 @@
 
 import Image from 'next/image'
 import { useCartStore } from '../../store'
-import formatPrice from '@/lib/PriceFormat'
+import formatPrice from '@/util/PriceFormat'
 import { IoAddCircle, IoRemoveCircle } from 'react-icons/io5'
 import { motion, AnimatePresence } from 'framer-motion'
 import Checkout from './Checkout'
 import OrderConfirmed from './OrderConfirmed'
-import ShoppingBag from '../../public/shoppingbag.png'
+import ShoppingBag from '../public/shoppingbag.png'
+import { Button } from './ui/button'
 
 export default function Cart() {
 	const cartStore = useCartStore()
@@ -24,29 +25,29 @@ export default function Cart() {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				onClick={() => cartStore.toggleCart()}
-				className='fixed w-full h-screen  left-0 top-0 bg-zinc-900/90'
+				className='fixed w-full h-screen left-0 top-0 bg-zinc-900/80'
 			>
 				{/* Cart */}
 				<motion.div
 					layout
 					onClick={(e) => e.stopPropagation()}
-					className='bg-zinc-200/10 absolute right-0 top-0  h-screen p-12 overflow-y-scroll  w-full lg:w-2/5'
+					className='bg-zinc-200/50 absolute right-0 top-0 h-screen p-12 overflow-y-scroll w-full lg:w-2/5'
 				>
 					{cartStore.onCheckout === 'cart' && (
-						<button
+						<Button
 							onClick={() => cartStore.toggleCart()}
-							className='text-sm font-bold pb-12 underline'
+							className='text-sm font-bold bg-black/40'
 						>
 							Back to store
-						</button>
+						</Button>
 					)}
 					{cartStore.onCheckout === 'checkout' && (
-						<button
+						<Button
 							onClick={() => cartStore.setCheckout('cart')}
-							className='text-sm font-bold pb-12'
+							className='text-sm font-bold flex flex-col text-center justify-center items-center h-8'
 						>
 							Check your cart 🛒
-						</button>
+						</Button>
 					)}
 					{/* Cart Items */}
 					{cartStore.onCheckout === 'cart' && (
@@ -55,7 +56,7 @@ export default function Cart() {
 								<motion.div
 									layout
 									key={item.id}
-									className='flex p-4 gap-4 bg-blue-500 my-4 rounded-lg '
+									className='flex p-4 gap-4 bg-zinc-700 my-4 rounded-lg'
 								>
 									<Image
 										className='rounded-md h-24'
@@ -67,9 +68,11 @@ export default function Cart() {
 									<div>
 										<h2>{item.name}</h2>
 										{/* Update quantity of a product */}
-										<div className='flex gap-2'>
-											<h2>Quantity: {item.quantity}</h2>
-											<button
+										<div className='flex items-center justify-center '>
+											<h2 className='mr-6'>Quantity: {item.quantity}</h2>
+											<Button
+												className='bg-transparent'
+												variant='ghost'
 												onClick={() =>
 													cartStore.removeProduct({
 														id: item.id,
@@ -80,9 +83,11 @@ export default function Cart() {
 													})
 												}
 											>
-												<IoRemoveCircle />
-											</button>
-											<button
+												<IoRemoveCircle size={24} />
+											</Button>
+											<Button
+												className='bg-transparent hover:opacity-50 active:border-none focus:border-none'
+												variant='ghost'
 												onClick={() =>
 													cartStore.addProduct({
 														id: item.id,
@@ -93,8 +98,8 @@ export default function Cart() {
 													})
 												}
 											>
-												<IoAddCircle />
-											</button>
+												<IoAddCircle size={24} />
+											</Button>
 										</div>
 
 										<p className='text-sm'>
@@ -109,12 +114,13 @@ export default function Cart() {
 					{cartStore.cart.length > 0 && cartStore.onCheckout === 'cart' ? (
 						<motion.div layout>
 							<p>Total: {formatPrice(totalPrice)}</p>
-							<button
+							<Button
+								variant='outline'
 								onClick={() => cartStore.setCheckout('checkout')}
 								className='py-2 mt-4 bg-zinc-00/90 w-full rounded-md text-white'
 							>
 								Checkout
-							</button>
+							</Button>
 						</motion.div>
 					) : null}
 					{/* Checkout Form */}

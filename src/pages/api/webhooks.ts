@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import { db } from '@/lib/db'
+import { db } from '@/util/db'
 import { buffer } from 'micro'
 import { NextApiRequest, NextApiResponse } from 'next'
 

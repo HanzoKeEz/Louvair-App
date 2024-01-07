@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Logo from '../../../../public/Logo.png'
+import Logo from '@/public/Logo.png'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import UserAuthForm from '@/components/UserAuthForm'

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from 'framer-motion'
 import Link from 'next/link'
-import Logo from '../../../public/Logo.png'
+import Logo from '@/public/Logo.png'
 import { linkVariants, navVariants } from '@/components/navigation'
 import { ThemeToggleButton } from '@/components/theme-toggle-button'
 import Image from 'next/image'
@@ -10,9 +10,6 @@ import { AiFillShopping } from 'react-icons/ai'
 import Cart from '../Cart'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useCartStore } from '../../../store'
-import { Button } from '../ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { Label } from '../ui/label'
 import { useState } from 'react'
 import DropMenu from '../DropMenu'
 
@@ -29,12 +26,12 @@ export function Navigation() {
 	const labels = ['Orders', 'Profile', 'Settings', 'Sign out']
 	const menuItems = []
 	return (
-		<nav className='sticky top-0 w-screen h-16 z-50 mb-16'>
+		<nav className='sticky top-0 w-screen h-16 z-50'>
 			<motion.header
 				variants={navVariants}
 				initial='hidden'
 				animate='visible'
-				className='flex container fixed inset-x-0 top-0 items-center justify-between w-full h-20 border'
+				className='flex container fixed inset-x-0 top-0 items-center justify-between w-full h-16'
 			>
 				<AnimatedLink href='/' variants={linkVariants} className=''>
 					<Image src={Logo} alt='Louvair Logo' width={36} height={36} />
@@ -44,11 +41,11 @@ export function Navigation() {
 					<AnimatedLink href='/#fragrances' variants={linkVariants}>
 						Air Ambience
 					</AnimatedLink>
-					<AnimatedLink href='/#machines' variants={linkVariants}>
+					<AnimatedLink href='/pricing' variants={linkVariants}>
 						Pricing
 					</AnimatedLink>
-					<AnimatedLink href='/#pricing' variants={linkVariants}>
-						Module
+					<AnimatedLink href='/module' variants={linkVariants}>
+						Module Unit
 					</AnimatedLink>
 					<AnimatedLink href='/#about' variants={linkVariants}>
 						About

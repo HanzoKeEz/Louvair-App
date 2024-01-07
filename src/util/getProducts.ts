@@ -5,6 +5,7 @@ export default async function getProducts() {
 		apiVersion: '2022-11-15',
 	})
 	const products = await stripe.products.list()
+	console.log(products)
 
 	const productWithPrices = await Promise.all(
 		products.data.map(async (product) => {

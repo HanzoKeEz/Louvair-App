@@ -40,6 +40,7 @@ export const useCartStore = create<CartState>()(
 						return { cart: [...state.cart, { ...item, quantity: 1 }] }
 					}
 				}),
+
 			removeProduct: (item) =>
 				set((state) => {
 					//Check if the item exists and remove quantity - 1

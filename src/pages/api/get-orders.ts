@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { db } from '@/util/db'
 import { getServerSession } from 'next-auth'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { authOptions } from './auth/[...nextauth]'
