@@ -49,7 +49,7 @@ export default function Checkout() {
 				setClientSecret(data.paymentIntent.client_secret)
 				cartStore.setPaymentIntent(data.paymentIntent.id)
 			})
-	}, [])
+	}, [cartStore, router, themeStore.mode])
 
 	const options: StripeElementsOptions = {
 		clientSecret,

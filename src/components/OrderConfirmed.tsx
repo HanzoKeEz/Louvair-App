@@ -14,7 +14,7 @@ export default function OrderConfirmed() {
 	useEffect(() => {
 		cartStore.setPaymentIntent('')
 		cartStore.clearCart()
-	}, [])
+	}, [cartStore])
 
 	const checkoutOrder = () => {
 		setTimeout(() => {
