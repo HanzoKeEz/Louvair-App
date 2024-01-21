@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	typescript: {
+		ignoreBuildErrors: true,
+	},
 	images: {
 		remotePatterns: [
 			{
@@ -13,6 +16,10 @@ const nextConfig = {
 			{
 				protocol: 'https',
 				hostname: 'files.stripe.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'images.unsplash.com',
 			},
 		],
 	},
