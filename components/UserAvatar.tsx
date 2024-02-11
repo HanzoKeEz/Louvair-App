@@ -5,7 +5,7 @@ import { AvatarProps } from '@radix-ui/react-avatar'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import Image from 'next/image'
-import { User2Icon } from 'lucide-react'
+import { UserCheck } from 'lucide-react'
 
 interface UserAvatarProps extends AvatarProps {
 	user: Pick<User, 'image' | 'name'>
@@ -16,18 +16,12 @@ export function UserAvatar({ user, ...props }: UserAvatarProps) {
 		<Avatar {...props}>
 			{user.image ? (
 				<div className='relative aspect-square h-full w-full'>
-					<Image
-						fill
-						src={user.image}
-						alt='profile picture'
-						referrerPolicy='no-referrer'
-						className='rounded-full'
-					/>
+					<Image fill src={user.image} alt='profile picture' referrerPolicy='no-referrer' className='rounded-full' />
 				</div>
 			) : (
 				<AvatarFallback>
 					<span className='sr-only'>{user?.name}</span>
-					<User2Icon className='h-4 w-4' />
+					<UserCheck className='h-4 w-4' />
 				</AvatarFallback>
 			)}
 		</Avatar>

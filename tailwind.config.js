@@ -54,6 +54,11 @@ module.exports = {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
 			},
+			fontFamily: {
+				vietnam: ['var(--font-vietnam)'],
+				greatVibes: ['var(--font-greatVibes)'],
+				spaceGrotesk: ['var(--font-spaceGrotesk)'],
+			},
 			keyframes: {
 				'accordion-down': {
 					from: { height: '0' },

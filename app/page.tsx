@@ -1,6 +1,6 @@
 import Product from '@/components/Product'
 import getProducts from '@/utils/getProducts'
-import Hero from '@/public/louvair4.png'
+import Hero from '@/public/Hero.png'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -17,12 +17,8 @@ export default async function Home() {
 					<div className='bg-fixed inset-0 object-cover w-screen'>
 						<AspectRatio ratio={16 / 9}>
 							<Image src={Hero} alt='Hero Image' className='rounded-sm object-cover ' priority />
-							<div className='absolute top-20 left-0 mt-6 w-full z-10'>
-								<h1 className='text-4xl font-light tracking-wide text-zinc-700 '>
-									Aromatic Bliss
-									<br />
-									<span className='text-sky-600 font-light uppercase text-xl pt-6'>Air Ambience</span>
-								</h1>
+							<div className='absolute top-10 left-0 w-full z-10'>
+								<h1 className='text-4xl font-greatVibes font-light tracking-wide text-zinc-500 '>Aromatic Bliss</h1>
 							</div>
 						</AspectRatio>
 					</div>
@@ -48,7 +44,7 @@ export default async function Home() {
 					</div>
 				</div>
 			</div>
-			<main className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6'>
+			<main className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 p-6 place-items-center items-center border-4 w-full'>
 				{products.map((product) => (
 					<Product {...product} key={product.id} />
 				))}

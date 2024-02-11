@@ -13,10 +13,10 @@ type IconButtonProps = HTMLMotionProps<'button'> & ComponentPropsWithRef<'button
 const IconButton: FC<IconButtonProps> = ({ children, ...props }) => (
 	<motion.button
 		{...props}
-		initial={{ opacity: 0, rotate: -65, originY: '150%', originX: 0.5 }}
+		initial={{ opacity: 0, rotate: -65, originY: '150%', originX: 0.25 }}
 		animate={{ opacity: 1, rotate: 0 }}
 		exit={{ opacity: 0, rotate: 65 }}
-		transition={{ duration: 0.4, ease: 'backOut' }}
+		transition={{ duration: 0.25, ease: 'backOut' }}
 	>
 		{children}
 	</motion.button>
