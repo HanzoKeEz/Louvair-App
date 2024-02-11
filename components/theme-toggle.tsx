@@ -7,9 +7,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import { useTheme } from '@/hooks/use-theme'
 import { useMounted } from '@/hooks/use-mounted'
+import { useThemeStore } from '@/zustand/store'
 
-type IconButtonProps = HTMLMotionProps<'button'> &
-	ComponentPropsWithRef<'button'>
+type IconButtonProps = HTMLMotionProps<'button'> & ComponentPropsWithRef<'button'>
 const IconButton: FC<IconButtonProps> = ({ children, ...props }) => (
 	<motion.button
 		{...props}
@@ -25,7 +25,13 @@ IconButton.displayName = 'IconButton'
 
 export const ThemeToggleButton: FC = () => {
 	const { theme, toggleTheme } = useTheme()
+	const themeStore = useThemeStore()
 	const mounted = useMounted()
+
+	const handleClick = () => {
+		if (themeStore.mode === 'dark') themeStore.toggleTheme('light')
+		if (themeStore.mode === 'light') themeStore.toggleTheme('dark')
+	}
 
 	const isDarkMode = theme === 'dark'
 

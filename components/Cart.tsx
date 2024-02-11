@@ -1,10 +1,10 @@
 'use client'
 
-import { useCartStore } from '../store'
+import { useCartStore } from '../zustand/store'
 import { motion, AnimatePresence } from 'framer-motion'
 import Checkout from './Checkout'
 import OrderConfirmed from './OrderConfirmed'
-import formatPrice from '@/util/PriceFormat'
+import formatPrice from '@/utils/PriceFormat'
 import Image from 'next/image'
 import { IoAddCircle, IoRemoveCircle } from 'react-icons/io5'
 import ShoppingBag from '../public/shoppingbag.png'
@@ -34,10 +34,7 @@ export default function Cart() {
 					className='bg-zinc-200/10 absolute right-0 top-0 h-screen p-12 overflow-y-scroll w-full lg:w-2/5'
 				>
 					{cartStore.onCheckout === 'cart' && (
-						<Button
-							onClick={() => cartStore.toggleCart()}
-							className='text-sm font-bold bg-black/40'
-						>
+						<Button onClick={() => cartStore.toggleCart()} className='text-sm font-bold bg-black/40'>
 							Back to store
 						</Button>
 					)}
@@ -53,18 +50,8 @@ export default function Cart() {
 					{cartStore.onCheckout === 'cart' && (
 						<>
 							{cartStore.cart.map((item) => (
-								<motion.div
-									layout
-									key={item.id}
-									className='flex p-4 gap-4 bg-zinc-600 my-4 rounded-lg'
-								>
-									<Image
-										className='rounded-md h-24'
-										src={item.image}
-										alt={item.name}
-										width={120}
-										height={120}
-									/>
+								<motion.div layout key={item.id} className='flex p-4 gap-4 bg-zinc-600 my-4 rounded-lg'>
+									<Image className='rounded-md h-24' src={item.image} alt={item.name} width={120} height={120} />
 									<motion.div layout>
 										<h2>{item.name}</h2>
 										{/* Update quantity of a product */}

@@ -3,10 +3,10 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { authOptions } from './auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import { AddCartType } from '@/types/AddCartType'
-import { prisma } from '@/util/prisma'
+import { prisma } from '@/utils/prisma'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-	apiVersion: '2023-10-16',
+	apiVersion: '2022-11-15',
 })
 
 interface Item {
@@ -18,6 +18,7 @@ interface Item {
 }
 
 const calculateOrderAmount = (items: AddCartType[]) => {
+	console.log('create-payment-intent:', items)
 	const totalPrice = items.reduce((acc, item) => {
 		return acc + item.unit_amount! * item.quantity!
 	}, 0)
@@ -37,13 +38,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	// Create the order data, "PRISMA CODE DB" // Data necessary for creating the payment_intent_id
 	const orderData = {
-		user: { connect: { id: userSession.user?.id } },
+		user: { connect: { id: (userSession.user as any).id } },
 		amount: calculateOrderAmount(items),
 		currency: 'usd',
 		status: 'pending',
 		paymentIntentID: payment_intent_id,
 		products: {
-			create: items.map((item: Item) => ({
+			create: items.map((item: any) => ({
 				name: item.name,
 				description: item.description || null,
 				unit_amount: parseFloat(item.unit_amount),
@@ -66,7 +67,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				include: { products: true },
 			})
 			if (!existing_order) {
-				res.status(400).json({ message: 'Invalid Payment Intent' })
+				res.status(400).json({
+					message: 'No order or invalid payment intent',
+					currentIntent: current_intent,
+					existingOrder: existing_order,
+				})
+				return
 			}
 
 			// Update Existing Order
@@ -76,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					amount: calculateOrderAmount(items),
 					products: {
 						deleteMany: {},
-						create: items.map((item: Item) => ({
+						create: items.map((item: any) => ({
 							name: item.name,
 							description: item.description || null,
 							unit_amount: parseFloat(item.unit_amount),
@@ -86,22 +92,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					},
 				},
 			})
-			res.status(200).json({ paymentIntent: updated_intent })
+			res.status(200).json({
+				message: 'Order updated successfully!',
+				paymentIntent: updated_intent,
+				order: updated_order,
+			})
 			return
 		}
 	} else {
 		// Create a new order with prisma and return the orderData to the client
-		const paymentIntent = await stripe.paymentIntents.create({
+		const new_payment_intent = await stripe.paymentIntents.create({
 			amount: calculateOrderAmount(items),
 			currency: 'usd',
 			automatic_payment_methods: { enabled: true },
 		})
-
-		orderData.paymentIntentID = paymentIntent.id
+		// Update earlier defined orderData object with a new payment_intent_id!
+		orderData.paymentIntentID = new_payment_intent.id
 		const newOrder = await prisma.order.create({
 			data: orderData,
 		})
-		// Data necessary for the order
-		res.status(200).json({ paymentIntent })
+		// STRIPE: RETURN PAYMENT INTENT ID ⭐️
+		res.status(200).json({ paymentIntent: new_payment_intent, order: newOrder })
+		return
 	}
 }

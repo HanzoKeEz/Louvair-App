@@ -1,5 +1,5 @@
 import Product from '@/components/Product'
-import getProducts from '@/util/getProducts'
+import getProducts from '@/utils/getProducts'
 import Hero from '@/public/louvair4.png'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import Image from 'next/image'
@@ -21,9 +21,7 @@ export default async function Home() {
 								<h1 className='text-4xl font-light tracking-wide text-zinc-700 '>
 									Aromatic Bliss
 									<br />
-									<span className='text-sky-600 font-light uppercase text-xl pt-6'>
-										Air Ambience
-									</span>
+									<span className='text-sky-600 font-light uppercase text-xl pt-6'>Air Ambience</span>
 								</h1>
 							</div>
 						</AspectRatio>
@@ -31,9 +29,9 @@ export default async function Home() {
 				</div>
 				<div className='my-12'>
 					<p className='text-zinc-900 max-w-prose font-thin dark:text-zinc-50 text-muted-foreground relative'>
-						L&apos;ouvair was founded in 2018 and, early-on, it committed to reinterpret ancient
-						techniques of fine craftsmanship to create unexpected air fume for your favorite
-						interior. Each creation carries the legacy of centuries of craftsmanship.
+						L&apos;ouvair was founded in 2018 and, early-on, it committed to reinterpret ancient techniques of fine
+						craftsmanship to create unexpected air fume for your favorite interior. Each creation carries the legacy of
+						centuries of craftsmanship.
 					</p>
 					<div className='flex justify-center gap-6 mt-6'>
 						<Link

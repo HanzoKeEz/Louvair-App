@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import formatPrice from '@/util/PriceFormat'
-import { useCartStore } from '../store'
+import formatPrice from '@/utils/PriceFormat'
+import { useCartStore } from '../zustand/store'
 import { Button } from './ui/button'
 
 export default function CheckoutForm({ clientSecret }: { clientSecret: string }) {

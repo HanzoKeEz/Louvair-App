@@ -1,8 +1,9 @@
 import Stripe from 'stripe'
-import { prisma } from '@/util/prisma'
+import { prisma } from '@/utils/prisma'
 import { buffer } from 'micro'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+// Required to disable body parser, otherwise we get an error from Stripe.
 export const config = {
 	api: {
 		bodyParser: false,
@@ -10,7 +11,7 @@ export const config = {
 }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-	apiVersion: '2023-10-16',
+	apiVersion: '2022-11-15',
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

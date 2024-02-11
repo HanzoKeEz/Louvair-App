@@ -1,17 +1,10 @@
 import Image from 'next/image'
-import formatPrice from '@/util/PriceFormat'
+import formatPrice from '@/utils/PriceFormat'
 import { ProductType } from '@/types/ProductType'
 import Link from 'next/link'
 import { Card, CardFooter } from './ui/card'
 
-export default function Product({
-	name,
-	image,
-	unit_amount,
-	id,
-	description,
-	metadata,
-}: ProductType) {
+export default function Product({ name, image, unit_amount, id, description, metadata }: ProductType) {
 	const { features } = metadata
 
 	return (
@@ -21,20 +14,18 @@ export default function Product({
 				query: { name, image, unit_amount, id, description, features },
 			}}
 		>
-			<Card>
+			<Card className='w-[340px]'>
 				<Image
 					src={image}
 					alt={image + name}
 					width={800}
 					height={800}
-					className='w-full h-96 object-cover rounded-lg'
+					className='w-full h-full object-cover rounded-lg'
 					priority={true}
 				/>
 				<CardFooter className='font-medium py-2 flex flex-col'>
 					<h1>{name}</h1>
-					<h2 className='text-sm font-thin'>
-						{unit_amount !== null ? formatPrice(unit_amount) : 'N/A'}
-					</h2>
+					<h2 className='text-sm font-thin'>{unit_amount !== null ? formatPrice(unit_amount) : 'N/A'}</h2>
 				</CardFooter>
 			</Card>
 		</Link>
