@@ -35,7 +35,7 @@ export function MainNav({ items, children }: MainNavProps) {
 
 	return (
 		<>
-			<div className='flex gap-6 md:gap-10'>
+			<div className='flex gap-6 md:gap-10 w-full justify-between'>
 				<Link href='/' className='hidden items-center space-x-2 md:flex'>
 					<Image src={Logo} alt={siteConfig.name} width={32} height={32} />
 					<span className='hidden font-greatVibes sm:inline-block'>{siteConfig.name}</span>
@@ -47,7 +47,7 @@ export function MainNav({ items, children }: MainNavProps) {
 								key={index}
 								href={item.disabled ? '#' : item.href}
 								className={cn(
-									'flex items-center text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm',
+									'flex items-center text-md font-thin transition-colors hover:text-foreground/80 sm:text-xs',
 									item.href.startsWith(`/${segment}`) ? 'text-foreground' : 'text-foreground/60',
 									item.disabled && 'cursor-not-allowed opacity-80'
 								)}
@@ -70,7 +70,7 @@ export function MainNav({ items, children }: MainNavProps) {
 									animate={{ scale: 1 }}
 									initial={{ scale: 0 }}
 									exit={{ scale: 0 }}
-									className='absolute flex items-center justify-center w-4 h-4 text-xs font-bold text-white rounded-full shadow-md bg-primary left-4 bottom-4'
+									className='absolute flex items-center justify-center w-4 h-4 text-xs font-thin text-white rounded-full shadow-md bg-primary left-4 bottom-4'
 								>
 									{cartStore.cart.length}
 								</motion.span>
@@ -81,7 +81,7 @@ export function MainNav({ items, children }: MainNavProps) {
 
 					<ThemeToggleButton />
 
-					<Link className='p-4 rounded-md hover:bg-base-100' href={'/dashboard'} onClick={handleBlurOut}>
+					<Link className='p-4 rounded-md text-sm font-thin hover:bg-black' href={'/dashboard'} onClick={handleBlurOut}>
 						My Orders
 					</Link>
 
