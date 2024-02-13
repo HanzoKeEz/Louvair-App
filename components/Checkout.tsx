@@ -6,26 +6,26 @@ import { useCartStore } from '../zustand/store'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import CheckoutForm from './CheckoutForm'
-// import OrderAnimation from './OrderAnimation'
+import OrderAnimation from './OrderAnimation'
 import { motion } from 'framer-motion'
 import { useThemeStore } from '../zustand/store'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
+const promise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!) // ✅
 
 export default function Checkout() {
 	const cartStore = useCartStore()
-	const router = useRouter()
-	const [clientSecret, setClientSecret] = useState('')
 	const themeStore = useThemeStore()
+
+	const [clientSecret, setClientSecret] = useState('')
 	const [stripeTheme, setStripeTheme] = useState<'flat' | 'stripe' | 'night' | 'none'>('stripe')
+	const router = useRouter()
 
 	useEffect(() => {
 		//Set the theme of stripe
-		if (themeStore.mode === 'dark') {
-			setStripeTheme('stripe')
-		} else {
-			setStripeTheme('night')
-		}
+		if (themeStore.mode === 'dark') setStripeTheme('night')
+
+		if (themeStore.mode === 'light') setStripeTheme('stripe')
+
 		//Create a paymentIntent as soon as the page loads up
 		fetch('/api/create-payment-intent', {
 			method: 'POST',
@@ -37,7 +37,7 @@ export default function Checkout() {
 		})
 			.then((res) => {
 				if (res.status === 403) {
-					return router.push('/api/auth/signin')
+					return router.push('/api/auth/login')
 				}
 				return res.json()
 			})
@@ -56,16 +56,24 @@ export default function Checkout() {
 	}
 
 	return (
-		<div className='bg-base-300'>
-			{/* {!clientSecret && <OrderAnimation />} */}
-			{!clientSecret && <p>Please wait...</p>}
+		<div>
 			{clientSecret && (
-				<motion.div layout className='p-2' initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-					<Elements options={options} stripe={stripePromise}>
+				<motion.div
+					initial={{ scale: 0 }}
+					animate={{ scale: 1 }}
+					exit={{ scale: 0 }}
+					transition={{
+						delay: 1,
+						type: 'spring',
+						duration: 0.5,
+					}}
+				>
+					<Elements options={options} stripe={promise}>
 						<CheckoutForm clientSecret={clientSecret} />
 					</Elements>
 				</motion.div>
 			)}
+			{!clientSecret && <OrderAnimation />}
 		</div>
 	)
 }

@@ -6,6 +6,7 @@ import { Be_Vietnam_Pro, Great_Vibes } from 'next/font/google'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from 'sonner'
 
 const vietnam = Be_Vietnam_Pro({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -23,6 +24,7 @@ const greatVibes = Great_Vibes({
 	subsets: ['latin'],
 	variable: '--font-greatVibes',
 })
+
 interface RootLayoutProps {
 	children: React.ReactNode
 }
@@ -32,10 +34,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html className={`${vietnam.variable} ${greatVibes.variable} `} lang='en' suppressHydrationWarning>
 			<Hydrate>
-				<ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
-					<Navbar />
+				<ThemeProvider attribute='class' defaultTheme='system' enableSystem>
 					<div className='mt-6'>{children}</div>
 					<TailwindIndicator />
+					<Toaster />
 				</ThemeProvider>
 			</Hydrate>
 		</html>

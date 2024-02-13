@@ -16,11 +16,11 @@ export default function Hydrate({ children }: { children: ReactNode }) {
 		<>
 			<SessionProvider>
 				{!isHydrated ? (
-					<body className='flex items-center justify-center w-full h-full'>
-						<p>loading...</p>
+					<body className=''>
+						<span>Loading...</span>
 					</body>
 				) : (
-					<body className='px-4'>{children}</body>
+					<body>{children}</body>
 				)}
 			</SessionProvider>
 		</>

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import Gif from '../public/beauty_flower.gif'
+import Gif from '@/public/spray.gif'
 
 export default function OrderAnimation() {
 	return (

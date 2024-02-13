@@ -24,6 +24,31 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'images.unsplash.com',
 			},
+			{
+				protocol: 'https',
+				hostname: 'marketplace.canva.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'globaltv.es',
+			},
+
+			{
+				protocol: 'https',
+				hostname: 'media.product.which.co.uk',
+			},
+			{
+				protocol: 'https',
+				hostname: 'pbs.twimg.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'intl.nothing.tech',
+			},
+			{
+				protocol: 'https',
+				hostname: 'lemanoosh.com',
+			},
 		],
 	},
 }

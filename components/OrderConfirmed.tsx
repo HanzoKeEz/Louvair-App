@@ -31,13 +31,7 @@ export default function OrderConfirmed() {
 			<div className='p-12 rounded-md text-center font-semibold'>
 				<h1 className='text-3xl font-semibold'>Your order has been placed!</h1>
 				<h2 className='text-md my-4'>Check your email for the receipt</h2>
-				<Image
-					src={gif}
-					alt='dance gif'
-					height={200}
-					width={200}
-					className='py-8 flex justify-center items-center w-full'
-				/>
+				<Image src={gif} alt='gif' height={200} width={200} className='py-8 flex justify-center items-center w-full' />
 				<div className='flex items-center justify-center gap-12'>
 					<Link href={'/dashboard'}>
 						<button onClick={checkoutOrder} className='font-medium'>

@@ -1,23 +1,21 @@
-import Stripe from 'stripe'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+import Stripe from 'stripe'
+
+// PRISMA: BEST PRACTICE FOR INSTANTIATING PRISMA CLIENT WITH NEXT.JS ⭐️
+// import { PrismaClient } from '@prisma/client';
+import { prisma } from '@/lib/db'
+
 import { authOptions } from './auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import { AddCartType } from '@/types/AddCartType'
-import { prisma } from '@/utils/prisma'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+	// Setting the Stripe API version to be used.
 	apiVersion: '2022-11-15',
 })
 
-interface Item {
-	name: string
-	description?: string
-	unit_amount: string
-	quantity: number
-	image?: string
-}
-
-const calculateOrderAmount = (items: AddCartType[]) => {
+const calcOrderAmount = (items: AddCartType[]) => {
 	console.log('create-payment-intent:', items)
 	const totalPrice = items.reduce((acc, item) => {
 		return acc + item.unit_amount! * item.quantity!
@@ -26,7 +24,6 @@ const calculateOrderAmount = (items: AddCartType[]) => {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	// get user
 	const userSession = await getServerSession(req, res, authOptions)
 	if (!userSession?.user) {
 		res.status(403).json({ message: 'Not logged in' })
@@ -39,9 +36,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	// Create the order data, "PRISMA CODE DB" // Data necessary for creating the payment_intent_id
 	const orderData = {
 		user: { connect: { id: (userSession.user as any).id } },
-		amount: calculateOrderAmount(items),
+		amount: calcOrderAmount(items),
 		currency: 'usd',
-		status: 'pending',
+		status: 'Pending',
 		paymentIntentID: payment_intent_id,
 		products: {
 			create: items.map((item: any) => ({
@@ -59,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		const current_intent = await stripe.paymentIntents.retrieve(payment_intent_id)
 		if (current_intent) {
 			const updated_intent = await stripe.paymentIntents.update(payment_intent_id, {
-				amount: calculateOrderAmount(items),
+				amount: calcOrderAmount(items),
 			})
 			// Fetch order with product ids
 			const existing_order = await prisma.order.findFirst({
@@ -67,7 +64,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				include: { products: true },
 			})
 			if (!existing_order) {
-				res.status(400).json({
+				res.status(404).json({
 					message: 'No order or invalid payment intent',
 					currentIntent: current_intent,
 					existingOrder: existing_order,
@@ -79,7 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			const updated_order = await prisma.order.update({
 				where: { id: existing_order?.id },
 				data: {
-					amount: calculateOrderAmount(items),
+					amount: calcOrderAmount(items),
 					products: {
 						deleteMany: {},
 						create: items.map((item: any) => ({
@@ -102,7 +99,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	} else {
 		// Create a new order with prisma and return the orderData to the client
 		const new_payment_intent = await stripe.paymentIntents.create({
-			amount: calculateOrderAmount(items),
+			amount: calcOrderAmount(items),
 			currency: 'usd',
 			automatic_payment_methods: { enabled: true },
 		})
