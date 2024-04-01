@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import payment from '../public/payment_mail.gif'
+import payment from '../public/spray.gif'
 import Link from 'next/link'
 
 import { useCartStore } from '@/zustand/store'

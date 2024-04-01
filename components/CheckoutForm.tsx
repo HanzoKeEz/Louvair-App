@@ -25,7 +25,7 @@ export default function CheckoutForm({ clientSecret }: Props) {
   useEffect(() => {
     if (!stripe) return
     if (!clientSecret) return
-  }, [stripe])
+  }, [stripe, clientSecret])
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()

@@ -3,12 +3,12 @@ import { DashboardConfig } from '@/types/index'
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
-      title: 'Pricing',
-      href: '/pricing'
+      title: 'Collection',
+      href: '/products'
     },
     {
-      title: 'Products',
-      href: '/products'
+      title: 'Pricing',
+      href: '/dashboard/billing'
     },
     {
       title: 'Dashboard',

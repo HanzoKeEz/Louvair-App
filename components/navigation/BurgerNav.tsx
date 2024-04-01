@@ -3,17 +3,28 @@
 import React from 'react'
 import Link from 'next/link'
 import { TbBrandFacebookFilled } from 'react-icons/tb'
-import { AiOutlineClose, AiOutlineInstagram, AiOutlineMenu } from 'react-icons/ai'
+import { AiOutlineInstagram } from 'react-icons/ai'
 import { ThemeToggle } from '../theme-toggle'
-import { motion } from 'framer-motion'
-import { LogoBrand } from '../LogoBrand'
-import { Logo } from '../Logo'
-import { AlignLeft, CircleX, SquareChevronRight, SquareX } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { AlignLeft, ShoppingBag, SquareChevronRight, SquareX } from 'lucide-react'
+import { useCartStore } from '@/zustand/store'
+import { MainNavItem } from '@/types'
+import { Button, buttonVariants } from '../ui/button'
+import { cn } from '@/utils/cn'
+import { signOut } from 'next-auth/react'
+import Cart from '../Cart'
 
 const AnimatedLink = motion(Link)
 AnimatedLink.defaultProps = { className: 'red-hover nav-link' }
 
-const BurgerNav = () => {
+interface BurgerNavProps {
+  children?: React.ReactNode
+  items?: MainNavItem[]
+  user?: { id: string; name: string }
+}
+
+function BurgerNav({ user, children, items }: BurgerNavProps) {
+  const cartStore = useCartStore()
   const [nav, setNav] = React.useState(false)
   const [desktopMenu, setDesktopMenu] = React.useState(false)
 
@@ -33,26 +44,75 @@ const BurgerNav = () => {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full h-[100px] z-[200] flex items-center justify-between px-6'>
-      <div className='z-20 md:hidden flex flex-col cursor-pointer top-6 left-6 shadow-2xl rounded-full border-[#69696941] sm:border-none'>
-        <Link href='/'>
-          <LogoBrand />
-
-          <h3 className='text-[10px] tracking-widest text-center mt-1 w-full uppercase sm:text-neutral-300 font-syncopate'>
-            L&apos;ouvair
-          </h3>
-        </Link>
-      </div>
+    <div className='fixed md:hidden top-0 left-0 w-full h-[80px] z-[900] flex items-center justify-between px-6'>
       <div
         onClick={handleNav}
         className='flex gap-3 text-black red-hover w-32'
       >
-        <span className='font-syncopate'>MENU</span>
+        <span className='font-syncopate text-secondary-foreground'>MENU</span>
         <AlignLeft
           size={25}
-          className=''
+          className='text-secondary-foreground'
         />
       </div>
+      <ul className='flex items-center justify-center gap-6 '>
+        <li
+          className='relative text-3xl font-assistant cursor-pointer hover:scale-95 duration-200 transition-all ease-in-out shadow-2xl'
+          onClick={() => cartStore.toggleCart()}
+        >
+          <ShoppingBag
+            size={28}
+            strokeWidth={0.5}
+            className=''
+          />
+          <AnimatePresence>
+            {/* Required condition when a component is removed from React tree */}
+            {cartStore.cart.length > 0 && (
+              <motion.span
+                animate={{ scale: 1 }}
+                initial={{ scale: 0 }}
+                exit={{ scale: 0 }}
+                className='absolute flex items-center justify-center w-6 h-6 text-base hover:underline hover:scale-95 duration-300 transition-all ease-in-out shadow-2xl font-normal text-[#3AB795] rounded-full no-underline bg-[#181818] left-4 bottom-4'
+              >
+                {cartStore.cart.length}
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </li>
+        <AnimatePresence>
+          {/* Required condition when a component is removed from React tree */}
+          {cartStore.isOpen && <Cart />}
+        </AnimatePresence>
+        {/* > If the user is not signed in: */}
+
+        <li className='flex hovers'>
+          <ThemeToggle />
+        </li>
+        <li className='hidden md:inline-block'>
+          {!user && (
+            <Link
+              href='/login'
+              className={cn(
+                'hidden md:inline-block font-assistant uppercase relative border-slate-500/50 text-xs tracking-wider',
+                buttonVariants({ variant: 'outline' })
+              )}
+            >
+              Sign in
+            </Link>
+          )}
+          {user && (
+            <Button
+              className={cn(
+                'hidden md:inline-block font-assistant uppercase relative text-xs tracking-wider',
+                buttonVariants({ variant: 'outline', size: 'sm' })
+              )}
+              onClick={() => signOut()}
+            >
+              Logout
+            </Button>
+          )}
+        </li>
+      </ul>
       <div
         className={`${
           nav
@@ -70,7 +130,7 @@ const BurgerNav = () => {
             } hidden sm:flex sm:flex-col w-full sm:items-end sm:justify-end cursor-pointer duration-1000 ease-in-out tracking-widest flex-col`}
           >
             <h2 className='whitespace-nowrap ml-0 w-full font-bold  text-5xl text-center'>
-              <span className='text-white'>L&apos;</span>ouvair
+              <span className='text-white font-syncopate'>L&apos;</span>ouvair
             </h2>
           </div>
           <div

@@ -1,26 +1,42 @@
 import { DashboardHeader } from '@/components/dashboard/header'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import priceFormat from '@/lib/priceFormat'
 import { DashboardShell } from '@/components/shell'
 import { db } from '@/lib/db'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
+import { getUserSubscriptionPlan } from '@/lib/subscription'
+import { stripe } from '@/lib/stripe'
+import { authOptions } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/session'
+import { redirect } from 'next/navigation'
+import { EmptyPlaceholder } from '@/components/empty-placeholder'
 
 export const metadata = {
   title: 'Dashboard'
 }
 
-export const revalidate = 0
+// export const revalidate = 0
 
 async function fetchOrders() {
-  const user = await getServerSession(authOptions)
+  const user = await getCurrentUser()
 
-  if (!user) return null
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || '/login')
+  }
+
+  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+  console.log('<Dashboard> :', subscriptionPlan)
+
+  let isCanceled = false
+  if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
+    const stripePlan = await stripe.subscriptions.retrieve(subscriptionPlan.stripeSubscriptionId)
+    isCanceled = stripePlan.cancel_at_period_end
+  }
 
   const orders = await db.order.findMany({
-    where: { userId: (user?.user as any).id },
-    include: { products: true }
+    where: { userId: user.id },
+    include: { products: true },
+    orderBy: { createdDate: 'desc' }
   })
   return orders
 }
@@ -65,66 +81,61 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <div className='font-assistant'>
-        <DashboardShell>
-          <DashboardHeader
-            heading='Dashboard'
-            text='Store and manage User account.'
-          >
-            Purchase History
-          </DashboardHeader>
-          <Separator />
-          <div className='flex flex-col gap-4'>
-            {orders?.map((order) => (
-              <div
-                key={order.id}
-                className='relative flex flex-col gap-1 p-3 rounded-lg shadow-sm bg-secondary'
-              >
-                <h2>Order: {order.id}</h2>
-
-                <p className='text-[12px]'>{today(order.createdDate)}</p>
-                <p className='absolute text-[13px] top-4 right-3'>
-                  Payment:{' '}
-                  <span
-                    className={`${
-                      order.status === 'complete' ? 'bg-green-500' : 'bg-blue-800'
-                    } p-1 text-white rounded-md px-2 mx-2 uppercase font-semibold tracking-wide`}
+      <DashboardShell>
+        <DashboardHeader
+          heading='Dashboard'
+          text='Manage purchases, subscriptions and User account.'
+        >
+          Purchase History
+        </DashboardHeader>
+        <Separator />
+        {/* Your Orders */}
+        <div className='flex flex-col gap-4 mt-6'>
+          {orders?.map((order) => (
+            <div
+              key={order.id}
+              className='relative flex flex-col gap-1 p-2 px-4 rounded-lg shadow-sm bg-base-200'
+            >
+              <h2>Order: {order.id}</h2>
+              <p className='text-[12px]'>{today(order.createdDate)}</p>
+              <p className='absolute text-[13px] top-4 right-3'>
+                Payment:{' '}
+                <span
+                  className={`${
+                    order.status === 'complete' ? 'bg-green-500' : 'bg-blue-500'
+                  } p-1 text-white rounded-md px-2 mx-2`}
+                >
+                  {order.status}
+                </span>
+              </p>
+              {/* Products in Order */}
+              <div className='flex flex-col gap-2 py-2'>
+                {order.products.map((product) => (
+                  <div
+                    key={product.id}
+                    className='flex items-center gap-4 py-1'
                   >
-                    {order.status}
-                  </span>
-                </p>
-                {/* Products in Order */}
-                <div className='flex flex-col gap-2 py-2'>
-                  {order.products.map((product) => (
-                    <div
-                      key={product.id}
-                      className='flex items-center gap-4 py-1'
-                    >
-                      <Image
-                        className='object-cover bg-primary rounded-full w-12 h-12'
-                        src={product.image!}
-                        alt={product.name}
-                        width={44}
-                        height={44}
-                        priority
-                      />
-                      <div className='flex flex-col'>
-                        <h4 className='text-md text-card-foreground font-semibold'>
-                          {product.name}
-                        </h4>
-                        <p className='text-sm'>
-                          {product.quantity} x {priceFormat(product.unit_amount)}
-                        </p>
-                      </div>
+                    <Image
+                      className='object-cover rounded-full w-9 h-9'
+                      src={product.image!}
+                      alt={product.name}
+                      width={36}
+                      height={36}
+                      priority
+                    />
+                    <div className='flex flex-col'>
+                      <h4 className='text-sm font-semibold'>{product.name}</h4>
+                      <p className='text-sm'>
+                        {product.quantity} x {priceFormat(product.unit_amount)}
+                      </p>
                     </div>
-                  ))}
-                </div>
-                <p className='text-sm font-semibold'>Total: {priceFormat(order.amount)}</p>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </DashboardShell>
-      </div>
+            </div>
+          ))}
+        </div>
+      </DashboardShell>
     </>
   )
 }

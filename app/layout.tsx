@@ -1,13 +1,13 @@
 import '../styles/globals.css'
 import '../styles/shared.css'
 import { Assistant, Space_Grotesk, Syncopate } from 'next/font/google'
-import Hydrate from '@/components/hydrate'
+// import Hydrate from '@/components/hydrate'
 import { siteConfig } from '@/config/site'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Toaster } from '@/components/ui/toaster'
-import { Analytics } from '@/components/analytics'
+import Provider from '@/components/provider'
 
 const syncopate = Syncopate({
   weight: ['400', '700'],
@@ -26,6 +26,7 @@ const assistant = Assistant({
   display: 'swap',
   weight: 'variable'
 })
+
 export const metadata = {
   title: {
     default: siteConfig.name,
@@ -35,7 +36,7 @@ export const metadata = {
   keywords: ['Next.js', 'React', 'Tailwind CSS', 'Server Components', 'Radix UI'],
   authors: [
     {
-      name: 'Lit2L',
+      name: 'Li2L',
       url: 'https://lit2l.com'
     }
   ],
@@ -54,21 +55,23 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html
-      lang='en'
-      className={`${syncopate.className} ${assistant.className} ${space_grotesk.className}`}
-    >
-      <Hydrate>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-        >
-          <main className=''>{children}</main>
-          <Analytics />
-          <Toaster />
-          <TailwindIndicator />
-        </ThemeProvider>
-      </Hydrate>
+    <html lang='en'>
+      <body className={`${syncopate.className} ${assistant.className} ${space_grotesk.className}`}>
+        {/* <Hydrate> */}
+
+        <Provider>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+          >
+            {children}
+
+            <Toaster />
+            <TailwindIndicator />
+          </ThemeProvider>
+        </Provider>
+        {/* </Hydrate> */}
+      </body>
     </html>
   )
 }

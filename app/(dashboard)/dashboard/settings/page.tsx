@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { authOptions } from '@/lib/auth'
 import { getCurrentUser } from '@/lib/session'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardShell } from '@/components/shell'

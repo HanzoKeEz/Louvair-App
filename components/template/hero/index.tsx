@@ -128,7 +128,7 @@ const Hero: FC = () => {
             href='/dashboard'
             className={cn(
               buttonVariants({ variant: 'secondary', size: 'sm' }),
-              'flex items-center w-72 justify-center red-hover font-light  hover:font-semibold border-2 '
+              'flex items-center w-72 justify-center red-hover font-light  hover:font-semibold border '
             )}
           >
             Get Started Today!
@@ -136,10 +136,7 @@ const Hero: FC = () => {
 
           <Link
             href='/products'
-            className={cn(
-              buttonVariants({ variant: 'default', size: 'sm' }),
-              'w-64 yellow-hover border-2 border-black/60'
-            )}
+            className='w-64 bg-gray-700 text-center yellow-hover border-2 border-slate-300/90'
           >
             See Collection
           </Link>

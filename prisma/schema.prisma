@@ -40,23 +40,21 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  accounts      Account[]
-  sessions      Session[]
-
-  orders Order[]
-
+  id                     String    @id @default(cuid())
+  name                   String?
+  email                  String?   @unique
+  emailVerified          DateTime?
+  image                  String?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @default(now())
+  accounts               Account[]
+  sessions               Session[]
+  orders                 Order[]
+  isActive               Boolean   @default(false)
   stripeCustomerId       String?   @unique
   stripeSubscriptionId   String?   @unique
   stripePriceId          String?
   stripeCurrentPeriodEnd DateTime?
-  isActive               Boolean   @default(false)
 }
 
 model VerificationToken {

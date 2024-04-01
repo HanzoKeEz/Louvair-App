@@ -18,7 +18,7 @@ export async function getUserSubscriptionPlan(userId: string): Promise<UserSubsc
   })
 
   if (!user) {
-    throw new Error('User not found')
+    redirect(authOptions.pages?.signIn || '/login')
   }
 
   // Check if user is on a pro plan.

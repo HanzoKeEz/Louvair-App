@@ -1,7 +1,7 @@
 // FIX: I changed .mjs to .js
 // More info: https://github.com/shadcn-ui/taxonomy/issues/100#issuecomment-1605867844
 
-// import('./env.mjs')
+import('./env.mjs')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

@@ -30,7 +30,7 @@ export function BillingForm({ subscriptionPlan, className, ...props }: BillingFo
     setIsLoading(!isLoading)
 
     // Get a Stripe session URL.
-    const response = await fetch('/pages/api/users/stripe')
+    const response = await fetch('/api/users/stripe')
     console.log('response: ', response)
 
     if (!response?.ok) {
@@ -64,6 +64,7 @@ export function BillingForm({ subscriptionPlan, className, ...props }: BillingFo
           </CardDescription>
         </CardHeader>
         <CardContent>{subscriptionPlan.description}</CardContent>
+
         <CardFooter className='flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0'>
           <button
             type='submit'

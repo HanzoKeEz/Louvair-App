@@ -31,21 +31,21 @@ export default function Cart() {
       <motion.section
         layout
         onClick={(e) => e.stopPropagation()}
-        className='absolute top-0 right-0 w-8/12 h-screen p-12 overflow-y-scroll shadow-md bg-zinc-200 lg:w-1/2'
+        className='absolute top-0 right-0 w-8/12 h-screen p-12 overflow-y-scroll shadow-md bg-zinc-100/90 lg:w-1/2'
       >
         {/* Conditional Headings */}
         {cartStore.onCheckout === 'cart' && (
           <div className='flex items-center justify-between mb-12'>
-            <h1 className='text-2xl font-space font-'>Your shopping Cart</h1>
+            <h1 className='text-2xl text-primary-foreground font-space'>Your shopping Cart</h1>
             <CgClose
-              className='w-6 h-6 cursor-pointer'
+              className='w-6 h-6 cursor-pointer bg-zinc-200/80'
               onClick={() => cartStore.toggleCart()}
             />
           </div>
         )}
         {cartStore.onCheckout === 'checkout' && (
           <div className='flex items-center justify-between mb-12'>
-            <h1 className='text-2xl font-bold'>Check your cart</h1>
+            <h1 className='text-2xl text-primary-foreground font-bold'>Check your cart</h1>
             <CgClose
               className='w-6 h-6 cursor-pointer'
               onClick={() => cartStore.setCheckout('cart')}
@@ -61,7 +61,7 @@ export default function Cart() {
               <motion.article
                 key={item.id}
                 layout
-                className='flex gap-4 p-6 mt-3 rounded-lg bg-zinc-100'
+                className='flex gap-4 p-6 mt-3 rounded-lg bg-zinc-100 text-white'
               >
                 <Image
                   className='object-cover w-24 h-24 rounded-full shadow'
@@ -72,17 +72,17 @@ export default function Cart() {
                   priority
                 />
                 <motion.div className='flex font-assistant flex-col'>
-                  <h2 className='text-md '>{item.name}</h2>
+                  <h2 className='text-md text-white'>{item.name}</h2>
                   <div className='flex items-center gap-2'>
-                    <h2 className='text-md'>Qty: {item.quantity}</h2>
+                    <h2 className='text-md text-white'>Qty: {item.quantity}</h2>
                     <button onClick={() => cartStore.removeProduct(item)}>
                       <CircleMinus className='w-6 h-6 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-red-500 hover:scale-125' />
                     </button>
                     <button onClick={() => cartStore.addProduct(item)}>
-                      <CirclePlus className='w-6 h-6 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-green-500 hover:scale-125' />
+                      <CirclePlus className='w-6 h-6 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-green-500 hover:scale-125 ' />
                     </button>
                   </div>
-                  <h2 className='mt-auto text-md'>
+                  <h2 className='mt-auto text-white text-md'>
                     {item.unit_amount && priceFormat(item.unit_amount)}
                   </h2>
                 </motion.div>
@@ -95,11 +95,11 @@ export default function Cart() {
         {cartStore.cart.length > 0 && cartStore.onCheckout === 'cart' ? (
           <motion.div layout>
             <p className='py-2 mt-6'>
-              <span className='font-semibold'>Total:</span> {priceFormat(totalPrice)}
+              <span className='font-semibold text-white'>Total:</span> {priceFormat(totalPrice)}
             </p>
             <button
               onClick={() => cartStore.setCheckout('checkout')}
-              className='w-full my-12 bg-primary text-primary-foreground hover:bg-primary-700 hover:text-primary-foreground h-12 '
+              className='w-full my-12 bg-primary text-white hover:bg-blue-700 hover:text-primary-foreground h-12 '
             >
               Checkout
             </button>
@@ -125,7 +125,9 @@ export default function Cart() {
               priority
               className='object-cover'
             />
-            <h2 className='text-lg font-semibold font-space'>0 items in your bag</h2>
+            <h2 className='text-lg font-semibold text-primary-foreground font-space'>
+              0 items in your bag
+            </h2>
           </motion.div>
         )}
       </motion.section>

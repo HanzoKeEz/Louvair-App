@@ -2,9 +2,10 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { UserAuthForm } from '@/components/user-auth-form'
 import { ChevronLeft } from 'lucide-react'
-import { LogoBrand } from '@/components/LogoBrand'
+import { LogoBrand } from '@/components/logos/LogoBrand'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { Icons } from '@/components/icons'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -13,27 +14,25 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className='w-full h-screen bg-slate-600 flex flex-col items-center font-space justify-center'>
+    <div className='container flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr from-slate-200 to-amber-100'>
       <Link
         href='/'
         className={cn(
           buttonVariants({ variant: 'ghost' }),
-          'absolute left-0 top-24 md:left-8 md:top-36'
+          'absolute left-4 top-4 md:left-8 md:top-8'
         )}
       >
         <>
-          <span className='flex h-8 items-center text-sm underline text-secondary-foreground'>
-            <ChevronLeft className='mr-2 h-8 w-8' />
-            Back
-          </span>
+          <Icons.chevronLeft className='mr-2 h-4 w-4' />
+          Back
         </>
       </Link>
-      <div className='mx-auto flex flex-col justify-center space-y-6 w-full  max-w-[450px]  border-x border-black/20 px-12'>
-        <div className='flex flex-col items-center justify-center gap-3 space-y-2 text-center'>
-          <div className='rounded-full'>
+      <div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
+        <div className='flex flex-col space-y-2 text-center'>
+          <div className='w-full flex items-center justify-center'>
             <LogoBrand className='mx-auto h-6 w-6 ' />
           </div>
-          <h1 className='text-2xl font-manrope font-semibold tracking-tight'>Welcome back</h1>
+          <h1 className='text-2xl font-semibold tracking-tight'>Welcome back</h1>
           <p className='text-sm text-muted-foreground'>
             Enter your email to sign in to your account
           </p>
@@ -42,7 +41,7 @@ export default function LoginPage() {
         <p className='px-8 text-center text-sm text-muted-foreground'>
           <Link
             href='/register'
-            className='underline underline-offset-4'
+            className='hover:text-brand underline underline-offset-4 text-slate-800'
           >
             Don&apos;t have an account? Sign Up
           </Link>

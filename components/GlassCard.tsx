@@ -8,9 +8,9 @@ interface GlassCardProps {
 
 const GlassCard: React.FC<GlassCardProps> = ({ title, expiration, cvv }) => {
   return (
-    <div className='glass-card font-assistant tracking-wider'>
+    <div className='glass-card font-assistant tracking-wider bg-card'>
       <h2 className='text-amber-400 text-lg tracking-wide'>{title}</h2>
-      <span className='flex justify-between items-center my-3'>
+      <span className='flex justify-between items-center text-card-foreground my-3'>
         <p>{expiration}</p>
         <p>{cvv}</p>
       </span>

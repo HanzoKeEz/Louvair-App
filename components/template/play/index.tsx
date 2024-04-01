@@ -123,8 +123,8 @@ const Play: React.FC = () => {
         >
           <Image
             src='/work/greenyellow.jpeg'
-            height='113'
-            width='200'
+            height={800}
+            width={800}
             alt='Ottografie'
             loading='lazy'
           />
@@ -142,12 +142,12 @@ const Play: React.FC = () => {
             />
           </video>
           <div className='overflow-hidden flex w-full flex-col ml-12'>
-            <h1
+            {/* <h1
               className='text-5xl text-slate-600 font-bold my-12'
               ref={heading}
             >
               Press <span className='text-red-900'>Play</span>
-            </h1>
+            </h1> */}
           </div>
           <div className='text-wrapper'>
             <p>

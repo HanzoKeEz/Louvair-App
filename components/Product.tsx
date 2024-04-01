@@ -29,12 +29,15 @@ export default function Product({
           alt={name}
           width={800}
           height={800}
-          className='object-contain w-full transition-transform duration-300 h-80 hover:scale-105'
+          className='object-contain w-full transition-transform duration-300 h-64 hover:scale-105'
           priority
         />
       </div>
-      <div className='px-2 py-4'>
-        <h1 className='text-[15px] font-bold'>{name}</h1>
+      <div className='px-2 py-4 border-4'>
+        <h1 className='text-xl font-bold'>{name}</h1>
+        <h2 className='text-[15px] font-bold'>{name}</h2>
+      </div>
+      <div className=''>
         <h2 className='text-sm opacity-80'>
           {unit_amount !== null ? priceFormat(unit_amount) : 'N/A'}
         </h2>
