@@ -8,10 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { AiFillShopping } from 'react-icons/ai'
 import { Logo } from '@/components/logos/Logo'
-
 import { useSelectedLayoutSegment } from 'next/navigation'
-
-import { UserAccountNav } from '../user-account-nav'
 import { cn } from '@/lib/utils'
 
 interface MainNavProps {

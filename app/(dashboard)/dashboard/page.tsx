@@ -9,7 +9,6 @@ import { stripe } from '@/lib/stripe'
 import { authOptions } from '@/lib/auth'
 import { getCurrentUser } from '@/lib/session'
 import { redirect } from 'next/navigation'
-import { EmptyPlaceholder } from '@/components/empty-placeholder'
 
 export const metadata = {
   title: 'Dashboard'

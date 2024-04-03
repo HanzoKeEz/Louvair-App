@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import '../styles/shared.css'
 import { Assistant, Space_Grotesk, Syncopate } from 'next/font/google'
-// import Hydrate from '@/components/hydrate'
 import { siteConfig } from '@/config/site'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
