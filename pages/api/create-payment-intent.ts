@@ -6,7 +6,7 @@ import Stripe from 'stripe'
 // import { PrismaClient } from '@prisma/client';
 import { db } from '@/lib/db'
 
-import { authOptions } from '@/lib/auth'
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import { AddCartType } from '@/types/AddCartType'
 

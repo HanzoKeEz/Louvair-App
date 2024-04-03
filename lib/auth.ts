@@ -1,11 +1,8 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { NextAuthOptions } from 'next-auth'
-import EmailProvider from 'next-auth/providers/email'
 import GoogleProvider from 'next-auth/providers/google'
-
-import { env } from '@/env.mjs'
-import { siteConfig } from '@/config/site'
 import { db } from '@/lib/db'
+import Stripe from 'stripe'
 
 export const authOptions: NextAuthOptions = {
   // huh any! I know.
@@ -20,10 +17,31 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     })
   ],
+  events: {
+    // A 'createUser' event fired whenever a new user created in ur NextAuth app.
+    // An object with 'user' key contains info about the newly created user.
+    createUser: async ({ user }) => {
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+        apiVersion: '2022-11-15'
+      })
+
+      if (user.email && user.name) {
+        const customer = await stripe.customers.create({
+          email: user.email,
+          name: user.name
+        })
+
+        await db.user.update({
+          where: { id: user.id },
+          data: { stripeCustomerId: customer.id }
+        })
+      }
+    }
+  },
   callbacks: {
     async session({ token, session }) {
       if (token) {
