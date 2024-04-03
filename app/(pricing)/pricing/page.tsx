@@ -9,6 +9,7 @@ import GlassCard from '@/components/GlassCard'
 import { Separator } from '@/components/ui/separator'
 import CardFront from '../../../public/assets/stripe_testcard_front.png'
 import CardBack from '../../../public/assets/stripe_testcard_back.png'
+import TestCards from '@/components/TestCards'
 
 export const metadata = {
   title: 'Pricing'
@@ -85,18 +86,7 @@ export default function PricingPage() {
           </div>
           <div className='w-full flex flex-col items-center justify-center rounded-xl'>
             <div className='rounded-xl border h-full w-full justify-center items-center flex flex-col md:flex-row'>
-              <Image
-                src={CardFront}
-                alt=''
-                width={400}
-                height={400}
-              />
-              <Image
-                src={CardBack}
-                alt=''
-                width={400}
-                height={400}
-              />
+              <TestCards />
             </div>
           </div>
         </div>

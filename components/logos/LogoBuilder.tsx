@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Builder from '../../public/assets/LarryLogo.png'
+import Builder from '../../public/lit2l/LarryLogo.png'
 
 export const LogoBuilder = ({ ...props }) => (
   <Image

@@ -2,14 +2,14 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import payment from '../public/spray.gif'
+import payment from '@/public/payment_mail.gif'
 import Link from 'next/link'
 
 import { useCartStore } from '@/zustand/store'
 import { useEffect } from 'react'
 import { Player } from '@lottiefiles/react-lottie-player'
 
-import orderCompleted from '../public/orderCompleted.json'
+import orderCompleted from '@/public/orderCompleted.json'
 
 export default function OrderConfirmed() {
   const cartStore = useCartStore()
@@ -17,7 +17,7 @@ export default function OrderConfirmed() {
   useEffect(() => {
     cartStore.setPaymentIntent('')
     cartStore.clearCart()
-  }, [cartStore])
+  }, [])
 
   const handleCheckout = () => {
     setTimeout(() => {

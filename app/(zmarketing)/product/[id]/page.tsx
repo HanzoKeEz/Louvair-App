@@ -3,38 +3,46 @@ import priceFormat from '@/lib/priceFormat'
 import Image from 'next/image'
 
 import AddCartBtn from '@/components/addCartBtn'
-import { Card, CardContent, CardDescription, CardFooter } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card'
+import AddCart from './AddCart'
 
-export default async function ProductPage({ searchParams }: SearchParamTypes) {
-  // console.log('searchParams: ', searchParams);
+export default async function Product({ searchParams }: SearchParamTypes) {
   return (
-    <div className='w-full min-h-screen flex flex-col items-center mt-20'>
-      <Card className='flex flex-col  gap-8 md:flex-row p-12'>
-        <CardContent className=''>
+    <div className='w-full h-full flex justify-center items-center'>
+      <Card className='border border-black w-1/2 rounded-lg'>
+        <CardContent>
           <Image
             src={searchParams.image}
-            alt={searchParams.name}
+            alt={searchParams.name + searchParams.image}
             width={800}
             height={800}
-            className='object-cover w-full h-72 rounded-lg '
+            className='rounded-md object-cover'
             priority={true}
           />
+
+          <CardHeader>
+            <CardTitle className='py-6'>
+              <h1>{searchParams.name}</h1>
+            </CardTitle>
+          </CardHeader>
+          <p className='py-2'>{searchParams.description}</p>
+          <p className='py-2'>{searchParams.features}</p>
+          <div className=''>
+            <p className='font-bold text-primary'>
+              {searchParams.unit_amount && priceFormat(searchParams.unit_amount)}
+            </p>
+          </div>
         </CardContent>
-        <CardDescription className=''>
-          <article className='flex flex-col justify-center items-center'>
-            <div className='text-center'>
-              <h1 className='text-2xl font-medium'>{searchParams.name}</h1>
-              <p className=''>{searchParams.description}</p>
-              <p className=''>{searchParams.features}</p>
-              <p className='py-2 text-lg rounded'>
-                {searchParams.unit_amount && priceFormat(searchParams.unit_amount)}
-              </p>
-            </div>
-            <CardFooter>
-              <AddCartBtn {...searchParams} />
-            </CardFooter>
-          </article>
-        </CardDescription>
+        <CardFooter>
+          <AddCart {...searchParams}>Add to cart</AddCart>
+        </CardFooter>
       </Card>
     </div>
   )

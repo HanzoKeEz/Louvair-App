@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import '../styles/shared.css'
-import { Assistant, Space_Grotesk, Syncopate } from 'next/font/google'
+import { Assistant, Great_Vibes, Space_Grotesk, Syncopate } from 'next/font/google'
 import { siteConfig } from '@/config/site'
 import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
@@ -19,6 +19,11 @@ const space_grotesk = Space_Grotesk({
   weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-space'
+})
+const greatVibes = Great_Vibes({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-greatVibes'
 })
 
 const assistant = Assistant({
@@ -57,7 +62,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       lang='en'
-      className={`${syncopate.className} ${assistant.className} ${space_grotesk.className}`}
+      className={`${syncopate.className} ,${greatVibes.variable}, ${assistant.className} ${space_grotesk.className}`}
     >
       {/* <Hydrate> */}
 
