@@ -5,7 +5,7 @@ import { useState, useEffect, FormEvent } from 'react'
 import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 
 import { useCartStore } from '@/zustand/store'
-import priceFormat from '@/lib/priceFormat'
+import priceFormat from '@/utils/priceFormat'
 
 interface Props {
   clientSecret: string
@@ -57,7 +57,7 @@ export default function CheckoutForm({ clientSecret }: Props) {
       <button
         id='submit'
         disabled={isLoading || !stripe || !elements}
-        className='w-full my-4 btn btn-primary'
+        className='w-full my-4 bg-neutral-900'
       >
         {isLoading ? <span>Processing</span> : <span>Pay now</span>}
       </button>

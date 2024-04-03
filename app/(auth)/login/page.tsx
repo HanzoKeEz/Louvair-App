@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className='container flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-tr from-slate-200 to-amber-100'>
+    <div className='container flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400'>
       <Link
         href='/'
         className={cn(

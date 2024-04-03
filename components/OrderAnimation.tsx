@@ -1,23 +1,22 @@
-'use client'
-
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import Gif from '@/public/spray.gif'
+import { Player } from '@lottiefiles/react-lottie-player'
+import checkoutOrder from '@/public/checkoutOrder.json'
 
 export default function OrderAnimation() {
   return (
-    <div className='flex items-center justify-center flex-col mt-24 p-12 '>
+    <div className='flex flex-col items-center justify-center p-12 mt-24'>
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        Confirming your order...
+        Prepping your order
       </motion.h1>
-      <Image
-        src={Gif}
-        alt='gif'
-        fill
+      <Player
+        autoplay
+        loop
+        src={checkoutOrder}
+        style={{ height: '300px', width: '300px' }}
       />
     </div>
   )

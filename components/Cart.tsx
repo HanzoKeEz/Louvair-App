@@ -1,19 +1,34 @@
 'use client'
 
-import priceFormat from '@/lib/priceFormat'
+import priceFormat from '@/utils/priceFormat'
 import { useCartStore } from '@/zustand/store'
 import Image from 'next/image'
+
+import { CgClose } from 'react-icons/cg'
+import { TbSquareRoundedPlus, TbSquareRoundedMinus } from 'react-icons/tb'
 import emptyBasket from '../public/shoppingbag.png'
-import { AnimatePresence, motion } from 'framer-motion'
+// FRAMER: USING THE LAYOUT PROP ⭐️
+// Setting `layout` prop to `true` enables an element to automatically animate to
+// its new position when its layout changes. The animation is efficient and uses
+// the CSS `transform` property. However, it can cause visual distortions on the
+// children elements and certain CSS properties like boxShadow and borderRadius.
+
+// To fix the distortions, add the `layout` prop to those child elements as well.
+// If boxShadow and borderRadius are already being animated on the parent, they
+// will auto-correct. Otherwise, set them directly via the initial prop.
+
+// Setting `layout` to "position", the component will animate its position while
+// the size changes instantly. Setting a "size" will make the size animate while
+// position changes instantly. A `layout` set to "preserve-aspect" components is
+// going to animate both size and position if the aspect ratio remains constant,
+// and only position if the ratio changes.
+import { motion } from 'framer-motion'
 import Checkout from './Checkout'
 import OrderConfirmed from './OrderConfirmed'
-import { Button } from './ui/button'
-import { ArrowLeftCircle, CircleMinus, CirclePlus } from 'lucide-react'
-import { CgClose } from 'react-icons/cg'
 
 export default function Cart() {
   const cartStore = useCartStore()
-  // console.log('<Cart>: ', cartStore)
+  console.log('<Cart>: ', cartStore)
   // Reduce to get total price:
   const totalPrice = cartStore.cart.reduce((acc, item) => {
     return acc + item.unit_amount! * item.quantity!
@@ -25,27 +40,27 @@ export default function Cart() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={() => cartStore.toggleCart()}
-      className='fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-screen bg-neutral-950/90 backdrop-blur-sm'
+      className='fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-screen bg-black/25 backdrop-blur-sm'
     >
       {/* Shopping Panel */}
       <motion.section
         layout
         onClick={(e) => e.stopPropagation()}
-        className='absolute top-0 right-0 w-8/12 h-screen p-12 overflow-y-scroll shadow-md bg-zinc-100/90 lg:w-1/2'
+        className='absolute top-0 right-0 w-8/12 h-screen p-12 overflow-y-scroll shadow-md bg-neutral-100 dark:bg-zinc-900/95 lg:w-2/5'
       >
         {/* Conditional Headings */}
         {cartStore.onCheckout === 'cart' && (
           <div className='flex items-center justify-between mb-12'>
-            <h1 className='text-2xl text-primary-foreground font-space'>Your shopping Cart</h1>
+            <h1 className='text-2xl font-bold'>Your shopping cart</h1>
             <CgClose
-              className='w-6 h-6 cursor-pointer bg-zinc-200/80'
+              className='w-6 h-6 cursor-pointer'
               onClick={() => cartStore.toggleCart()}
             />
           </div>
         )}
         {cartStore.onCheckout === 'checkout' && (
           <div className='flex items-center justify-between mb-12'>
-            <h1 className='text-2xl text-primary-foreground font-bold'>Check your cart</h1>
+            <h1 className='text-2xl font-bold'>Check your cart</h1>
             <CgClose
               className='w-6 h-6 cursor-pointer'
               onClick={() => cartStore.setCheckout('cart')}
@@ -61,28 +76,28 @@ export default function Cart() {
               <motion.article
                 key={item.id}
                 layout
-                className='flex gap-4 p-6 mt-3 rounded-lg bg-zinc-100 text-white'
+                className='flex gap-4 p-4 mt-3 rounded-lg bg-zinc-200'
               >
                 <Image
-                  className='object-cover w-24 h-24 rounded-full shadow'
+                  className='w-24 h-24 rounded-full shadow object-contain'
                   src={item.image}
                   alt={item.name}
                   width={110}
                   height={110}
                   priority
                 />
-                <motion.div className='flex font-assistant flex-col'>
-                  <h2 className='text-md text-white'>{item.name}</h2>
+                <motion.div className='flex flex-col text-zinc-900'>
+                  <h2 className='text-sm font-semibold'>{item.name}</h2>
                   <div className='flex items-center gap-2'>
-                    <h2 className='text-md text-white'>Qty: {item.quantity}</h2>
+                    <h2 className='text-sm'>Qty: {item.quantity}</h2>
                     <button onClick={() => cartStore.removeProduct(item)}>
-                      <CircleMinus className='w-6 h-6 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-red-500 hover:scale-125' />
+                      <TbSquareRoundedMinus className='w-3 h-3 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-red-500 hover:scale-125' />
                     </button>
                     <button onClick={() => cartStore.addProduct(item)}>
-                      <CirclePlus className='w-6 h-6 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-green-500 hover:scale-125 ' />
+                      <TbSquareRoundedPlus className='w-3 h-3 transition duration-100 ease-in-out cursor-pointer hover:drop-shadow-md hover:text-green-500 hover:scale-125' />
                     </button>
                   </div>
-                  <h2 className='mt-auto text-white text-md'>
+                  <h2 className='mt-auto text-sm'>
                     {item.unit_amount && priceFormat(item.unit_amount)}
                   </h2>
                 </motion.div>
@@ -95,11 +110,11 @@ export default function Cart() {
         {cartStore.cart.length > 0 && cartStore.onCheckout === 'cart' ? (
           <motion.div layout>
             <p className='py-2 mt-6'>
-              <span className='font-semibold text-white'>Total:</span> {priceFormat(totalPrice)}
+              <span className='font-semibold'>Total:</span> {priceFormat(totalPrice)}
             </p>
             <button
               onClick={() => cartStore.setCheckout('checkout')}
-              className='w-full my-12 bg-primary text-white hover:bg-blue-700 hover:text-primary-foreground h-12 '
+              className='w-full py-2 text-white my-4 dark:bg-zinc-100 bg-zinc-900 dark:text-black'
             >
               Checkout
             </button>
@@ -125,9 +140,7 @@ export default function Cart() {
               priority
               className='object-cover'
             />
-            <h2 className='text-lg font-semibold text-primary-foreground font-space'>
-              0 items in your bag
-            </h2>
+            <h2 className='text-lg font-semibold'>Empty Shopping Bag</h2>
           </motion.div>
         )}
       </motion.section>

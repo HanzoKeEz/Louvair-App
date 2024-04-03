@@ -1,11 +1,6 @@
-import { SiteFooter } from '@/components/site-footer'
 import BurgerNav from '@/components/navigation/BurgerNav'
 import { MainNav } from '@/components/navigation/main-nav'
-import { getCurrentUser } from '@/lib/session'
 import { marketingConfig } from '@/config/marketing'
-import Link from 'next/link'
-import { cn } from '@/utils/cn'
-import { buttonVariants } from '@/components/ui/button'
 
 interface MarketingLayoutProps {
   children: React.ReactNode
@@ -22,7 +17,7 @@ export default async function MarketingLayout({ children }: MarketingLayoutProps
           </nav>
         </div>
       </header>
-      <main className='flex-1'>{children}</main>
+      <main className=''>{children}</main>
       {/* <SiteFooter /> */}
     </div>
   )

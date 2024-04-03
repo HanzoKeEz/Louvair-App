@@ -8,6 +8,7 @@ import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Toaster } from '@/components/ui/toaster'
 import Provider from '@/components/provider'
+import Hydration from '@/components/Hydration'
 
 const syncopate = Syncopate({
   weight: ['400', '700'],
@@ -55,23 +56,26 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='en'>
-      <body className={`${syncopate.className} ${assistant.className} ${space_grotesk.className}`}>
-        {/* <Hydrate> */}
+    <html
+      lang='en'
+      className={`${syncopate.className} ${assistant.className} ${space_grotesk.className}`}
+    >
+      {/* <Hydrate> */}
 
+      <Hydration>
         <Provider>
           <ThemeProvider
             attribute='class'
-            defaultTheme='system'
+            defaultTheme='light'
           >
             {children}
-
             <Toaster />
             <TailwindIndicator />
           </ThemeProvider>
         </Provider>
-        {/* </Hydrate> */}
-      </body>
+      </Hydration>
+
+      {/* </Hydrate> */}
     </html>
   )
 }

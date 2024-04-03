@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 import Cart from '../Cart'
 import { useCartStore } from '@/zustand/store'
-import { signIn, signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { Menu, ShoppingBag, SquareX } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from '../theme-toggle'
@@ -16,15 +16,17 @@ import { Button, buttonVariants } from '../ui/button'
 
 import { LogoBrand } from '../logos/LogoBrand'
 
+const AnimatedLink = motion(Link)
+AnimatedLink.defaultProps = { className: 'hover:text-primary nav-link' }
+
 interface MainNavProps {
-  children?: React.ReactNode
   items?: MainNavItem[]
   user?: { id: string; name: string }
 }
 
-export function MainNav({ children, items, user }: MainNavProps) {
+export function MainNav({ items, user }: MainNavProps) {
   const cartStore = useCartStore()
-  const [showMobileNav, setShowMobileNav] = React.useState(false)
+  const { data: session, status } = useSession()
 
   const segment = useSelectedLayoutSegment()
 
