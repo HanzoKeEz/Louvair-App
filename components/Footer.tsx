@@ -1,91 +1,135 @@
+import { siteConfig } from '@/config/site'
+
 import Link from 'next/link'
-import Louvair from '../public/assets/LogoWhite.png'
-import Image from 'next/image'
+import { Separator } from './ui/separator'
+import { AiFillInstagram } from 'react-icons/ai'
+import { CgTwitter } from 'react-icons/cg'
+import { MdFacebook } from 'react-icons/md'
+
+const data = [
+  {
+    label: 'LEGAL',
+    links: [
+      {
+        label: 'Privacy Policy',
+        url: '/privacy'
+      },
+      {
+        label: 'Terms & Conditions',
+        url: '/terms'
+      }
+    ]
+  },
+  {
+    label: 'RESOURCES',
+    links: [
+      {
+        label: 'Blog',
+        url: '/blog'
+      },
+      {
+        label: 'About',
+        url: '/about'
+      },
+      {
+        label: 'Contact',
+        url: '/contact'
+      }
+    ]
+  },
+  {
+    label: 'SUPPORT',
+    links: [
+      {
+        label: 'Telegram',
+        url: '/telegram'
+      },
+      {
+        label: 'FAQ',
+        url: '/faq'
+      }
+    ]
+  }
+]
 
 export default function Footer() {
   return (
-    <footer className='px-6 bg-zinc-900 w-full font-sans'>
-      <div className='grid grid-cols-1 gap-8 py-6 text-white transition-colors duration-150 lg:grid-cols-12 border-zinc-600 bg-zinc-900'>
-        <div className='col-span-1 lg:col-span-2 font-syncopate'>
-          <Link
-            href='/'
-            className='flex items-center flex-initial font-bold md:mr-24'
-          >
-            <span className='mr-2 border rounded-full border-zinc-700'>
-              <Image
-                src={Louvair}
-                alt='Louvair Logo'
-                width={40}
-                height={40}
-              />
-            </span>
-
-            <span className='text-sm font-bold'>L&apos;ouvair</span>
-          </Link>
-        </div>
-        <div className='flex w-full justify-between'>
-          <div className='col-span-1 lg:col-span-2'>
-            <ul className='flex flex-col flex-initial md:flex-1'>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <Link
-                  href='/'
-                  className='text-white transition duration-150 ease-in-out hover:text-zinc-200'
-                >
-                  Home
-                </Link>
-              </li>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <Link
-                  href='/'
-                  className='text-white transition duration-150 ease-in-out hover:text-zinc-200'
-                >
-                  About
-                </Link>
-              </li>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <Link
-                  href='/'
-                  className='text-white transition duration-150 ease-in-out hover:text-zinc-200'
-                >
-                  Careers
-                </Link>
-              </li>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <Link
-                  href='/'
-                  className='text-white transition duration-150 ease-in-out hover:text-zinc-200'
-                >
-                  Blog
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className='col-span-1 lg:col-span-2'>
-            <ul className='flex flex-col flex-initial md:flex-1'>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <span className='font-bold text-white transition duration-150 ease-in-out hover:text-zinc-200'>
-                  LEGAL
-                </span>
-              </li>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <span className='text-white transition duration-150 ease-in-out hover:text-zinc-200'>
-                  Privacy Policy
-                </span>
-              </li>
-              <li className='py-3 md:py-0 md:pb-4'>
-                <span className='text-white transition duration-150 ease-in-out hover:text-zinc-200'>
-                  Terms of Use
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className='flex items-center justify-between md:flex-row bg-zinc-900'>
-          <span className='text-xs'>
-            &copy; {new Date().getFullYear()} Louvair, Inc. All rights reserved.
-          </span>
-        </div>
+    <footer className='w-full'>
+      <Separator className='my-12' />
+      <div className='flex justify-between px-[1.4rem] md:px-[4rem] lg:px-[6rem] xl:px-[8rem] 2xl:px-[12rem]'>
+        <Trademark />
+        <Links />
       </div>
+      <Separator className='mt-8 mb-6' />
+      <Socials />
     </footer>
+  )
+}
+
+function Links() {
+  return (
+    <div className='text-end justify-evenly grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6'>
+      {data.map(({ label, links }) => (
+        <div key={label}>
+          <h2 className='mb-3 text-sm uppercase'>{label}</h2>
+          <ul className='block space-y-1'>
+            {links.map(({ label, url }) => (
+              <li key={label}>
+                <Link
+                  href={url}
+                  className='text-sm transition duration-300 text-muted-foreground hover:text-foreground'
+                >
+                  {label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function Trademark() {
+  return (
+    <div className='mb-6 hidden md:mb-0 md:block'>
+      <span className='flex flex-col'>
+        <h2 className='whitespace-nowrap text-sm font-semibold uppercase'>{siteConfig.name}</h2>
+        <span className='mt-2 text-sm text-neutral-500 dark:text-neutral-400'>
+          © {new Date().getFullYear()} {siteConfig.name}™ . All Rights Reserved.
+        </span>
+      </span>
+    </div>
+  )
+}
+
+function Socials() {
+  return (
+    <div className='mb-6 flex justify-center space-x-6 text-muted-foreground'>
+      <a
+        href='https://instagram.com/accretence'
+        target='_blank'
+        rel='noreferrer'
+      >
+        <AiFillInstagram className='h-4' />
+        <span className='sr-only'>Instagram page</span>
+      </a>
+      <a
+        href='https://twitter.com/accretence'
+        target='_blank'
+        rel='noreferrer'
+      >
+        <CgTwitter className='h-4' />
+        <span className='sr-only'>Twitter page</span>
+      </a>
+      <a
+        href='https://github.com/accretence'
+        target='_blank'
+        rel='noreferrer'
+      >
+        <MdFacebook className='h-4' />
+        <span className='sr-only'>GitHub account</span>
+      </a>
+    </div>
   )
 }

@@ -1,6 +1,3 @@
-import { redirect } from 'next/navigation'
-
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getCurrentUser } from '@/lib/session'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardShell } from '@/components/shell'
@@ -15,7 +12,7 @@ export default async function SettingsPage() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions.pages?.signIn || '/login')
+    return null
   }
 
   return (

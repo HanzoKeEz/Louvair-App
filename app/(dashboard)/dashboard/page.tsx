@@ -6,9 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
 import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { stripe } from '@/lib/stripe'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getCurrentUser } from '@/lib/session'
-import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'Dashboard'
@@ -20,7 +18,7 @@ async function fetchOrders() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions?.pages?.signIn || '/login')
+    return null
   }
 
   const subscriptionPlan = await getUserSubscriptionPlan(user.id)

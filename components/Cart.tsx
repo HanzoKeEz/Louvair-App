@@ -7,28 +7,14 @@ import Image from 'next/image'
 import { CgClose } from 'react-icons/cg'
 import { TbSquareRoundedPlus, TbSquareRoundedMinus } from 'react-icons/tb'
 import emptyBasket from '../public/shoppingbag.png'
-// FRAMER: USING THE LAYOUT PROP ⭐️
-// Setting `layout` prop to `true` enables an element to automatically animate to
-// its new position when its layout changes. The animation is efficient and uses
-// the CSS `transform` property. However, it can cause visual distortions on the
-// children elements and certain CSS properties like boxShadow and borderRadius.
 
-// To fix the distortions, add the `layout` prop to those child elements as well.
-// If boxShadow and borderRadius are already being animated on the parent, they
-// will auto-correct. Otherwise, set them directly via the initial prop.
-
-// Setting `layout` to "position", the component will animate its position while
-// the size changes instantly. Setting a "size" will make the size animate while
-// position changes instantly. A `layout` set to "preserve-aspect" components is
-// going to animate both size and position if the aspect ratio remains constant,
-// and only position if the ratio changes.
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Checkout from './Checkout'
 import OrderConfirmed from './OrderConfirmed'
 
 export default function Cart() {
   const cartStore = useCartStore()
-  console.log('<Cart>: ', cartStore)
+
   // Reduce to get total price:
   const totalPrice = cartStore.cart.reduce((acc, item) => {
     return acc + item.unit_amount! * item.quantity!
@@ -42,7 +28,7 @@ export default function Cart() {
       onClick={() => cartStore.toggleCart()}
       className='fixed top-0 bottom-0 left-0 right-0 z-50 w-full h-screen bg-black/25 backdrop-blur-sm'
     >
-      {/* Shopping Panel */}
+      {/* Cart */}
       <motion.section
         layout
         onClick={(e) => e.stopPropagation()}

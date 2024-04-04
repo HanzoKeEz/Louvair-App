@@ -20,7 +20,7 @@ export default function AddCart({ name, id, image, unit_amount, quantity }: AddC
       <button
         onClick={handleAddToCart}
         disabled={added}
-        className='py-2 bg-neutral-800  rounded-lg border w-full'
+        className='py-2 bg-neutral-800 duration-200  text-neutral-100 rounded-lg border w-full'
       >
         {!added && <span>Add to cart</span>}
         {added && <span>Adding to cart</span>}

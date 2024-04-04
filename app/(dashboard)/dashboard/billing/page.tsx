@@ -1,14 +1,13 @@
 import { redirect } from 'next/navigation'
 import { stripe } from '@/lib/stripe'
+import { authOptions } from '@/lib/auth'
+import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { BillingForm } from '@/components/billing-form'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getCurrentUser } from '@/lib/session'
-import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardShell } from '@/components/dashboard/shell'
 import { FileWarning, FileWarningIcon } from 'lucide-react'
-import { UserAccountNav } from '@/components/user-account-nav'
 import TestCards from '@/components/TestCards'
 
 export const metadata = {
@@ -20,7 +19,7 @@ export default async function BillingPage() {
   const user = await getCurrentUser()
 
   if (!user) {
-    redirect(authOptions.pages?.signIn || '/login')
+    return null
   }
 
   const subscriptionPlan = await getUserSubscriptionPlan(user.id)
@@ -29,22 +28,23 @@ export default async function BillingPage() {
   let isCanceled = false
   if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {
     const stripePlan = await stripe.subscriptions.retrieve(subscriptionPlan.stripeSubscriptionId)
-    isCanceled = stripePlan.cancel_at_period_end
+    isCanceled = stripePlan.canceled_at !== null
+    console.log('<BillingPage> :', stripePlan)
   }
 
-  // const posts = await db.post.findMany({
+  // const subscription = await db.post.findMany({
   //   where: {
-  //     authorId: user.id,
+  //     authorId: user.id
   //   },
   //   select: {
   //     id: true,
   //     title: true,
   //     published: true,
-  //     createdAt: true,
+  //     createdAt: true
   //   },
   //   orderBy: {
-  //     updatedAt: "desc",
-  //   },
+  //     updatedAt: 'desc'
+  //   }
   // })
 
   return (
@@ -52,9 +52,7 @@ export default async function BillingPage() {
       <DashboardHeader
         heading='Billing'
         text='Manage billing and your subscription plan.'
-      >
-        <UserAccountNav user={{ name: user.name, image: user.image, email: user.email }} />
-      </DashboardHeader>
+      ></DashboardHeader>
       <div className='flex flex-col justify-center items-center gap-8 font-space '>
         <Alert className='!pl-14'>
           <FileWarning />

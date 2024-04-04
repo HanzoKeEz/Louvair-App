@@ -3,6 +3,8 @@
 import { useThemeStore } from '@/zustand/store'
 import { ReactNode, useEffect, useState } from 'react'
 
+import { SessionProvider } from 'next-auth/react'
+
 // ZUSTAND: HYDRATE COMPONENT TO HANDLE CLIENT-SIDE RENDERING (STEP 4) ⭐️
 // This component prevents client-specific code from running on the server and
 // causing a mismatch between pre-rendered server-rendered and client-rendered
@@ -28,18 +30,18 @@ export default function Hydration({ children }: Props) {
   // once the component has "mounted" using our effect hook, on the client.
   return (
     <>
-      {!isHydrated ? (
-        <body className='flex items-center justify-center w-full h-full'>
-          <code className=''>Loading...</code>
-        </body>
-      ) : (
-        <body
-          data-theme={themeStore.mode}
-          className='px-4 '
-        >
-          {children}
-        </body>
-      )}
+      <SessionProvider>
+        {isHydrated ? (
+          <body
+            className=''
+            data-theme={themeStore.mode}
+          >
+            {children}
+          </body>
+        ) : (
+          <body></body>
+        )}
+      </SessionProvider>
     </>
   )
 }

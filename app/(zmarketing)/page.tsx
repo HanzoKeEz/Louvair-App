@@ -38,7 +38,7 @@ export default async function ProductsPage() {
   console.log('products: ', products)
   const productImages = products.map((images) => images.image)
   return (
-    <main className='w-full min-h-screen mt-24'>
+    <main className='w-full min-h-screen '>
       <div className=''>
         <HeroSlider />
       </div>

@@ -2,12 +2,13 @@ import '../styles/globals.css'
 import '../styles/shared.css'
 import { Assistant, Great_Vibes, Space_Grotesk, Syncopate } from 'next/font/google'
 import { siteConfig } from '@/config/site'
-import { ThemeProvider } from '@/components/theme-provider'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { getServerSession } from 'next-auth'
+import { MainNav } from '@/components/navigation/main-nav'
 import { Toaster } from '@/components/ui/toaster'
-import Provider from '@/components/provider'
 import Hydration from '@/components/Hydration'
+import { authOptions } from '@/lib/auth'
+import Footer from '@/components/Footer'
 
 const syncopate = Syncopate({
   weight: ['400', '700'],
@@ -59,27 +60,22 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+  const session = await getServerSession(authOptions)
+
   return (
     <html
       lang='en'
-      className={`${syncopate.className} ,${greatVibes.variable}, ${assistant.className} ${space_grotesk.className}`}
+      className={`${syncopate.className} ${space_grotesk.className} ${greatVibes.className} ${assistant.className} bg-neutral-100 dark:bg-zinc-900 text-neutral-900 dark:text-neutral-100`}
     >
-      {/* <Hydrate> */}
-
       <Hydration>
-        <Provider>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='light'
-          >
-            {children}
-            <Toaster />
-            <TailwindIndicator />
-          </ThemeProvider>
-        </Provider>
+        <div className='flex flex-col min-h-screen w-full'>
+          <MainNav />
+          <div className='flex-grow'>{children}</div>
+          <Footer />
+        </div>
+        <Toaster />
+        <TailwindIndicator />
       </Hydration>
-
-      {/* </Hydrate> */}
     </html>
   )
 }

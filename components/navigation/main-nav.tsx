@@ -16,19 +16,42 @@ import { Button, buttonVariants } from '../ui/button'
 
 import { LogoBrand } from '../logos/LogoBrand'
 
+const navlinks = [
+  {
+    id: 0,
+    title: 'Featured',
+    href: '/'
+  },
+  {
+    id: 1,
+    title: 'Pricing',
+    href: '/pricing'
+  },
+  {
+    id: 2,
+    title: 'Dashboard',
+    href: '/dashboard'
+  }
+]
+
 const AnimatedLink = motion(Link)
 AnimatedLink.defaultProps = { className: 'hover:text-primary nav-link' }
 
 interface MainNavProps {
   items?: MainNavItem[]
-  user?: { id: string; name: string }
+  user?: { name: string; email: string }
 }
 
 export function MainNav({ items, user }: MainNavProps) {
+  const segment = useSelectedLayoutSegment()
   const cartStore = useCartStore()
   const { data: session, status } = useSession()
+  console.log('session:', session)
+  if (status === 'loading') {
+    return <p>Loading...</p>
+  }
 
-  const segment = useSelectedLayoutSegment()
+  const links = navlinks
 
   const handleBlurOut = () => {
     if (document.activeElement instanceof HTMLElement) {
@@ -36,9 +59,16 @@ export function MainNav({ items, user }: MainNavProps) {
     }
   }
 
+  // useSession() returns a session object with the following properties:
+  // - data: The session object returned by the server.
+  // - status: The loading status of the session.
+  // - error: The error object if the session failed to load.
+  // -used to check if the user is signed in or not
+  // -render the sign in button when no session and  or sign out when user is session
+
   return (
     <div className=''>
-      <div className='hidden md:flex md:border-y border-y-0 border-neutral-700 shadow-sm h-[80px]  backdrop-blur-[10px] bg-[rgba(255,255,255,0.1)] z-[900] fixed top-0 left-0 w-full justify-between items-center px-3'>
+      <div className='hidden md:flex md:border-y border-y-0 border-neutral-700 shadow-sm h-[80px]  backdrop-blur-[10px] bg-[rgba(255,255,255,0.5)] z-[900] fixed top-0 left-0 w-full justify-between items-center px-3'>
         <div className='hidden md:flex flex-col items-center justify-center'>
           <Link
             href='/'
@@ -61,17 +91,17 @@ export function MainNav({ items, user }: MainNavProps) {
         </button>
       </div> */}
         <div className='border-black/20 rounded-none px-4 py-2 md:border-y sm:border-y-0 shadow-2xl shadow-neutral-600 translate-x-16'>
-          {items?.length ? (
+          {links?.length ? (
             <nav className='hidden gap-6 md:flex '>
-              {items?.map((item, index) => (
+              {links?.map((item, index) => (
                 <Link
                   key={index}
                   href={item.href}
                   passHref
                   className={cn(
-                    'hidden md:flex font-medium font-space yellow-hover tracking-wide uppercase w-24 h-6 justify-center',
+                    'hidden md:flex  text-sm font-light font-space yellow-hover tracking-wide uppercase w-24 h-6 justify-center',
                     item.href.startsWith(`/${segment}`) ? 'text-foreground' : 'text-foreground/60',
-                    item.disabled && 'cursor-not-allowed opacity-80'
+                    item.href && 'cursor-not-allowed opacity-80'
                   )}
                 >
                   {item.title}
@@ -112,7 +142,7 @@ export function MainNav({ items, user }: MainNavProps) {
               <ThemeToggle />
             </li>
             <li className='hidden md:inline-block'>
-              {!user && (
+              {session ? (
                 <Link
                   href='/login'
                   className={cn(
@@ -122,17 +152,16 @@ export function MainNav({ items, user }: MainNavProps) {
                 >
                   Sign in
                 </Link>
-              )}
-              {user && (
-                <Button
+              ) : (
+                <button
                   className={cn(
-                    'hidden md:inline-block font-assistant uppercase relative text-xs tracking-wider',
-                    buttonVariants({ variant: 'ghost', size: 'sm' })
+                    'hidden md:inline-block hovers font-assistant bg-neutral-700 text-gray-200 rounded-sm uppercase relative text-xs tracking-wider',
+                    buttonVariants({ variant: 'outline', size: 'sm' })
                   )}
                   onClick={() => signOut()}
                 >
                   Logout
-                </Button>
+                </button>
               )}
             </li>
           </ul>

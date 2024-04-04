@@ -12,7 +12,6 @@ export async function getUserSubscriptionPlan(userId: string): Promise<UserSubsc
     select: {
       stripeSubscriptionId: true,
       stripeCurrentPeriodEnd: true,
-      stripeCustomerId: true,
       stripePriceId: true
     }
   })

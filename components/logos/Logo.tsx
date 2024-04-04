@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import LouvairLogo from '../../public/assets/LogoWhite.png'
+import LouvairLogo from '../../public/lit2l/LogoWhite.png'
 
 export const Logo = ({ ...props }) => (
   <Image

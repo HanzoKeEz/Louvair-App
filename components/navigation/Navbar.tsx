@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Cart from '../Cart'
-import { MainNavItem } from '@/types'
+import { MainNavItem } from '@/types/index'
 import { useCartStore } from '../../zustand/store'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from '@/components/theme-toggle'

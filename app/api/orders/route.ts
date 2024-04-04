@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 
 import { getServerSession } from 'next-auth'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { authOptions } from '@/lib/auth'
 
 // db: BEST PRACTICE FOR INSTANTIATING PRISMA CLIENT WITH NEXT.JS ⭐️
 // import { PrismaClient } from '@prisma/client';

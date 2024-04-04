@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Player } from '@lottiefiles/react-lottie-player'
-import checkoutOrder from '@/public/checkoutOrder.json'
+import checkoutOrder from '../public/checkoutOrder.json'
 
 export default function OrderAnimation() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
-import CardFront from '../public/TESTCARD.png'
-import CardBack from '../public/testcard_back.png'
+import CardFront from '../public/lit2l/stripe_testcard_front.png'
+import CardBack from '../public/lit2l/stripe_testcard_back.png'
 import Image from 'next/image'
 
 function TestCards() {

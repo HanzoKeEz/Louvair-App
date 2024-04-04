@@ -5,10 +5,9 @@ import { Check } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import Image from 'next/image'
 import { Card } from '@/components/ui/card'
-import GlassCard from '@/components/GlassCard'
+
 import { Separator } from '@/components/ui/separator'
-import CardFront from '../../../public/assets/stripe_testcard_front.png'
-import CardBack from '../../../public/assets/stripe_testcard_back.png'
+
 import TestCards from '@/components/TestCards'
 
 export const metadata = {

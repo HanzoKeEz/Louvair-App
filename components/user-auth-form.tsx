@@ -87,48 +87,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       className={cn('grid gap-6 font-space', className)}
       {...props}
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='grid gap-2 font-space'>
-          <div className='grid gap-1'>
-            <Label
-              className='sr-only'
-              htmlFor='email'
-            >
-              Email
-            </Label>
-            <Input
-              id='email'
-              placeholder='name@example.com'
-              type='email'
-              autoCapitalize='none'
-              autoComplete='email'
-              autoCorrect='off'
-              // disabled={isLoading || isGitHubLoading}
-              disabled={true}
-              {...register('email')}
-            />
-            {/* {errors?.email && <p className='px-1 text-xs text-red-600'>{errors.email.message}</p>} */}
-          </div>
-          <Button
-            className={cn(buttonVariants())}
-            disabled={true}
-          >
-            {isLoading && <Disc3 className='mr-2 h-4 w-4 animate-spin' />}
-            Sign In with Email
-          </Button>
-        </div>
-      </form>
+      <form onSubmit={handleSubmit(onSubmit)}></form>
       <div className='relative'>
         <div className='absolute inset-0 flex items-center'>
           <span className='w-full border-t' />
         </div>
         <div className='relative flex justify-center text-xs uppercase'>
-          <span className='bg-background px-2 text-primary-foreground'>Or continue with</span>
+          <span className='bg-background px-2 text-primary-foreground'>Continue with</span>
         </div>
       </div>
-      <Button
+      <button
         type='button'
-        className='border-black flex items-center justify-center gap-3 bg-slate-800 text-neutral-100'
+        className='border-black bg-neutral-900 hover:bg-opacity-80 flex items-center justify-center gap-3  h-9 w-82 rounded-md text-neutral-100 duration-200'
         onClick={handleGoogleSignIn}
         disabled={isLoading || isGoogleLoading}
       >
@@ -138,7 +108,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <FcGoogle className='mr-2 h-5 w-5' />
         )}{' '}
         Google
-      </Button>
+      </button>
     </div>
   )
 }

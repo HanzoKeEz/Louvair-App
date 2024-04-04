@@ -8,7 +8,6 @@ import Link from 'next/link'
 import { useCartStore } from '@/zustand/store'
 import { useEffect } from 'react'
 import { Player } from '@lottiefiles/react-lottie-player'
-
 import orderCompleted from '@/public/orderCompleted.json'
 
 export default function OrderConfirmed() {
@@ -37,10 +36,10 @@ export default function OrderConfirmed() {
         <h2 className='my-4 text-sm'>Check your email for the receipt</h2>
         {/* <Image
           src={payment}
-          alt="payment"
+          alt='payment'
           width={120}
           height={120}
-          className="w-full py-8"
+          className='w-full py-8'
         /> */}
         <Player
           autoplay
@@ -58,7 +57,7 @@ export default function OrderConfirmed() {
                 handleCheckout()
               }, 1000)
             }}
-            className='my-4 btn btn-primary'
+            className='my-4 bg-neutral-900 hover:bg-neutral-900/60 border border-black text-neutral-100'
           >
             Check your Order
           </button>
