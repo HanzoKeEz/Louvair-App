@@ -16,6 +16,13 @@ export default function OrderConfirmed() {
   useEffect(() => {
     cartStore.setPaymentIntent('')
     cartStore.clearCart()
+
+    return () => {
+      cartStore.setPaymentIntent('')
+      cartStore.clearCart()
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleCheckout = () => {

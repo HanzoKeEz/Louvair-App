@@ -1,19 +1,22 @@
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
 import { Check } from 'lucide-react'
 import { Label } from '@/components/ui/label'
-import Image from 'next/image'
 import { Card } from '@/components/ui/card'
-
-import { Separator } from '@/components/ui/separator'
-
 import TestCards from '@/components/TestCards'
+import { authOptions, getAuthSession } from '@/app/_clients/nextAuth'
+import { getServerSession } from 'next-auth'
+import { Separator } from '@/components/ui/separator'
+import { CheckoutPaymentButton } from '@/app/_components/CheckoutPaymentButton'
 
 export const metadata = {
   title: 'Pricing'
 }
-export default function PricingPage() {
+export default async function PricingPage() {
+  const session = await getAuthSession()
+
+  if (!session?.user) {
+    return null
+  }
+
   return (
     <section className='w-screen h-screen flex flex-col items-center font-space mt-16'>
       <Card className='md:max-w-[64rem] text-center sm:text-left flex flex-col container p-6'>
@@ -63,14 +66,7 @@ export default function PricingPage() {
               <Label className='text-xs '>Save over $600 on membership</Label>
             </div>
 
-            <div className=''>
-              <Link
-                href='/dashboard/billing'
-                className={cn(buttonVariants({ size: 'lg' }))}
-              >
-                Get Started
-              </Link>
-            </div>
+            <CheckoutPaymentButton />
           </div>
         </div>
         <div className='mx-auto flex w-full max-w-[58rem] mt-6 rounded border py-6 flex-col justify-center items-center dark:bg-muted gap-4'>

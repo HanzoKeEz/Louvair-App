@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { stripe } from '@/lib/stripe'
-import { authOptions } from '@/lib/auth'
+import { getAuthSession } from '@/app/_clients/nextAuth'
 import { getUserSubscriptionPlan } from '@/lib/subscription'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { BillingForm } from '@/components/billing-form'
@@ -9,21 +9,19 @@ import { DashboardHeader } from '@/components/dashboard/header'
 import { DashboardShell } from '@/components/dashboard/shell'
 import { FileWarning, FileWarningIcon } from 'lucide-react'
 import TestCards from '@/components/TestCards'
+import { Session } from 'next-auth'
 
 export const metadata = {
   title: 'Billing',
   description: 'Manage billing and your subscription plan.'
 }
 
-export default async function BillingPage() {
-  const user = await getCurrentUser()
+export default async function BillingPage({}) {
+  const session = await getAuthSession()
 
-  if (!user) {
-    return null
-  }
+  const subscriptionPlan = await getUserSubscriptionPlan()
 
-  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
-
+  if (!session) return redirect('/')
   // If user has a pro plan, check cancel status on Stripe.
   let isCanceled = false
   if (subscriptionPlan.isPro && subscriptionPlan.stripeSubscriptionId) {

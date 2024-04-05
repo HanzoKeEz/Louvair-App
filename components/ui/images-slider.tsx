@@ -77,6 +77,8 @@ export const ImagesSlider = ({
       window.removeEventListener('keydown', handleKeyDown)
       clearInterval(interval)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const slideVariants = {

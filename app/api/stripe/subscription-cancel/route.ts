@@ -1,11 +1,11 @@
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
-import { authOptions } from '@/lib/auth'
+import { authOptions } from '@/app/_clients/nextAuth'
 import Stripe from 'stripe'
 
 export async function GET(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2022-11-15'
+    apiVersion: '2023-10-16'
   })
 
   const session = await getServerSession(authOptions)
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       { status: 401 }
     )
   }
-  const stripeSubscriptionId = session.user.subscriptionID
+  const stripeSubscriptionId = session.user.subscriptionId
 
   const subscription = await stripe.subscriptions.update(stripeSubscriptionId, {
     cancel_at_period_end: true

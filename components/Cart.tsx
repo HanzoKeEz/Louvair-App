@@ -9,7 +9,7 @@ import { TbSquareRoundedPlus, TbSquareRoundedMinus } from 'react-icons/tb'
 import emptyBasket from '../public/shoppingbag.png'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Checkout from './Checkout'
+import Checkout from './Checkout/Checkout'
 import OrderConfirmed from './OrderConfirmed'
 
 export default function Cart() {

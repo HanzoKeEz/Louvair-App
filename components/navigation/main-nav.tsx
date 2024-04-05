@@ -3,18 +3,19 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
-import { MainNavItem } from '@/types/index'
+
 import { cn } from '@/lib/utils'
 
 import Cart from '../Cart'
 import { useCartStore } from '@/zustand/store'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut } from 'next-auth/react'
 import { Menu, ShoppingBag, SquareX } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from '../theme-toggle'
 import { Button, buttonVariants } from '../ui/button'
 
 import { LogoBrand } from '../logos/LogoBrand'
+import { getAuthSession } from '@/app/_clients/nextAuth'
 
 const navlinks = [
   {
@@ -37,19 +38,9 @@ const navlinks = [
 const AnimatedLink = motion(Link)
 AnimatedLink.defaultProps = { className: 'hover:text-primary nav-link' }
 
-interface MainNavProps {
-  items?: MainNavItem[]
-  user?: { name: string; email: string }
-}
-
-export function MainNav({ items, user }: MainNavProps) {
+export function MainNav() {
   const segment = useSelectedLayoutSegment()
   const cartStore = useCartStore()
-  const { data: session, status } = useSession()
-  console.log('session:', session)
-  if (status === 'loading') {
-    return <p>Loading...</p>
-  }
 
   const links = navlinks
 
@@ -81,15 +72,6 @@ export function MainNav({ items, user }: MainNavProps) {
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        {/* <div className='flex items-center justify-between md:hidden z-50'>
-        <button
-          onClick={() => setShowMobileNav((prev) => !prev)}
-          className='p-2 text-2xl text-neutral-500'
-        >
-          {showMobileNav ? <BurgerNav /> : ''}
-        </button>
-      </div> */}
         <div className='border-black/20 rounded-none px-4 py-2 md:border-y sm:border-y-0 shadow-2xl shadow-neutral-600 translate-x-16'>
           {links?.length ? (
             <nav className='hidden gap-6 md:flex '>
@@ -142,27 +124,15 @@ export function MainNav({ items, user }: MainNavProps) {
               <ThemeToggle />
             </li>
             <li className='hidden md:inline-block'>
-              {session ? (
-                <Link
-                  href='/login'
-                  className={cn(
-                    'hidden md:inline-block font-assistant uppercase relative border-slate-500/50 text-xs tracking-wider',
-                    buttonVariants({ variant: 'ghost' })
-                  )}
-                >
-                  Sign in
-                </Link>
-              ) : (
-                <button
-                  className={cn(
-                    'hidden md:inline-block hovers font-assistant bg-neutral-700 text-gray-200 rounded-sm uppercase relative text-xs tracking-wider',
-                    buttonVariants({ variant: 'outline', size: 'sm' })
-                  )}
-                  onClick={() => signOut()}
-                >
-                  Logout
-                </button>
-              )}
+              <Link
+                href='/login'
+                className={cn(
+                  'hidden md:inline-block font-assistant uppercase relative border-slate-500/50 text-xs tracking-wider',
+                  buttonVariants({ variant: 'outline' })
+                )}
+              >
+                Sign in
+              </Link>
             </li>
           </ul>
           <AnimatePresence>

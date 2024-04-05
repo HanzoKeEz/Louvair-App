@@ -4,14 +4,14 @@ import { db } from '@/lib/db'
 import { NextRequest, NextResponse } from 'next/server'
 
 // Required to disable body parser, otherwise we get an error from Stripe.
-export const config = {
-  api: {
-    bodyParser: false
-  }
-}
+// export const config = {
+//   api: {
+//     bodyParser: false
+//   }
+// }
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2022-11-15'
+  apiVersion: '2023-10-16'
 })
 
 const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!
@@ -56,7 +56,7 @@ const webhookHandler = async (req: NextRequest) => {
           },
           data: {
             isActive: true,
-            stripeSubscriptionId: subscriptionId
+            subscriptionId: subscriptionId
           }
         })
         break

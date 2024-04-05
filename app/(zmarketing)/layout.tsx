@@ -1,5 +1,5 @@
-import BurgerNav from '@/components/navigation/BurgerNav'
-import { MainNav } from '@/components/navigation/main-nav'
+import BurgerNav from '@/components/Navigation/BurgerNav'
+import { MainNav } from '@/components/Navigation/main-nav'
 import { marketingConfig } from '@/config/marketing'
 
 interface MarketingLayoutProps {

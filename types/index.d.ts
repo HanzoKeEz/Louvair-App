@@ -53,6 +53,7 @@ export type DashboardConfig = {
 }
 
 export type SubscriptionPlan = {
+  id: string
   name: string
   description: string
   stripePriceId: string

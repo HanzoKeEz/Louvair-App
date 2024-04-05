@@ -1,13 +1,12 @@
 import '../styles/globals.css'
 import '../styles/shared.css'
 import { Assistant, Great_Vibes, Space_Grotesk, Syncopate } from 'next/font/google'
+import { getServerSession } from 'next-auth/next'
 import { siteConfig } from '@/config/site'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { getServerSession } from 'next-auth'
-import { MainNav } from '@/components/navigation/main-nav'
+import { MainNav } from '@/components/Navigation/main-nav'
 import { Toaster } from '@/components/ui/toaster'
 import Hydration from '@/components/Hydration'
-import { authOptions } from '@/lib/auth'
 import Footer from '@/components/Footer'
 
 const syncopate = Syncopate({
@@ -60,19 +59,20 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const session = await getServerSession(authOptions)
-
+  const session = await getServerSession()
   return (
     <html
       lang='en'
       className={`${syncopate.className} ${space_grotesk.className} ${greatVibes.className} ${assistant.className} bg-neutral-100 dark:bg-zinc-900 text-neutral-900 dark:text-neutral-100`}
     >
       <Hydration>
-        <div className='flex flex-col min-h-screen w-full'>
-          <MainNav />
-          <div className='flex-grow'>{children}</div>
-          <Footer />
-        </div>
+        <MainNav
+          user={session?.user}
+          expires={session?.expires as string}
+        />
+        <div className=''>{children}</div>
+        <Footer />
+
         <Toaster />
         <TailwindIndicator />
       </Hydration>

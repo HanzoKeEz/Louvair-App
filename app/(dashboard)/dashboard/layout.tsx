@@ -1,24 +1,24 @@
-import { getCurrentUser } from '@/lib/session'
-import { MainNav } from '@/components/navigation/main-nav'
-import { DashboardNav } from '@/components/navigation/nav'
+import { MainNav } from '@/components/Navigation/main-nav'
+import { DashboardNav } from '@/components/Navigation/nav'
 import { dashboardConfig } from '@/config/dashboard'
 import { SiteFooter } from '@/components/site-footer'
-import { marketingConfig } from '@/config/marketing'
-import BurgerNav from '@/components/navigation/BurgerNav'
+import BurgerNav from '@/components/Navigation/BurgerNav'
 import { UserAccountNav } from '@/components/user-account-nav'
+import { getAuthSession } from '@/app/_clients/nextAuth'
 
 interface DashboardLayoutProps {
   children?: React.ReactNode
 }
 
 export default async function DashboardLayout({ children }: DashboardLayoutProps) {
-  const user = await getCurrentUser()
+  const session = await getAuthSession()
+  const user = session?.user
 
   return (
     <div className='flex min-h-screen bg-zinc-400 flex-col space-y-6'>
       <header className='sticky top-0 z-40 border-b bg-background'>
         <div className='container flex h-16 items-center justify-between py-4'>
-          <MainNav items={marketingConfig.mainNav} />
+          <MainNav />
           {user && (
             <UserAccountNav
               user={{
@@ -28,6 +28,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
               }}
             />
           )}
+
           <BurgerNav />
         </div>
       </header>

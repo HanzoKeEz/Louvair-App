@@ -1,35 +1,45 @@
 // @ts-nocheck
 // TODO: Fix this when we turn strict mode on.
-import { UserSubscriptionPlan } from 'types'
-import { freePlan, proPlan } from '@/config/subscriptions'
+import { getAuthSession } from '@/app/_clients/nextAuth'
+import { memberSubscriptionPlans } from '@/config/subscriptions'
 import { db } from '@/lib/db'
+import { stripe } from './stripe'
 
-export async function getUserSubscriptionPlan(userId: string): Promise<UserSubscriptionPlan> {
-  const user = await db.user.findFirst({
-    where: {
-      id: userId
-    },
-    select: {
-      stripeSubscriptionId: true,
-      stripeCurrentPeriodEnd: true,
-      stripePriceId: true
-    }
+export async function getUserSubscriptionPlan() {
+  const session = await getAuthSession()
+  if (!session || !session.user) {
+    throw new Error('User or Session not found')
+  }
+
+  const user = await db.user.findUnique({
+    where: { id: session.user.id }
   })
 
   if (!user) {
-    redirect(authOptions.pages?.signIn || '/login')
+    throw new Error('User not found')
   }
 
-  // Check if user is on a pro plan.
-  const isPro =
-    user.stripePriceId && user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
+  const isSubscribed =
+    user.stripePriceId &&
+    user.stripeCurrentPeriodEnd &&
+    user.stripeCurrentPeriodEnd.getTime() + 86_400_000 > Date.now()
 
-  const plan = isPro ? proPlan : freePlan
+  const plan = isSubscribed
+    ? memberSubscriptionPlans.find((plan) => plan.stripePriceId === user.stripePriceId)
+    : null
+
+  let isCanceled = false
+  if (isSubscribed && user.stripeSubscriptionId) {
+    const stripePlan = await stripe.subscriptions.retrieve(user.stripeSubscriptionId)
+    isCanceled = stripePlan.cancel_at_period_end
+  }
 
   return {
     ...plan,
-    ...user,
-    stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd?.getTime(),
-    isPro
+    stripeSubscriptionId: user.stripeSubscriptionId,
+    stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd,
+    stripeCustomerId: user.stripeCustomerId,
+    isSubscribed,
+    isCanceled
   }
 }
