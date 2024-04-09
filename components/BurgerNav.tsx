@@ -4,15 +4,15 @@ import React from 'react'
 import Link from 'next/link'
 import { TbBrandFacebookFilled } from 'react-icons/tb'
 import { AiOutlineInstagram } from 'react-icons/ai'
-import { ThemeToggle } from '../theme-toggle'
+import { ThemeToggle } from './theme-toggle'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AlignLeft, ShoppingBag, SquareChevronRight, SquareX } from 'lucide-react'
 import { useCartStore } from '@/zustand/store'
 import { MainNavItem } from '@/types/index'
-import { Button, buttonVariants } from '../ui/button'
+import { Button, buttonVariants } from './ui/button'
 import { cn } from '@/utils/cn'
 import { signOut } from 'next-auth/react'
-import Cart from '../Checkout/Cart'
+import Cart from './Checkout/Cart'
 
 const AnimatedLink = motion(Link)
 AnimatedLink.defaultProps = { className: 'red-hover nav-link' }

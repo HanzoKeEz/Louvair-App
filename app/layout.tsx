@@ -4,7 +4,7 @@ import { Assistant, Great_Vibes, Space_Grotesk, Syncopate } from 'next/font/goog
 import { getServerSession } from 'next-auth/next'
 import { siteConfig } from '@/config/site'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { MainNav } from '@/components/Navigation/main-nav'
+import { MainNav } from '@/components/main-nav'
 import { Toaster } from '@/components/ui/toaster'
 import Hydration from '@/components/Hydration'
 import Footer from '@/components/Footer'

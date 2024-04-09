@@ -6,16 +6,13 @@ import { useSelectedLayoutSegment } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
-import Cart from '../Checkout/Cart'
+import Cart from './Checkout/Cart'
 import { useCartStore } from '@/zustand/store'
-import { signIn, signOut, useSession } from 'next-auth/react'
 import { Menu, ShoppingBag, SquareX } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ThemeToggle } from '../theme-toggle'
-import { Button, buttonVariants } from '../ui/button'
-
-import { LogoBrand } from '../logos/LogoBrand'
-import { getAuthSession } from '@/app/_clients/nextAuth'
+import { ThemeToggle } from './theme-toggle'
+import { Button, buttonVariants } from './ui/button'
+import { LogoBrand } from './logos/LogoBrand'
 
 const navlinks = [
   {

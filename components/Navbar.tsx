@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import Cart from '../Checkout/Cart'
+import Cart from './Checkout/Cart'
 import { MainNavItem } from '@/types/index'
-import { useCartStore } from '../../zustand/store'
+import { useCartStore } from '../zustand/store'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { AiFillShopping } from 'react-icons/ai'

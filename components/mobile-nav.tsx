@@ -5,7 +5,7 @@ import { MainNavItem } from '@/types/index'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 
-import { LogoBrand } from '../logos/LogoBrand'
+import { LogoBrand } from './logos/LogoBrand'
 
 interface MobileNavProps {
   items: MainNavItem[]

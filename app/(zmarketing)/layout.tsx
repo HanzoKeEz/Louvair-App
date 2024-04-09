@@ -1,6 +1,6 @@
 import SignInBtn from '@/components/Auth/sign-in-btn'
-import BurgerNav from '@/components/Navigation/BurgerNav'
-import { MainNav } from '@/components/Navigation/main-nav'
+import BurgerNav from '@/components/BurgerNav'
+import { MainNav } from '@/components/main-nav'
 import { marketingConfig } from '@/config/marketing'
 import { getAuthSession } from '../_clients/nextAuth'
 

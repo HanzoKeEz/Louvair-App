@@ -1,7 +1,7 @@
-import { MainNav } from '@/components/Navigation/main-nav'
-import { DashboardNav } from '@/components/Navigation/nav'
+import { MainNav } from '@/components/main-nav'
+import { DashboardNav } from '@/components/nav'
 import { dashboardConfig } from '@/config/dashboard'
-import BurgerNav from '@/components/Navigation/BurgerNav'
+import BurgerNav from '@/components/BurgerNav'
 import { UserAccountNav } from '@/components/user-account-nav'
 import { getAuthSession } from '@/app/_clients/nextAuth'
 
