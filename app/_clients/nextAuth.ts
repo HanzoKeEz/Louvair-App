@@ -6,6 +6,7 @@ import { stripe } from './stripe'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
@@ -29,27 +30,31 @@ export const authOptions: NextAuthOptions = {
       }
     }
   },
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: 'jwt'
-  },
+
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.email = user.email
-        token.name = user.name
-        token.picture = user.image
-      }
-      return token
-    },
-    session: async ({ session, token }) => {
-      if (token) {
-        session.user.id = token.id
-        session.user.email = token.email
-        session.user.name = token.name
-        session.user.image = token.picture
-      }
+    //     async jwt({ token, user }) {
+    //       if (user) {
+    //         token.id = user.id
+    //         token.email = user.email
+    //         token.name = user.name
+    //         token.picture = user.image
+    //       }
+    //       return token
+    //     },
+    //     session: async ({ session, token }) => {
+    //       if (token) {
+    //         session.user.id = token.id
+    //         session.user.email = token.email
+    //         session.user.name = token.name
+    //         session.user.image = token.picture
+    //       }
+    //       return session
+    //     }
+    //   }
+    // }
+
+    async session({ session, user, token }) {
+      session.user = user
       return session
     }
   }

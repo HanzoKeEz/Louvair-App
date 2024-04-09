@@ -16,7 +16,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   return (
     <div className='flex min-h-screen bg-zinc-400 flex-col space-y-6'>
       <header className='sticky top-0 z-40 border-b bg-background'>
-        <div className='container flex h-16 items-center justify-between py-4'>
+        <div className='container flex h-20 items-center justify-between py-4'>
           <MainNav />
           {user && (
             <UserAccountNav

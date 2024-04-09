@@ -1,17 +1,21 @@
 import { Check } from 'lucide-react'
 import { Label } from '@/components/ui/label'
-import { Card } from '@/components/ui/card'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import TestCards from '@/components/TestCards'
 import { authOptions, getAuthSession } from '@/app/_clients/nextAuth'
 import { getServerSession } from 'next-auth'
 import { Separator } from '@/components/ui/separator'
 import { CheckoutPaymentButton } from '@/app/_components/CheckoutPaymentButton'
+import { ManageUserSubscriptionButton } from '@/components/Subscription/manage-user-subscription-button'
+import { memberSubscriptionPlans } from '@/config/subscriptions'
+import { getUserSubscriptionPlan } from '@/lib/subscription'
 
 export const metadata = {
   title: 'Pricing'
 }
 export default async function PricingPage() {
   const session = await getAuthSession()
+  const subscriptionPlan = await getUserSubscriptionPlan()
 
   if (!session?.user) {
     return null
@@ -65,10 +69,46 @@ export default async function PricingPage() {
               <p className='text-sm font-medium text-muted-foreground'>Billed Monthly</p>
               <Label className='text-xs '>Save over $600 on membership</Label>
             </div>
-
-            <CheckoutPaymentButton />
+            <Card className='p-6 mb-2'>
+              <p className='text-lg font-semibold leading-none'>{subscriptionPlan.name}</p>
+              <p className='text-sm text-muted-foreground'>
+                {!subscriptionPlan.isSubscribed
+                  ? 'You are not subscribed to any plan.'
+                  : subscriptionPlan.isCanceled
+                  ? 'Your plan will be canceled on '
+                  : 'Your plan renews on '}
+                {subscriptionPlan?.stripeCurrentPeriodEnd
+                  ? subscriptionPlan.stripeCurrentPeriodEnd.toLocaleDateString()
+                  : null}
+              </p>
+            </Card>
+            <div className=''>
+              {memberSubscriptionPlans.map((plan) => (
+                <>
+                  <Card key={plan.id}>
+                    <CardHeader>
+                      <CardTitle>{plan.name} Plan</CardTitle>
+                    </CardHeader>
+                    <CardFooter className='flex items-end'>
+                      {session?.user ? (
+                        <ManageUserSubscriptionButton
+                          key={plan.id}
+                          userId={session.user.id}
+                          email={session.user.email || ''}
+                          stripePriceId={plan.stripePriceId}
+                          stripeCustomerId={subscriptionPlan?.stripeCustomerId}
+                          isSubscribed={!!subscriptionPlan.isSubscribed}
+                          isCurrentPlan={subscriptionPlan?.name === plan.name}
+                        />
+                      ) : null}
+                    </CardFooter>
+                  </Card>
+                </>
+              ))}
+            </div>
           </div>
         </div>
+
         <div className='mx-auto flex w-full max-w-[58rem] mt-6 rounded border py-6 flex-col justify-center items-center dark:bg-muted gap-4'>
           <div className='max-w-[85%] leading-normal sm:leading-10 rounded-sm text-center text-muted-foreground'>
             <h2 className='text-xl font-bold sm:text-2xl uppercase font-assistant '>Test Mode</h2>

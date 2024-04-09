@@ -6,6 +6,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Icons } from '@/components/shared/icons'
 
 import { redirect } from 'next/navigation'
+import { getProducts } from '@/utils/getProducts'
+import Product from '@/components/Product'
 
 export const metadata = {
   title: 'Dashboard'
@@ -17,6 +19,10 @@ export default async function DashboardPage() {
   if (!user) {
     redirect(authOptions?.pages?.signIn || '/login')
   }
+
+  const products = await getProducts()
+
+  console.log('products: ', products)
 
   return (
     <DashboardShell>
@@ -43,6 +49,19 @@ export default async function DashboardPage() {
           </AlertDescription>
         </Alert>
       </div>
+      <section className='grid grid-cols-2 my-12 gap-12'>
+        {products.map((product) => (
+          <Product
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            image={product.image}
+            unit_amount={product.unit_amount}
+            description={product.description as string}
+            metadata={product.metadata}
+          />
+        ))}
+      </section>
     </DashboardShell>
   )
 }

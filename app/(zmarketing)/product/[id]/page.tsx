@@ -29,7 +29,7 @@ export default async function Product({ searchParams }: SearchParamTypes) {
 
           <CardHeader>
             <CardTitle className='text-left text-xl'>
-              <h1>{searchParams.name}</h1>
+              <p>{searchParams.name}</p>
             </CardTitle>
           </CardHeader>
           <p className='py-2'>{searchParams.description}</p>

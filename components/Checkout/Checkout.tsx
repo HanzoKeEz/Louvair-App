@@ -52,7 +52,7 @@ export default function Checkout() {
   const options: StripeElementsOptions = {
     clientSecret,
     appearance: {
-      theme: stripeTheme,
+      theme: 'night',
       labels: 'floating'
     }
   }

@@ -59,7 +59,7 @@ export function MainNav() {
 
   return (
     <div className=''>
-      <div className='hidden md:flex md:border-y border-y-0 border-neutral-700 shadow-sm h-[80px]  backdrop-blur-[10px] bg-[rgba(255,255,255,0.5)] z-[900] fixed top-0 left-0 w-full justify-between items-center px-3'>
+      <div className='hidden md:flex md:border-y border-y-0 border-neutral-700 shadow-sm h-[80px]  backdrop-blur-[10px] bg-[rgba(255,255,255,0.5)] z-[900] fixed top-0 left-0 w-full justify-between items-center pl-3 pr-20'>
         <div className='hidden md:flex flex-col items-center justify-center'>
           <Link
             href='/'
@@ -122,17 +122,6 @@ export function MainNav() {
 
             <li className='flex hovers'>
               <ThemeToggle />
-            </li>
-            <li className='hidden md:inline-block'>
-              <Link
-                href='/login'
-                className={cn(
-                  'hidden md:inline-block font-assistant uppercase relative border-slate-500/50 text-xs tracking-wider',
-                  buttonVariants({ variant: 'outline' })
-                )}
-              >
-                Sign in
-              </Link>
             </li>
           </ul>
           <AnimatePresence>

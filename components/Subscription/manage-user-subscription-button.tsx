@@ -11,7 +11,7 @@ interface ManageUserSubscriptionButtonProps {
   email: string
   isCurrentPlan: boolean
   isSubscribed: boolean
-  stripeCustomerId?: string
+  stripeCustomerId?: string | null
   stripePriceId: string
 }
 

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Player } from '@lottiefiles/react-lottie-player'
-import checkoutOrder from '../public/checkoutOrder.json'
+import spray from '../public/spray.gif'
+import Image from 'next/image'
 
 export default function OrderAnimation() {
   return (
@@ -12,10 +13,9 @@ export default function OrderAnimation() {
       >
         Prepping your order
       </motion.h1>
-      <Player
-        autoplay
-        loop
-        src={checkoutOrder}
+      <Image
+        alt='spray'
+        src={spray}
         style={{ height: '300px', width: '300px' }}
       />
     </div>
