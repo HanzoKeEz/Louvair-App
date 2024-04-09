@@ -66,10 +66,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       className={`${syncopate.className} ${space_grotesk.className} ${greatVibes.className} ${assistant.className} bg-neutral-100 dark:bg-zinc-900 text-neutral-900 dark:text-neutral-100`}
     >
       <Hydration>
-        <MainNav
-          user={session?.user}
-          expires={session?.expires as string}
-        />
+        <MainNav />
         <div className=''>{children}</div>
         <Footer />
 

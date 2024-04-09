@@ -12,7 +12,7 @@ import { MainNavItem } from '@/types/index'
 import { Button, buttonVariants } from '../ui/button'
 import { cn } from '@/utils/cn'
 import { signOut } from 'next-auth/react'
-import Cart from '../Cart'
+import Cart from '../Checkout/Cart'
 
 const AnimatedLink = motion(Link)
 AnimatedLink.defaultProps = { className: 'red-hover nav-link' }

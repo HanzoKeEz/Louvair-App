@@ -30,15 +30,10 @@ model Account {
 
 model Session {
   id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
+  sessionToken String   @unique
+  userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
-
-  @@index([userId])
-  @@map("sessions")
 }
 
 model User {
@@ -47,19 +42,14 @@ model User {
   email                  String?   @unique
   emailVerified          DateTime?
   image                  String?
-  role                   String?   @default("")
-  stripeCustomerId       String?   @unique @map("stripe_customer_id")
-  isPaid                 Boolean?  @default(false) @map("is_paid")
-  stripeSubscriptionId   String?   @unique @map("stripe_subscription_id")
-  subscriptionStatus     String?
-  stripePriceId          String?   @map("stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map("stripe_current_period_end")
+  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
+  stripePriceId          String?   @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
   accounts               Account[]
   sessions               Session[]
   orders                 Order[]
-  isActive               Boolean   @default(false)
-
-  @@map("users")
+  isSubscribed           Boolean   @default(false)
 }
 
 model VerificationToken {
@@ -91,5 +81,4 @@ model Product {
   image       String?
   quantity    Float   @default(0)
   orders      Order[]
-  amount      Float
 }

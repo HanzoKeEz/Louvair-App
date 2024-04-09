@@ -8,8 +8,7 @@ declare global {
 declare module 'next-auth' {
   interface User {
     id: string
-    role: 'user' | 'admin'
-    isPaid: boolean
+    isSubscribed: boolean
     stripeCustomerId: string
     isActive: boolean
     subscriptionId: string

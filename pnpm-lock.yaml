@@ -83,6 +83,9 @@ dependencies:
   gsap:
     specifier: ^3.12.5
     version: 3.12.5
+  jose:
+    specifier: ^5.2.4
+    version: 5.2.4
   locomotive-scroll:
     specifier: ^4.1.4
     version: 4.1.4
@@ -3195,6 +3198,10 @@ packages:
 
   /jose@4.15.5:
     resolution: {integrity: sha512-jc7BFxgKPKi94uOvEmzlSWFFe2+vASyXaKUpdQKatWAESU2MWjDfFf0fdfc83CDKcA5QecabZeNLyfhe3yKNkg==}
+    dev: false
+
+  /jose@5.2.4:
+    resolution: {integrity: sha512-6ScbIk2WWCeXkmzF6bRPmEuaqy1m8SbsRFMa/FLrSCkGIhj8OLVG/IH+XHVmNMx/KUo8cVWEE6oKR4dJ+S0Rkg==}
     dev: false
 
   /js-tokens@4.0.0:

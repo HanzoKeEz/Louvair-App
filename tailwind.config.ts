@@ -14,6 +14,9 @@ module.exports = {
       }
     },
     extend: {
+      gridTemplateColumns: {
+        fluid: 'repeat(auto-fit, minmax(20rem,1fr))'
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

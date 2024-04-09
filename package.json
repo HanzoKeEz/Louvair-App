@@ -14,6 +14,7 @@
     "lint": "next lint && biome lint ."
   },
   "dependencies": {
+    "@biomejs/biome": "1.5.3",
     "@hookform/resolvers": "^3.1.1",
     "@lottiefiles/react-lottie-player": "^3.5.3",
     "@next-auth/prisma-adapter": "^1.0.5",
@@ -33,13 +34,13 @@
     "@stripe/stripe-js": "^1.46.0",
     "@studio-freight/lenis": "^1.0.40",
     "@t3-oss/env-nextjs": "^0.9.2",
-    "@biomejs/biome": "1.5.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel-autoplay": "8.0.0-rc17",
     "embla-carousel-react": "8.0.0-rc17",
     "framer-motion": "^11.0.18",
     "gsap": "^3.12.5",
+    "jose": "^5.2.4",
     "locomotive-scroll": "^4.1.4",
     "lucide-react": "^0.358.0",
     "micro": "^10.0.1",

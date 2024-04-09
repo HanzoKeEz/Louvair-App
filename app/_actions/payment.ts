@@ -1,19 +1,19 @@
 'use server'
 
 import { authOptions } from '../_clients/nextAuth'
-import { db } from '@/lib/db'
+import { prisma } from '@/app/_clients/prisma'
 import { stripe } from '@/lib/stripe'
-import { getServerSession } from 'next-auth'
+import { getAuthSession } from '@/app/_clients/nextAuth'
 import { redirect } from 'next/navigation'
 
 export async function checkout() {
-  const session = await getServerSession(authOptions)
+  const session = await getAuthSession()
 
   if (!session) {
     throw new Error('session not found')
   }
 
-  const user = await db.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id }
   })
 
@@ -54,17 +54,17 @@ export async function checkout() {
 }
 
 export async function cancel(id: string) {
-  const session = await getServerSession(authOptions)
+  const session = await getAuthSession()
 
   if (!session) {
     throw new Error('session not found')
   }
 
-  if (!session.user.isPaid) {
+  if (!session.user.isSubscribed) {
     throw new Error('user is not active')
   }
 
-  const user = await db.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id }
   })
 
@@ -75,9 +75,9 @@ export async function cancel(id: string) {
   const subscription = await stripe.subscriptions.cancel(id)
 
   if (subscription.status === 'canceled') {
-    await db.user.update({
+    await prisma.user.update({
       where: { id: session.user.id },
-      data: { isPaid: false }
+      data: { isSubscribed: false }
     })
   }
 
@@ -85,13 +85,13 @@ export async function cancel(id: string) {
 }
 
 export async function status() {
-  const session = await getServerSession(authOptions)
+  const session = await getAuthSession()
 
   if (!session) {
     throw new Error('session not found')
   }
 
-  const user = await db.user.findUnique({
+  const user = await prisma.user.findUnique({
     where: { id: session.user.id }
   })
 

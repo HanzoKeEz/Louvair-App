@@ -6,9 +6,9 @@ import { useSelectedLayoutSegment } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
-import Cart from '../Cart'
+import Cart from '../Checkout/Cart'
 import { useCartStore } from '@/zustand/store'
-import { signIn, signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { Menu, ShoppingBag, SquareX } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ThemeToggle } from '../theme-toggle'

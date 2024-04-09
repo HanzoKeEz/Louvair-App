@@ -4,10 +4,10 @@ export type ProductType = {
   quantity?: number | 1
   image: string
   id: string
-  description: string | null
-  metadata: MetadataType
+  description: string
+  metadata: string
 }
 
-type MetadataType = {
-  features: string
-}
+// type MetadataType = {
+//   features: string
+// }

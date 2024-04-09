@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Cart from '../Cart'
+import Cart from '../Checkout/Cart'
 import { MainNavItem } from '@/types/index'
 import { useCartStore } from '../../zustand/store'
 import { AnimatePresence, motion } from 'framer-motion'

@@ -2,7 +2,7 @@ import { SearchParamTypes } from '@/types/SearchParamType'
 import priceFormat from '@/lib/priceFormat'
 import Image from 'next/image'
 
-import AddCartBtn from '@/components/addCartBtn'
+import AddCartBtn from '@/components/Checkout/addCartBtn'
 import {
   Card,
   CardContent,

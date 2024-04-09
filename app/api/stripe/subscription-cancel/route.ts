@@ -4,7 +4,7 @@ import { authOptions } from '@/app/_clients/nextAuth'
 import Stripe from 'stripe'
 
 export async function GET(req: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2023-10-16'
   })
 

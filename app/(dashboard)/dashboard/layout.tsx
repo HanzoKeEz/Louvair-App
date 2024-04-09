@@ -1,7 +1,6 @@
 import { MainNav } from '@/components/Navigation/main-nav'
 import { DashboardNav } from '@/components/Navigation/nav'
 import { dashboardConfig } from '@/config/dashboard'
-import { SiteFooter } from '@/components/site-footer'
 import BurgerNav from '@/components/Navigation/BurgerNav'
 import { UserAccountNav } from '@/components/user-account-nav'
 import { getAuthSession } from '@/app/_clients/nextAuth'
@@ -38,7 +37,6 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
         </aside>
         <main className='flex w-full flex-1 flex-col overflow-hidden'>{children}</main>
       </div>
-      <SiteFooter className='border-t' />
     </div>
   )
 }

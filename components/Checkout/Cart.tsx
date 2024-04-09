@@ -6,11 +6,11 @@ import Image from 'next/image'
 
 import { CgClose } from 'react-icons/cg'
 import { TbSquareRoundedPlus, TbSquareRoundedMinus } from 'react-icons/tb'
-import emptyBasket from '../public/shoppingbag.png'
+import emptyBasket from '../../public/shoppingbag.png'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Checkout from './Checkout/Checkout'
-import OrderConfirmed from './OrderConfirmed'
+import Checkout from './Checkout'
+import OrderConfirmed from '../OrderConfirmed'
 
 export default function Cart() {
   const cartStore = useCartStore()
