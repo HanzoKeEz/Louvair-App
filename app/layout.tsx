@@ -66,7 +66,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     >
       <Hydration>
         <div className=''>{children}</div>
-        
 
         <Toaster />
         <TailwindIndicator />

@@ -1,25 +1,29 @@
-"use client";
+'use client'
 
-import { signOut } from "next-auth/react";
-import { useTransition } from "react";
-import { Button } from "./Button";
+import { signOut } from 'next-auth/react'
+import { useTransition } from 'react'
+import { Button } from './Button'
 
 export function SignOutButton() {
-  const [isPending, transision] = useTransition();
+  const [isPending, transition] = useTransition()
 
   const handleClick = () => {
-    transision(async () => {
+    transition(async () => {
       try {
-        await signOut();
+        await signOut()
       } catch {
-        alert("Failed to sign out");
+        alert('Failed to sign out')
       }
-    });
-  };
+    })
+  }
 
   return (
-    <Button onClick={handleClick} disabled={isPending}>
+    <Button
+      className='bg-neutral-900 w-36 text-center justify-center p-2 rounded-lg text-card items-center flex text-sm hover:bg-neutral-900/80 z-[999]'
+      onClick={handleClick}
+      disabled={isPending}
+    >
       Sign out
     </Button>
-  );
+  )
 }

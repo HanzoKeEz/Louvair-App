@@ -41,6 +41,7 @@ export default function OrderConfirmed() {
       <div className='p-8 text-center rounded-b-md'>
         <h1 className='text-xl font-medium'>Your order has been confirmed</h1>
         <h2 className='my-4 text-sm'>Check your email for the receipt</h2>
+        <p className='text-sm'>L&apos;ouvair members can view order history in your dashboard.</p>
         {/* <Image
           src={payment}
           alt='payment'
@@ -64,7 +65,7 @@ export default function OrderConfirmed() {
                 handleCheckout()
               }, 1000)
             }}
-            className='my-4 bg-neutral-900 hover:bg-neutral-900/60 border border-black text-neutral-100'
+            className='my-4 bg-amber-400 w-full hover:bg-neutral-900/60 border-2 border-yellow-950 text-neutral-950 py-2 px-6 shadow-xl shadow-amber-600/70 rounded-md hover:text-amber-400 duration-300'
           >
             Check your Order
           </button>

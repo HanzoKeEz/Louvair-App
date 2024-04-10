@@ -9,13 +9,14 @@ import { CheckoutPaymentButton } from '@/app/_components/CheckoutPaymentButton'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { Icons } from '@/components/icons'
 
 export const metadata = {
   title: 'Pricing'
 }
 export default async function PricingPage() {
   return (
-    <section className='w-screen h-screen flex flex-col items-center font-space mt-16'>
+    <section className='relative w-screen h-screen flex flex-col items-center font-space mt-28'>
       <Card className='md:max-w-[64rem] text-center sm:text-left flex flex-col container p-6'>
         <div className='flex w-full flex-col gap-4 md:max-w-[58rem] '>
           <h2 className='font-assistant font-semibold text-4xl tracking-wide'>
@@ -88,6 +89,13 @@ export default async function PricingPage() {
           </div>
         </div>
       </Card>
+      <Link
+        href='/'
+        className='fixed flex items-center top-16 left-16 text-xl text-muted-foreground hover:scale-95 duration-200'
+      >
+        <Icons.chevronLeft className='w-8 h-8' />
+        Back
+      </Link>
     </section>
   )
 }

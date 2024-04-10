@@ -36,10 +36,10 @@ export default function Cart() {
       >
         {/* Conditional Headings */}
         {cartStore.onCheckout === 'cart' && (
-          <div className='flex items-center justify-between mb-12'>
+          <div className='flex items-center justify-between mt-12 mb-12'>
             <h1 className='text-2xl font-bold'>Your shopping cart</h1>
             <CgClose
-              className='w-6 h-6 cursor-pointer'
+              className='w-10 h-10 cursor-pointer hover:scale-75 duration-200'
               onClick={() => cartStore.toggleCart()}
             />
           </div>

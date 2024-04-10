@@ -55,7 +55,7 @@ export default function CheckoutForm({ clientSecret }: Props) {
       <button
         id='submit'
         disabled={isLoading || !stripe || !elements}
-        className='w-full my-4 bg-neutral-900 hover:bg-neutral-900/60 border border-black text-neutral-100'
+        className='w-full my-4 bg-neutral-900 hover:bg-neutral-900/60 border border-black text-neutral-100 py-1 flex justify-center items-center'
       >
         {isLoading ? <span>Processing</span> : <span>Pay now</span>}
       </button>

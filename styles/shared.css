@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -7,6 +11,8 @@
 html {
   height: 100%;
   font-family: '';
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
 }
 body {
   text-size-adjust: auto;
@@ -14,6 +20,7 @@ body {
   min-height: 100%;
   overscroll-behavior: none;
   scroll-behavior: smooth;
+  overflow-x: hidden;
   /* overflow: hidden; */
 }
 
@@ -44,6 +51,48 @@ body {
   flex-direction: column;
 }
 
+/* BurgerNav */
+li {
+  position: relative;
+}
+
+.list-1 li::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  content: '';
+  width: 5px;
+  height: 5px;
+  @apply bg-neutral-900 dark:bg-white rounded-full hidden;
+}
+
+.list-1 li:hover::after {
+  @apply block;
+}
+
+.list-2 li::after {
+  position: absolute;
+  left: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  width: 8px;
+  height: 8px;
+  @apply bg-neutral-50 rounded-full hidden;
+}
+
+.list-2 li:hover::after {
+  @apply block;
+}
+
+.pre:hover::after {
+  @apply block;
+}
+
+.pre::after {
+  @apply absolute w-full h-[4px] lg:h-[7px] bg-neutral-900 lg:hidden bottom-[4px] lg:bottom-0;
+  content: '';
+}
 /*
 .parent {
   display: grid;

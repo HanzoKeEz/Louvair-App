@@ -80,7 +80,7 @@ export function MainNav() {
                   className={cn(
                     'hidden md:flex  text-sm font-light font-space yellow-hover tracking-wide uppercase w-24 h-6 justify-center',
                     item.href.startsWith(`/${segment}`) ? 'text-foreground' : 'text-foreground/60',
-                    item.href && 'cursor-not-allowed opacity-80'
+                    item.href && ' opacity-80'
                   )}
                 >
                   {item.title}
@@ -116,10 +116,6 @@ export function MainNav() {
               </AnimatePresence>
             </li>
             {/* > If the user is not signed in: */}
-
-            {/* <li className='flex hovers'>
-              <ThemeToggle />
-            </li> */}
           </ul>
           <AnimatePresence>
             {/* Required condition when a component is removed from React tree */}
