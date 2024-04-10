@@ -84,16 +84,16 @@ function BurgerNav({ user, children, items }: BurgerNavProps) {
           {cartStore.isOpen && <Cart />}
         </AnimatePresence>
         {/* > If the user is not signed in: */}
-
+        {/*
         <li className='flex hovers'>
           <ThemeToggle />
-        </li>
-        <li className='hidden md:inline-block'>
+        </li> */}
+        <li className='hidden md:inline-block z-[999]'>
           {!user && (
             <Link
               href='/login'
               className={cn(
-                'hidden md:inline-block font-assistant uppercase relative border-slate-500/50 text-xs tracking-wider',
+                'hidden md:inline-block font-assistant uppercase relative border-slate-500/50 text-xs tracking-wider z-[999]',
                 buttonVariants({ variant: 'outline' })
               )}
             >
@@ -158,9 +158,9 @@ function BurgerNav({ user, children, items }: BurgerNavProps) {
             <p className='text-md text-center text-[#ba7339] my-6'>Aromatic Bliss</p>
           </div>
         </div>
-        <div className='flex w-full justify-center items-center h-20 '>
+        {/* <div className='flex w-full justify-center items-center h-20 '>
           <ThemeToggle />
-        </div>
+        </div> */}
         <div
           id='middle'
           className='h-1/4 mb-24'

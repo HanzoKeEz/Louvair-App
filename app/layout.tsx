@@ -59,7 +59,6 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const session = await getServerSession()
   return (
     <html
       lang='en'
@@ -67,7 +66,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     >
       <Hydration>
         <div className=''>{children}</div>
-        <Footer />
+        
 
         <Toaster />
         <TailwindIndicator />

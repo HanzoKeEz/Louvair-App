@@ -16,15 +16,15 @@ export default async function Billing() {
     <div className='min-h-[calc(100vh-57px)] py-8 px-4 md:px-16 lg:px-24'>
       <Card className='p-6 mb-2'>
         <p className='text-lg font-semibold leading-none'>{subscriptionPlan?.name}</p>
-        <p className='text-sm text-muted-foreground'>
+        <p className='text-sm text-black'>
           {subscriptionPlan?.isSubscribed
-            ? 'You are not subscribed to any plan.'
+            ? 'You are on the Pro Plan.'
             : subscriptionPlan?.isCanceled
             ? 'Your plan will be canceled on '
             : 'Your plan renews on '}
           {subscriptionPlan?.stripeCurrentPeriodEnd
-            ? subscriptionPlan.stripeCurrentPeriodEnd.toLocaleDateString()
-            : null}
+            ? subscriptionPlan.stripeCurrentPeriodEnd.toString()
+            : 'N/A'}
         </p>
       </Card>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>

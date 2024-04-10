@@ -90,12 +90,12 @@ export default function Navbar({ children, items }: MainNavProps) {
         </AnimatePresence>
       </div>
 
-      <Link
+      {/* <Link
         href={'/login'}
         className='hidden md:flex'
       >
         Login
-      </Link>
+      </Link> */}
     </header>
   )
 }

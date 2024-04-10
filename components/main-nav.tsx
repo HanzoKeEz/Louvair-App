@@ -55,7 +55,7 @@ export function MainNav() {
   // -render the sign in button when no session and  or sign out when user is session
 
   return (
-    <div className=''>
+    <div className='w-9/12'>
       <div className='hidden md:flex md:border-y border-y-0 border-neutral-700 shadow-sm h-[80px]  backdrop-blur-[10px] bg-[rgba(255,255,255,0.5)] z-[900] fixed top-0 left-0 w-full justify-between items-center pl-3 pr-20'>
         <div className='hidden md:flex flex-col items-center justify-center'>
           <Link
@@ -90,10 +90,10 @@ export function MainNav() {
           ) : null}
         </div>
 
-        <div className='flex items-center'>
+        <div className='hidden md:flex items-center pr-16'>
           <ul className='flex items-center justify-center gap-6 '>
             <li
-              className='relative text-3xl font-assistant cursor-pointer hover:scale-95 duration-200 transition-all ease-in-out shadow-2xl'
+              className=' relative text-3xl font-assistant cursor-pointer hover:scale-95 duration-200 transition-all ease-in-out shadow-2xl'
               onClick={() => cartStore.toggleCart()}
             >
               <ShoppingBag
@@ -117,9 +117,9 @@ export function MainNav() {
             </li>
             {/* > If the user is not signed in: */}
 
-            <li className='flex hovers'>
+            {/* <li className='flex hovers'>
               <ThemeToggle />
-            </li>
+            </li> */}
           </ul>
           <AnimatePresence>
             {/* Required condition when a component is removed from React tree */}

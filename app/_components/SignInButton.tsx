@@ -1,25 +1,28 @@
-"use client";
+'use client'
 
-import { signIn } from "next-auth/react";
-import { useTransition } from "react";
-import { Button } from "./Button";
+import { signIn } from 'next-auth/react'
+import { useTransition } from 'react'
+import { Button } from './Button'
 
 export function SignInButton() {
-  const [isPending, transision] = useTransition();
+  const [isPending, transition] = useTransition()
 
   const handleClick = () => {
-    transision(async () => {
+    transition(async () => {
       try {
-        await signIn();
+        await signIn()
       } catch {
-        alert("Failed to sign in");
+        alert('Failed to sign in')
       }
-    });
-  };
+    })
+  }
 
   return (
-    <Button onClick={handleClick} disabled={isPending}>
+    <Button
+      onClick={handleClick}
+      disabled={isPending}
+    >
       Sign in with Google
     </Button>
-  );
+  )
 }

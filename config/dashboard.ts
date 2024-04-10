@@ -17,19 +17,19 @@ export const dashboardConfig: DashboardConfig = {
   ],
   sidebarNav: [
     {
-      title: 'Store',
+      title: 'Products',
       href: '/dashboard',
-      icon: 'laptop'
+      icon: 'media'
     },
     {
-      title: 'Billing',
+      title: 'Subscription',
       href: '/dashboard/billing',
       icon: 'billing'
     },
     {
       title: 'Orders',
       href: '/dashboard/orders',
-      icon: 'media'
+      icon: 'user'
     },
     {
       title: 'Settings',

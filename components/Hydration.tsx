@@ -35,7 +35,7 @@ export default function Hydration({ children }: Props) {
       ) : (
         <body
           data-theme={themeStore.mode}
-          className='px-4'
+          className=''
         >
           {children}
         </body>
