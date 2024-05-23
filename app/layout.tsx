@@ -1,13 +1,13 @@
 import '../styles/globals.css'
 import '../styles/shared.css'
 import { Assistant, Great_Vibes, Space_Grotesk, Syncopate } from 'next/font/google'
-import { getServerSession } from 'next-auth/next'
 import { siteConfig } from '@/config/site'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
-import { MainNav } from '@/components/main-nav'
+import { MainNav } from '@/app/_components/navigation/main-nav'
 import { Toaster } from '@/components/ui/toaster'
-import Hydration from '@/components/Hydration'
+import Hydration from '@/app/_components/Hydration'
 import Footer from '@/components/Footer'
+import { MobileNav } from './_components/navigation/mobile-navigation'
 
 const syncopate = Syncopate({
   weight: ['400', '700'],
@@ -62,10 +62,18 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
       lang='en'
-      className={`${syncopate.className} ${space_grotesk.className} ${greatVibes.className} ${assistant.className} bg-neutral-100 dark:bg-zinc-900 text-neutral-900 dark:text-neutral-100`}
+      className={`font-sans text-text bg-background ${syncopate} ${space_grotesk} ${greatVibes} ${assistant}`}
+      suppressHydrationWarning
     >
       <Hydration>
-        <div className=''>{children}</div>
+        <header className='sticky flex items-center h-20 px-6 z-40 border-b bg-background'>
+          <MainNav />
+          <MobileNav />
+        </header>
+        <div className=''>
+          {children}
+          <Footer />
+        </div>
 
         <Toaster />
         <TailwindIndicator />

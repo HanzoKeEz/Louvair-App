@@ -7,7 +7,7 @@ import { Icons } from '@/components/shared/icons'
 
 import { redirect } from 'next/navigation'
 import { getProducts } from '@/utils/getProducts'
-import Product from '@/components/Product'
+import Product from '@/app/_components/Product'
 
 export const metadata = {
   title: 'Dashboard'

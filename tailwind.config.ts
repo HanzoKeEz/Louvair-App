@@ -1,22 +1,13 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   darkMode: ['class'],
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './ui/**/*.{ts,tsx}'],
-
+  future: {
+    hoverOnlyWhenSupported: true
+  },
   theme: {
-    container: {
-      center: true,
-      padding: '1rem',
-      screens: {
-        '2xl': '1400px'
-      }
-    },
     extend: {
-      gridTemplateColumns: {
-        fluid: 'repeat(auto-fit, minmax(20rem,1fr))'
-      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -50,8 +41,39 @@ module.exports = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
-        }
+        },
+        dark: {
+          50: '#EDEDED',
+          100: '#dadada',
+          200: '#b5b5b5',
+          300: '#8f8f8f',
+          400: '#6a6a6a',
+          500: '#454545',
+          600: '#373737',
+          700: '#292929',
+          800: '#1c1c1c',
+          850: '#171717',
+          900: '#0e0e0e'
+        },
+        raisin: '#352D39'
       },
+      container: {
+        center: true,
+        padding: '1rem',
+        '2xl': '1400px'
+      },
+      screens: {
+        '2xl': '1440px'
+      },
+      backgroundImage: {
+        powder: 'radial-gradient(circle, #8f8f8f, #f7f7f7)',
+        radial: 'radial-gradient(circle, #173B4F, #1D1F20, #181818)',
+        conic: 'conic-gradient(from 180deg at 50% 50%, #181818, #1C475F)'
+      },
+      gridTemplateColumns: {
+        fluid: 'repeat(auto-fit, minmax(20rem,1fr))'
+      },
+
       borderRadius: {
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,

@@ -5,9 +5,9 @@ import Cart from './Checkout/Cart'
 import { MainNavItem } from '@/types/index'
 import { useCartStore } from '../zustand/store'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { ThemeToggleButton } from '@/app/_components/theme-toggle-button'
 import { AiFillShopping } from 'react-icons/ai'
-import { Logo } from '@/components/logos/Logo'
+import { Logo } from '@/app/_components/logos/Logo'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
@@ -74,7 +74,7 @@ export default function Navbar({ children, items }: MainNavProps) {
         </button>
         {/* > If the user is not signed in: */}
 
-        <ThemeToggle />
+        <ThemeToggleButton />
 
         <Link
           className='p-4 rounded-md text-sm font-thin hover:bg-black'

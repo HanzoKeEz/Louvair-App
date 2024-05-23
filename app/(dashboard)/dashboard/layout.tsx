@@ -1,10 +1,11 @@
-import { MainNav } from '@/components/main-nav'
+import { MainNav } from '@/app/_components/navigation/main-nav'
 import { DashboardNav } from '@/components/nav'
 import { dashboardConfig } from '@/config/dashboard'
-import BurgerNav from '@/components/BurgerNav'
+
 import { UserAccountNav } from '@/components/user-account-nav'
 import { getAuthSession } from '@/app/_clients/nextAuth'
 import { SignInButton } from '@/app/_components/SignInButton'
+import { MobileNav } from '@/app/_components/navigation/mobile-navigation'
 
 interface DashboardLayoutProps {
   children?: React.ReactNode
@@ -15,13 +16,11 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
   const user = session?.user
 
   return (
-    <div className='flex min-h-screen bg-background flex-col space-y-6'>
+    <div className='flex min-h-screen bg-background flex-col border-4 border-black '>
       <header className='sticky top-0 z-40 border-b bg-background'>
-        <div className='container flex h-20 items-center justify-between py-6'>
-          <MainNav />
-
-          <BurgerNav />
-
+        <MainNav />
+        <MobileNav />
+        <div className='z-40 border-4'>
           {user ? (
             <UserAccountNav
               user={{
@@ -39,7 +38,7 @@ export default async function DashboardLayout({ children }: DashboardLayoutProps
         <aside className='hidden bg-gray-950/95  z-[10] w-[200px] flex-col md:flex'>
           <DashboardNav items={dashboardConfig.sidebarNav} />
         </aside>
-        <main className='flex w-full flex-col '>{children}</main>
+        <main className=' '>{children}</main>
       </div>
     </div>
   )

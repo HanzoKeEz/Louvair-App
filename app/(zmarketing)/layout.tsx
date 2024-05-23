@@ -1,41 +1,23 @@
 import SignInBtn from '@/components/Auth/sign-in-btn'
 import BurgerNav from '@/components/BurgerNav'
-import { MainNav } from '@/components/main-nav'
+
 import { marketingConfig } from '@/config/marketing'
-import { getAuthSession } from '../_clients/nextAuth'
+import { authOptions, getAuthSession } from '../_clients/nextAuth'
 import Footer from '@/components/Footer'
-import { SignInButton } from '@/app/_components/SignInButton'
-import { UserAccountNav } from '@/components/user-account-nav'
+import { getServerSession } from 'next-auth'
+import { getProducts } from '@/utils/getProducts'
 
 interface MarketingLayoutProps {
   children: React.ReactNode
 }
 
 export default async function MarketingLayout({ children }: MarketingLayoutProps) {
-  const session = await getAuthSession()
-
+  const user = await getServerSession(authOptions)
+  const products = await getProducts()
+  console.log('products: ', products)
   return (
-    <div className='flex min-h-screen flex-col space-y-6'>
-      <header className='sticky top-0 z-40 border-b bg-background'>
-        <div className='container flex h-20 items-center justify-between py-6'>
-          <MainNav />
-          <BurgerNav />
-
-          {session?.user ? (
-            <UserAccountNav
-              user={{
-                name: session.user.name,
-                image: session.user.image,
-                email: session.user.email
-              }}
-            />
-          ) : (
-            <SignInButton />
-          )}
-        </div>
-      </header>
+    <div className='flex min-h-screen flex-col w-full'>
       <main className='container'>{children}</main>
-      <Footer />
     </div>
   )
 }

@@ -5,7 +5,6 @@ export type ProductType = {
   image: string
   id: string
   description: string
-  metadata: string
 }
 
 // type MetadataType = {
